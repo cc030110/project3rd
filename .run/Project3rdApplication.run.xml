@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Project3rdApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateResources" />
+    <module name="project3rd.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.spring.project3rd.Project3rdApplication" />
+    <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateResources" />
+    <option name="VM_PARAMETERS" value="-Deserver.port=8083" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
