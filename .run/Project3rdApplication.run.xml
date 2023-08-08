@@ -4,7 +4,7 @@
     <module name="project3rd.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.spring.project3rd.Project3rdApplication" />
     <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateResources" />
-    <option name="VM_PARAMETERS" value="-Deserver.port=8083" />
+    <option name="VM_PARAMETERS" value="-Dserver.port=8083" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
