@@ -1,4 +1,3 @@
-/*
 package com.spring.project3rd.domain.user;
 
 import lombok.AllArgsConstructor;
@@ -13,16 +12,18 @@ import javax.persistence.*;
 @Getter
 //@Table(name="users")
 //@Entity
-//@ToString
+@ToString
 public class User {
 
     @Id
     private String id;
     private String password;
+    @Column
     private String name;
     private String gender;
     private int age;
     private byte[] profile_img;
+    @Column
     private String email;
     private int country_no;
     private String city;
@@ -33,4 +34,3 @@ public class User {
 
 
 }
-*/
