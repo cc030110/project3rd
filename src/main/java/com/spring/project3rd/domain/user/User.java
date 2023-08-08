@@ -1,3 +1,4 @@
+/*
 package com.spring.project3rd.domain.user;
 
 import lombok.AllArgsConstructor;
@@ -32,3 +33,4 @@ public class User {
 
 
 }
+*/
