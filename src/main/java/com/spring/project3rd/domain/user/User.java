@@ -1,13 +1,16 @@
+package com.spring.project3rd.domain.user;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Tables(name="users")
+@Table(name="users")
 @Entity
 @ToString
 public class User {
