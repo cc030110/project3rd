@@ -1,4 +1,3 @@
-/*
 package com.spring.project3rd.domain.user;
 
 import lombok.AllArgsConstructor;
@@ -14,4 +13,3 @@ public class UserRequestDto {
     private String name;
     private String email;
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package com.spring.project3rd.controller;
 
 import com.spring.project3rd.config.jwt.JwtToken;
@@ -29,4 +28,4 @@ public class UserController {
     }
 
 }
-*/
+
