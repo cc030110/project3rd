@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Footer</h1>
+    <div class="footer">
+        <h2>푸터</h2>
+    </div>
 </body>
 </html>
