@@ -9,11 +9,11 @@ import javax.persistence.*;
 import java.security.Timestamp;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Table(name="user")
 @Entity
 @ToString
-@AllArgsConstructor
 public class User {
 
     @Id
@@ -28,6 +28,7 @@ public class User {
     private String liveCity;
     private short warningCount;
     private short isActive;
+
 
     public User(UserRequestDto userRequestDto){
         this.id = userRequestDto.getId();

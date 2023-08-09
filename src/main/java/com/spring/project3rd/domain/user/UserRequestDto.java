@@ -17,10 +17,10 @@ public class UserRequestDto {
     private String id;
     private String password;
     private String name;
+    private String email;
     private String gender;
     private int age;
     private byte[] profileImg;
-    private String email;
     private String liveCountry;
     private String liveCity;
     private short warningCount;

@@ -73,6 +73,27 @@ public class UserController {
         JSONObject response = new JSONObject();
 
 
+        try {
+            System.out.println("gg");
+            User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("오류")
+            );
+//            user = userRepository.findByEamail(userRequestDto.getEmail()).orElseThrow(
+//                    () -> new IllegalArgumentException("오류")
+//            );
+//            user = userRepository.findBy(userRequestDto.getId()).orElseThrow(
+//                    () -> new IllegalArgumentException("오류")
+//            );
+            System.out.println("gg");
+            User newUser = new User(userRequestDto);
+
+            userRepository.save(newUser);
+            response = new JSONObject(newUser);
+            response.put("join", "success");
+        } catch (Exception e) {
+            response.put("join", "fail");
+        }
+
         return response.toMap();
     }
 

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UserService {
+
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
