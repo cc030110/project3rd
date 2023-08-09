@@ -1,31 +1,93 @@
 package com.spring.project3rd.controller;
 
 import com.spring.project3rd.config.jwt.JwtToken;
+import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
+import com.spring.project3rd.domain.user.UserRequestDto;
 import com.spring.project3rd.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.json.JSONObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
-import java.util.Map;
-
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("users")
+@RequestMapping("api/user")
+// 세션 로그인
+@Controller
+@SessionAttributes({"log"})
 public class UserController {
 
     private final UserService userService;
-//    private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService){
-        this.userService = userService;
+//    @PostMapping("login")
+//    public ResponseEntity<JwtToken> loginSuccess(@RequestBody Map<String, String> loginForm){
+//        JwtToken token = userService.login(loginForm.get("id"), loginForm.get("password"));
+//        return ResponseEntity.ok(token);
+//    }
+
+    @SessionScope
+    @PostMapping("login")
+    public ModelAndView login(@RequestBody User user) {
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("log", user.getId());
+        return modelAndView;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<JwtToken> loginSuccess(@RequestBody Map<String, String> loginForm){
-        JwtToken token = userService.login(loginForm.get("username"), loginForm.get("password"));
-        return ResponseEntity.ok(token);
+    @PostMapping("logout")
+    public String logout(WebRequest request, SessionStatus status){
+        // 우선 호출 후,
+        status.setComplete();
+        // 세션 속성을 수정
+        request.removeAttribute("log", WebRequest.SCOPE_SESSION);
+        return "redirect:/";
     }
+
+    // 유저 1인 정보 불러오기(회원 수정에 쓸거)
+    @GetMapping("{id}")
+    public User getUserById(@PathVariable String id){
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 유저")
+        );
+        return user;
+    }
+
+    // 회원 가입
+    @PostMapping(value = "join", consumes = {"multipart/form-data"})
+    public Map join(@ModelAttribute UserRequestDto userRequestDto){
+        JSONObject response = new JSONObject();
+
+        try {
+            Optional<User> existingUser = userRepository.findById(userRequestDto.getId());
+            if (existingUser.isPresent()) {
+                response.put("join", "fail");
+            } else {
+                User newUser = new User(userRequestDto);
+                userRepository.save(newUser);
+                response.put("join", "success");
+            }
+        } catch (Exception e) {
+            // 예외 처리 로직
+        }
+
+        return response.toMap();
+    }
+
 
 }
 

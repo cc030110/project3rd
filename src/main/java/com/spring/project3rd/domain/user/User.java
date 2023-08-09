@@ -6,9 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.security.Timestamp;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Table(name="user")
 @Entity
@@ -22,15 +23,27 @@ public class User {
     private String name;
     private String gender;
     private int age;
-    private byte[] profile_img;
-    @Column
+    @Column(name = "profile_img")
+    private byte[] profileImg;
     private String email;
-    private int country_no;
-    private String city;
-    private String needs_lang;
-    private String mother_lang;
-    private int warning;
-    private short is_active;
+    @Column(name = "live_country")
+    private String liveCountry;
+    @Column(name = "live_city")
+    private String liveCity;
+    @Column(name = "warning_count")
+    private short warningCount;
+    @Column(name = "is_active")
+    private short isActive;
+    @Column(name = "created_at")
+    private Timestamp createdAt;
 
 
+    public User(UserRequestDto userRequestDto){
+        this.id = userRequestDto.getId();
+        this.password = userRequestDto.getPassword();
+        this.name = userRequestDto.getName();
+        this.email = userRequestDto.getEmail();
+        this.gender = userRequestDto.getGender();
+        this.createdAt = userRequestDto.getCreateAt();
+    }
 }

@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="css/reset.css">
 
 <body>
+<p>empty log : ${empty log}</p>
 <div class="wrap">
     <c:import url="header.jsp"/>
         <div class="main_con">
