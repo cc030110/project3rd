@@ -1,3 +1,4 @@
+/*
 package com.spring.project3rd.controller;
 
 
@@ -9,3 +10,4 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class LogController {
 
 }
+*/
