@@ -25,11 +25,6 @@ public class User {
     private byte[] profile_img;
     @Column
     private String email;
-    private int country_no;
-    private String city;
-    private String needs_lang;
-    private String mother_lang;
-    private int warning;
     private short is_active;
 
 
