@@ -48,7 +48,9 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 
-
+	// thymeleaf
+	/*compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'*/
 }
 
 tasks.named('test') {

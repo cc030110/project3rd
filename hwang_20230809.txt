@@ -1,0 +1,11 @@
+인규(23.08.08) 
+
+* 수정된 부분 : index.jsp
+
+* 추가된 부분 : 
+ - Config
+    ㄴ WebMvcConfig
+ - Resources
+    ㄴ application.yml
+ - Resources Bundle 'messages' 
+    ㄴ message.properties
