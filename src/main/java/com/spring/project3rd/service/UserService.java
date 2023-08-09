@@ -16,9 +16,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserService {
-
 
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;

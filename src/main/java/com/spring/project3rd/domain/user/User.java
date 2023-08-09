@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.security.Timestamp;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Table(name="user")
 @Entity
@@ -23,19 +24,12 @@ public class User {
     private String name;
     private String gender;
     private int age;
-    @Column(name = "profile_img")
     private byte[] profileImg;
     private String email;
-    @Column(name = "live_country")
     private String liveCountry;
-    @Column(name = "live_city")
     private String liveCity;
-    @Column(name = "warning_count")
     private short warningCount;
-    @Column(name = "is_active")
     private short isActive;
-    @Column(name = "created_at")
-    private Timestamp createdAt;
 
 
     public User(UserRequestDto userRequestDto){
@@ -44,6 +38,6 @@ public class User {
         this.name = userRequestDto.getName();
         this.email = userRequestDto.getEmail();
         this.gender = userRequestDto.getGender();
-        this.createdAt = userRequestDto.getCreateAt();
+        this.liveCountry = userRequestDto.getLiveCountry();
     }
 }

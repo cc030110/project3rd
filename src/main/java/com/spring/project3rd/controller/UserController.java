@@ -72,17 +72,26 @@ public class UserController {
     public Map join(@ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
 
+
         try {
-            Optional<User> existingUser = userRepository.findById(userRequestDto.getId());
-            if (existingUser.isPresent()) {
-                response.put("join", "fail");
-            } else {
-                User newUser = new User(userRequestDto);
-                userRepository.save(newUser);
-                response.put("join", "success");
-            }
+            System.out.println("gg");
+            User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("오류")
+            );
+//            user = userRepository.findByEamail(userRequestDto.getEmail()).orElseThrow(
+//                    () -> new IllegalArgumentException("오류")
+//            );
+//            user = userRepository.findBy(userRequestDto.getId()).orElseThrow(
+//                    () -> new IllegalArgumentException("오류")
+//            );
+            System.out.println("gg");
+            User newUser = new User(userRequestDto);
+
+            userRepository.save(newUser);
+            response = new JSONObject(newUser);
+            response.put("join", "success");
         } catch (Exception e) {
-            // 예외 처리 로직
+            response.put("join", "fail");
         }
 
         return response.toMap();
