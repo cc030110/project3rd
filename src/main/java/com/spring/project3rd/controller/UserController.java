@@ -72,18 +72,6 @@ public class UserController {
     public Map join(@ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
 
-        try {
-            Optional<User> existingUser = userRepository.findById(userRequestDto.getId());
-            if (existingUser.isPresent()) {
-                response.put("join", "fail");
-            } else {
-                User newUser = new User(userRequestDto);
-                userRepository.save(newUser);
-                response.put("join", "success");
-            }
-        } catch (Exception e) {
-            // 예외 처리 로직
-        }
 
         return response.toMap();
     }

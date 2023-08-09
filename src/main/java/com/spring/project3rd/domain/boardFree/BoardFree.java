@@ -16,7 +16,6 @@ public class BoardFree extends Timestamp {
 
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment 컬럼인 것을 명시
-    @Column(name="board_no")
     private int boardNo;
     @Column(nullable = false)
     private String id;
@@ -24,7 +23,5 @@ public class BoardFree extends Timestamp {
     private String title;
     @Column(length = 4000)
     private String contents;
-    @Column(name="is_modified")
-    private short isModified;
 
 }

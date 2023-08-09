@@ -17,7 +17,12 @@ public class UserRequestDto {
     private String id;
     private String password;
     private String name;
-    private String email;
     private String gender;
-    private Timestamp createAt;
+    private int age;
+    private byte[] profileImg;
+    private String email;
+    private String liveCountry;
+    private String liveCity;
+    private short warningCount;
+    private short isActive;
 }
