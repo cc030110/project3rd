@@ -8,7 +8,7 @@
 
 <head>
     <!-- CSS -->
-    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="/css/gird.css">
 
     <title>GLOBALTIES</title>
 </head>

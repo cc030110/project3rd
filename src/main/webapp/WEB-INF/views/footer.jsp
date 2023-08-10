@@ -7,8 +7,7 @@
     <title>GLOBALTIES</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body>
