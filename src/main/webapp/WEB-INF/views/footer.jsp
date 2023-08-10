@@ -4,13 +4,17 @@
 
 <html>
 <head>
-    <!-- CSS -->
     <title>GLOBALTIES</title>
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/footer.css">
 </head>
+
 <body>
     <div class="footer">
         <h2>푸터</h2>
     </div>
 </body>
+
 </html>

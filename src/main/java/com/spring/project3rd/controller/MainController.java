@@ -11,4 +11,11 @@ public class MainController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("/board-community")
+    public String boardCommunity(){
+        return "board_community_list";
+    }
+
+
 }
