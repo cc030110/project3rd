@@ -71,31 +71,40 @@ public class UserController {
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
     public Map join(@ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
-
-
         try {
-            System.out.println("gg");
             User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
-                    () -> new IllegalArgumentException("오류")
+                    () -> new IllegalArgumentException("ID 중복 확인")
             );
-//            user = userRepository.findByEamail(userRequestDto.getEmail()).orElseThrow(
-//                    () -> new IllegalArgumentException("오류")
-//            );
-//            user = userRepository.findBy(userRequestDto.getId()).orElseThrow(
-//                    () -> new IllegalArgumentException("오류")
-//            );
-            System.out.println("gg");
-            User newUser = new User(userRequestDto);
-
-            userRepository.save(newUser);
-            response = new JSONObject(newUser);
-            response.put("join", "success");
-        } catch (Exception e) {
+            user = userRepository.findById(userRequestDto.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("ID 중복 확인")
+            );
+            user = userRepository.findById(userRequestDto.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("ID 중복 확인")
+            );
             response.put("join", "fail");
+        } catch (Exception e) {
+            User newUser = new User(userRequestDto);
+            userRepository.save(newUser);
+            response.put("join", "success");
         }
-
         return response.toMap();
     }
+
+    // 회원 정보 수정
+//    @PutMapping(value = "{id/update}", consumes = {"multipart/form-data"})
+//    public Map update(WebRequest request, @PathVariable String id, @ModelAttribute UserRequestDto userRequestDto){
+//        JSONObject response = new JSONObject();
+//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+//
+//        if(log != null){
+//            response.put("user", "update");
+//            return null;
+//        }
+//        // 로그인 처리 후 수정할것
+//
+//        return response.toMap();
+//    }
+
 
 
 }

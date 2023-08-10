@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigInteger;
 import java.security.Timestamp;
 
 
@@ -19,10 +20,10 @@ public class UserRequestDto {
     private String name;
     private String email;
     private String gender;
-    private int age;
-    private byte[] profileImg;
+    private Short age;
+    private Byte[] profileImg;
     private String liveCountry;
     private String liveCity;
-    private short warningCount;
-    private short isActive;
+    private Short warningCount;
+    private Short isActive;
 }
