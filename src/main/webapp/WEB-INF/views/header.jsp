@@ -14,7 +14,7 @@
     <!-- JS -->
     <!-- 선택 옵션에 따른 언어 변경 : locale 변경(/?lang='국가 코드') -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="script/lang-select.js"></script>
+    <script src="/script/lang-select.js"></script>
 </head>
 
 <body>

@@ -1,34 +1,26 @@
 package com.spring.project3rd.controller;
 
-import com.spring.project3rd.config.jwt.JwtToken;
 import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.domain.user.UserRequestDto;
 import com.spring.project3rd.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.json.JSONObject;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/user")
 // 세션 로그인
-@Controller
 @SessionAttributes({"log"})
 public class UserController {
 
@@ -41,12 +33,30 @@ public class UserController {
 //        return ResponseEntity.ok(token);
 //    }
 
+//    @SessionScope
+//    @PostMapping("login")
+//    public ModelAndView login(@RequestBody User user) {
+//        ModelAndView modelAndView = new ModelAndView("index");
+//        modelAndView.addObject("log", user.getId());
+//        return modelAndView;
+//    }
+
     @SessionScope
     @PostMapping("login")
-    public ModelAndView login(@RequestBody User user) {
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("log", user.getId());
-        return modelAndView;
+    public ResponseEntity<String> login(WebRequest request, @RequestBody User requestUser) {
+        String resultMsg = "";
+
+        Optional<User> optionalUser = userRepository.findById(requestUser.getId());
+        // 해당 값이 없으면 null
+        User user = optionalUser.orElse(null);
+
+        if(user!=null&&user.getPassword().equals(requestUser.getPassword())){
+            request.setAttribute("log",user.getId(), WebRequest.SCOPE_SESSION);
+            resultMsg = "success";
+        }else{
+            resultMsg = "fail";
+        }
+        return ResponseEntity.ok(resultMsg);
     }
 
     @PostMapping("logout")

@@ -1,0 +1,6 @@
+@import "reset.css";
+
+.err{
+    display: none;
+    color: red;
+}

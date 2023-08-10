@@ -6,16 +6,19 @@ import com.spring.project3rd.service.BoardFreeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("board/free/")
 public class BoardFreeController {
@@ -25,6 +28,7 @@ public class BoardFreeController {
 
     // 게시글 목록
     // 시작 페이지1, 검색어 없을 경우 ""
+
     @GetMapping("list/{page}")
     public ModelAndView showList(@PathVariable("page") int page,
                                  @RequestParam(defaultValue = "") String keyword,
@@ -42,12 +46,9 @@ public class BoardFreeController {
         return view;
     }
 
-    // 게시글 등록
-    @GetMapping("upload")
-    public String uploadPage(){
-        // 로그인 확인 필요
-        return "board_free_upload";
-    }
+    // 자유게시판 - 게시글 등록
+
+
 //    @PostMapping("upload")
 //    public String upload(){
 //

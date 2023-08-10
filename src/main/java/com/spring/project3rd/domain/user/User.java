@@ -34,10 +34,17 @@ public class User {
         this.id = userRequestDto.getId();
         this.password = userRequestDto.getPassword();
         this.name = userRequestDto.getName();
-        this.gender = userRequestDto.getGender();
         this.age = userRequestDto.getAge();
         this.email = userRequestDto.getEmail();
         this.liveCountry = userRequestDto.getLiveCountry();
         this.liveCity=userRequestDto.getLiveCity();
+        this.isActive = 1;
+        this.warningCount = 0;
+        if(userRequestDto.getGender()==null){
+            this.gender="남";
+        }else{
+            this.gender=userRequestDto.getGender();
+        }
+
     }
 }

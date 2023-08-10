@@ -15,6 +15,8 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
+
+
         <form id="board-free-upload-form">
             <div>
                 <label for="title">제목</label>
