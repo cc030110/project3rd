@@ -8,22 +8,37 @@ import org.springframework.web.context.request.WebRequest;
 
 @Controller
 public class MainController {
+
+    // 메인 페이지
     @GetMapping("/")
     public String index(){
         return "index";
     }
 
-    // 로그인 페이지 이동
+    // 로그인 페이지
     @GetMapping("login")
     public String login(){
         return "login";
     }
 
-    // 커뮤니티 게시판
-    @GetMapping("board/community")
+    // 회원가입
+    @GetMapping("api/user/join")
+    public String showJoinForm() {
+        return "user_join";
+    }
+
+    // 커뮤니티 게시판 메인 : 추후 수정 혹은 삭제 : 인규
+    @GetMapping("/board/community")
     public String boardCommunity(){
         return "board_community_list";
     }
+
+    // 커뮤니티 게시판 - 게시글 작성
+    @GetMapping("/board/community/write")
+    public String boardCommunityWrite(){
+        return "board_community_write";
+    }
+
 
     // 자유게시판 - 게시글 업로드
     @GetMapping("board/free/upload")
@@ -38,9 +53,5 @@ public class MainController {
         return "login";
     }
 
-    // 회원가입
-    @GetMapping("api/user/join")
-    public String showJoinForm() {
-        return "user_join";
-    }
+
 }
