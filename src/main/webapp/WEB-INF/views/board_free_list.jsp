@@ -12,12 +12,13 @@
     <title>자유 게시판</title>
 </head>
 <body>
-    <div class="wrap">
-        <c:import url="header.jsp"/>
-            <div>
-                자유 게시판
-            </div>
-        <c:import url="footer.jsp"/>
+<div class="wrap">
+    <c:import url="header.jsp"/>
+    <h2>자유 게시판</h2>
+    <div class="list-container">
+        list : ${list}
     </div>
+    <c:import url="footer.jsp"/>
+</div>
 </body>
 </html>
