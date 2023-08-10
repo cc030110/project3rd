@@ -1,5 +1,6 @@
 package com.spring.project3rd.domain.user;
 
+import com.spring.project3rd.util.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @Table(name="user")
 @Entity
 @ToString
-public class User {
+public class User extends Timestamp {
 
     @Id
     private String id;
@@ -22,7 +23,7 @@ public class User {
     private String name;
     private String gender;
     private Short age;
-    private Byte[] profileImg;
+    private String profileImg;
     private String email;
     private String liveCountry;
     private String liveCity;
@@ -47,4 +48,18 @@ public class User {
         }
 
     }
+
+    public void update(UserRequestDto userRequestDto){
+        this.password = userRequestDto.getPassword();
+        this.gender = userRequestDto.getGender();
+        this.age = userRequestDto.getAge();
+        this.profileImg = userRequestDto.getProfileImg();
+        this.liveCountry = userRequestDto.getLiveCountry();
+        this.liveCity = userRequestDto.getLiveCity();
+        this.warningCount = userRequestDto.getWarningCount();
+        this.isActive = userRequestDto.getIsActive();
+    }
+
+
+
 }

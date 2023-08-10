@@ -21,9 +21,10 @@ public class UserRequestDto {
     private String email;
     private String gender;
     private Short age;
-    private Byte[] profileImg;
+    private String profileImg;
     private String liveCountry;
     private String liveCity;
     private Short warningCount;
     private Short isActive;
+
 }

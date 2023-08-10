@@ -19,6 +19,7 @@ public class MainController {
         return "login";
     }
 
+    // 커뮤니티 게시판
     @GetMapping("board/community")
     public String boardCommunity(){
         return "board_community_list";
@@ -37,5 +38,9 @@ public class MainController {
         return "login";
     }
 
-
+    // 회원가입
+    @GetMapping("api/user/join")
+    public String showJoinForm() {
+        return "user_join";
+    }
 }

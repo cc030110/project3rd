@@ -8,8 +8,8 @@
     <title>Title</title>
 
     <!-- css -->
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/header.css">
 
     <!-- JS -->
     <!-- 선택 옵션에 따른 언어 변경 : locale 변경(/?lang='국가 코드') -->
