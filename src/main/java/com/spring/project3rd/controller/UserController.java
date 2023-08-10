@@ -19,10 +19,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -58,6 +55,31 @@ public class UserController {
         return "redirect:/";
     }
 
+    // 회원 가입
+    @PostMapping(value = "join", consumes = {"multipart/form-data"})
+    public Map join(@ModelAttribute UserRequestDto userRequestDto){
+        JSONObject response = new JSONObject();
+        try {
+            User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
+                    () -> new IllegalArgumentException("ID 중복 확인")
+            );
+//            user = userRepository.findById(userRequestDto.getId()).orElseThrow(
+//                    () -> new IllegalArgumentException("ID 중복 확인")
+//            );
+//            user = userRepository.findById(userRequestDto.getId()).orElseThrow(
+//                    () -> new IllegalArgumentException("ID 중복 확인")
+//            );
+            System.out.println(user.getCreatedAt());
+            response.put("join", "fail");
+        } catch (Exception e) {
+            User newUser = new User(userRequestDto);
+            System.out.println(newUser.getGender());
+            userRepository.save(newUser);
+            response.put("join", "success");
+        }
+        return response.toMap();
+    }
+
     // 유저 1인 정보 불러오기(회원 수정에 쓸거)
     @GetMapping("{id}")
     public User getUserById(@PathVariable String id){
@@ -67,44 +89,42 @@ public class UserController {
         return user;
     }
 
-    // 회원 가입
-    @PostMapping(value = "join", consumes = {"multipart/form-data"})
-    public Map join(@ModelAttribute UserRequestDto userRequestDto){
+    // 회원 정보 수정
+    @PutMapping(value = "{id}/update", consumes = {"multipart/form-data"})
+    public Map update(WebRequest request, @PathVariable String id, @ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
-        try {
-            User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
-                    () -> new IllegalArgumentException("ID 중복 확인")
-            );
-            user = userRepository.findById(userRequestDto.getId()).orElseThrow(
-                    () -> new IllegalArgumentException("ID 중복 확인")
-            );
-            user = userRepository.findById(userRequestDto.getId()).orElseThrow(
-                    () -> new IllegalArgumentException("ID 중복 확인")
-            );
-            response.put("join", "fail");
-        } catch (Exception e) {
-            User newUser = new User(userRequestDto);
-            userRepository.save(newUser);
-            response.put("join", "success");
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        if(log != null){
+            response.put("user", "update");
+            return null;
         }
+        // 로그인 처리 후 수정할것
+
         return response.toMap();
     }
 
-    // 회원 정보 수정
-//    @PutMapping(value = "{id/update}", consumes = {"multipart/form-data"})
-//    public Map update(WebRequest request, @PathVariable String id, @ModelAttribute UserRequestDto userRequestDto){
-//        JSONObject response = new JSONObject();
-//        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-//
-//        if(log != null){
-//            response.put("user", "update");
-//            return null;
-//        }
-//        // 로그인 처리 후 수정할것
-//
-//        return response.toMap();
-//    }
+    // 회원 탈퇴
+    @DeleteMapping("{id}/delete")
+    public Map delete(WebRequest request, @PathVariable String id, UserRequestDto userRequestDto){
+        JSONObject response = new JSONObject();
 
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않는 유저")
+        );
+        System.out.println(log);
+        if(log != null )
+        //&& log.equals(user.getId())
+        {
+            userService.deleteUser(id);
+            response.put("delete", "success");
+        } else {
+            response.put("delete", "fail");
+        }
+
+        return response.toMap();
+    }
 
 
 }

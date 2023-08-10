@@ -11,10 +11,13 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/board-community")
+    @GetMapping("/board/community")
     public String boardCommunity(){
         return "board_community_list";
     }
 
-
+    @GetMapping("api/user/join")
+    public String showJoinForm() {
+        return "user_join";
+    }
 }
