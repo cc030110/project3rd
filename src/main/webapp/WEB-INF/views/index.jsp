@@ -6,21 +6,21 @@
 <html>
 
 <head>
+    <title>GLOBALTIES</title>
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/reset.css">
-
-    <title>GLOBALTIES</title>
 </head>
 
 <body>
-<p>empty log : ${empty log}</p>
-<div class="wrap">
-    <c:import url="header.jsp"/>
+    <div class="wrap">
+        <c:import url="header.jsp"/>
+        <p>empty log : ${empty log}</p>
         <div class="main_con">
             <spring:message code="index.hello"/>
         </div>
-    <c:import url="footer.jsp"/>
-</div>
+        <c:import url="footer.jsp"/>
+    </div>
 </body>
 
 </html>

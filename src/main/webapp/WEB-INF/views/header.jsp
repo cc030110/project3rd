@@ -1,6 +1,6 @@
 <%-- Header --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%><!-- 다국어 처리 -->
 
 <html>
 
@@ -9,6 +9,7 @@
 
     <!-- css -->
     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/header.css">
 
     <!-- JS -->
     <!-- 선택 옵션에 따른 언어 변경 : locale 변경(/?lang='국가 코드') -->
@@ -32,7 +33,7 @@
 
         <div class="lang_select">
                 <select name="locales" id="locales">
-                    <option value="en">English</option>
+                    <option value="en" selected>English</option>
                     <option value="ko">한국어</option>
                     <option value="ja">日本語</option>
                     <%--<option value="spanish">Español</option>
