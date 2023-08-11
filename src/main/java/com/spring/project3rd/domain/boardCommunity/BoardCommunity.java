@@ -7,12 +7,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 
-@Entity
-@Table(name="board_community")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table(name="board_community")
+@Entity
 public class BoardCommunity extends Timestamp{
 
     @Id // primary key
@@ -23,28 +24,39 @@ public class BoardCommunity extends Timestamp{
     private String id;
 
     @Column
-    private String platform;
+    private String platformName;
 
     @Column(length=100,nullable=false)
     private String title;
 
-    @Column(length=4000)
+    @Column(length=4000,nullable = false)
     private String contents;
 
     @Column(nullable=false)
     private int participantsNum;
 
     @Column(nullable=true)
-    private java.sql.Timestamp deadline;
+    private Date deadline;
+
+    @Column
+    private short isModified;
 
     public BoardCommunity(BoardCommunityRequestDto bcDto) {
         super();
-//        this.boardNo=bcDto.getBoardNo();
         this.id = bcDto.getId();
-        this.platform = bcDto.getPlatform();
+        this.platformName = bcDto.getPlatformName();
         this.title = bcDto.getTitle();
         this.contents = bcDto.getContents();
         this.participantsNum = bcDto.getParticipantsNum();
-        this.deadline = bcDto.getDeadline();
+        this.deadline=bcDto.getDeadline();
+    }
+
+    public void update(BoardCommunityRequestDto bcDto){
+        this.platformName= bcDto.getPlatformName();
+        this.title=bcDto.getTitle();
+        this.contents=bcDto.getContents();
+        this.participantsNum = bcDto.getParticipantsNum();
+        this.deadline=bcDto.getDeadline();
+        this.isModified=bcDto.getIsModified();
     }
 }

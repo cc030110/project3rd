@@ -19,6 +19,13 @@
     <div class="main_con">
         <ul>
             <li>
+                <label for="platform">플랫폼</label>
+                <select name="platform" id="platform">
+
+                </select>
+            </li>
+
+            <li>
                 <label for="title">
                     <spring:message code="board_community_upload.title"/>
                 </label>
