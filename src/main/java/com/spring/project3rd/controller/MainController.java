@@ -32,7 +32,7 @@ public class MainController {
     // 커뮤니티 게시판 메인 : 추후 수정 혹은 삭제 : 인규
     @GetMapping("/board/community")
     public String boardCommunity(){
-        return "board_community_list";
+        return "board_community";
     }
 
     // 커뮤니티 게시판 - 게시글 작성
