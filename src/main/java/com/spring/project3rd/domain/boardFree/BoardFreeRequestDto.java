@@ -1,14 +1,12 @@
 package com.spring.project3rd.domain.boardFree;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class BoardFreeRequestDto {
     private int boardNo;
     private String id;

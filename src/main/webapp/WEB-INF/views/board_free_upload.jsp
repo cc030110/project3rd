@@ -15,27 +15,21 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
-
-
-        <form id="board-free-upload-form">
-            <div>
-                <label for="title">제목</label>
-                <input type="text" id="title" name="title" required>
-            </div>
-            <div>
-                <label for="contents">내용</label>
-                <textarea id="contents" name="contents" maxlength="4000"></textarea>
-            </div>
-            <div>
-                <input type="file" id="file-img" name="file-img" accept="image/png, image/jpg, image/jpeg, image.gif">
-                <div class="img-container">
+        <div class="board-content">
+            <form>
+                <input type="text" id="name" name="name" value="${sessionScope.log}" readonly>
+                <input type="text" id="title" name="title" placeholder="제목." autofocus>
+                <textarea id="contents" name="contents" placeholder="내용"></textarea>
+                <input type="file" id="file" name="file" accept="image/png, image/jpg, image/jpeg, image.gif" multiple>
+                <div class="img-box">
 
                 </div>
-            </div>
-            <input type="button" value="등록" id="upload-btn" onclick="boardFreeUpload(form)">
-        </form>
+                <input type="button" value="작성" id="submit-bnt" onclick="upload()">
+            </form>
+        </div>
     </div>
     <c:import url="footer.jsp"/>
 </div>
+<script src="/script/board-free.js"></script>
 </body>
 </html>

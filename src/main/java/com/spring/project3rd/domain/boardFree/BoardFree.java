@@ -19,9 +19,17 @@ public class BoardFree extends Timestamp {
     private int boardNo;
     @Column(nullable = false)
     private String id;
-    @Column(length = 100,nullable = false)
+    @Column(length = 100, nullable = false)
     private String title;
-    @Column(length = 4000)
+    @Column(length = 4000, nullable = false)
     private String contents;
+    private short isModified;
+
+    public BoardFree(BoardFreeRequestDto boardDto){
+        this.id = boardDto.getId();
+        this.title = boardDto.getTitle();
+        this.contents = boardDto.getContents();
+        this.isModified = 0;
+    }
 
 }

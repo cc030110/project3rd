@@ -1,9 +1,8 @@
 package com.spring.project3rd.controller;
 
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 @Controller
@@ -20,6 +19,9 @@ public class MainController {
     public String login(){
         return "login";
     }
+
+
+
 
     // 회원가입
     @GetMapping("api/user/join")
@@ -38,7 +40,6 @@ public class MainController {
     public String boardCommunityWrite(){
         return "board_community_write";
     }
-
 
     // 자유게시판 - 게시글 업로드
     @GetMapping("board/free/upload")

@@ -2,20 +2,20 @@ package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
+import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
+import com.spring.project3rd.domain.boardImg.BoardFreeImg;
+import com.spring.project3rd.domain.boardImg.BoardFreeImgRepository;
 import com.spring.project3rd.service.BoardFreeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 
 
 @RestController
@@ -26,9 +26,10 @@ public class BoardFreeController {
     private final BoardFreeRepository boardFreeRepository;
     private final BoardFreeService boardFreeService;
 
+    private final BoardFreeImgRepository imgRepository;
+
     // 게시글 목록
     // 시작 페이지1, 검색어 없을 경우 ""
-
     @GetMapping("list/{page}")
     public ModelAndView showList(@PathVariable("page") int page,
                                  @RequestParam(defaultValue = "") String keyword,
@@ -46,12 +47,56 @@ public class BoardFreeController {
         return view;
     }
 
-    // 자유게시판 - 게시글 등록
 
 
-//    @PostMapping("upload")
-//    public String upload(){
-//
-//    }
+    // 게시글 업로드
+    @PostMapping("upload")
+    public BoardFree upload(@RequestBody BoardFreeRequestDto boardDto){
+        System.out.println(boardDto);
+        BoardFree board = null;
+
+        if(boardDto.getId()!=null&&boardDto.getTitle()!=null&&boardDto.getContents()!=null){
+            board = new BoardFree(boardDto);
+            boardFreeRepository.save(board);
+        }
+
+        return board;
+    }
+
+
+
+    // 파일 업로드
+    @PostMapping("upload/file")
+    public String uploadImgFile(@ModelAttribute BoardFreeImg img){
+
+
+        return "";
+    }
+
+
+    // 게시글 하나 확인
+    @GetMapping("{no}")
+    public ModelAndView showBoard(@PathVariable int no){
+        ModelAndView view = new ModelAndView("board_free");
+
+        Optional<BoardFree> optionalBoard = boardFreeRepository.findById(no);
+        BoardFree board = optionalBoard.orElse(null);
+
+        view.addObject("board",board);
+
+        if(board!=null){
+            int boardNo = board.getBoardNo();
+            List<BoardFreeImg> imgList = imgRepository.findByBoardNo(boardNo);
+            // 해당 게시글에 업로드된 파일이 존재할 경우
+            if(!imgList.isEmpty()){
+                view.addObject("imgList",imgList);
+            }
+        }
+
+        return view;
+    }
+
+
+
 
 }

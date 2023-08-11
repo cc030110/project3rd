@@ -16,7 +16,12 @@
     <c:import url="header.jsp"/>
     <h2>자유 게시판</h2>
     <div class="list-container">
-        list : ${list}
+        <c:forEach items="${list}" var="listItem" varStatus="vs">
+            <p>제목 : ${listItem.title}</p>
+            <p>내용 : ${listItem.contents}</p>
+            <p>생성일: ${listItem.createdAt}</p>
+        </c:forEach>
+
     </div>
     <c:import url="footer.jsp"/>
 </div>

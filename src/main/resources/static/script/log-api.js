@@ -38,10 +38,14 @@ function login(){
         }).done(function (result){
             if(result==="success"){
                 alert("로그인되었습니다.");
-                window.location.href="/";
+                if(window.location.pathname==="/login"){
+                    window.location.href="/";
+                }else{
+                    window.location.reload();
+                }
             }else{
                 alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
-                window.location.href="/login";
+                window.location.reload();
             }
         }).fail(function (){
             alert("로그인 오류");
