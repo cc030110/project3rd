@@ -29,6 +29,12 @@ public class MainController {
         return "user_join";
     }
 
+    // 유저 리스트(프로필 게시판)
+    @GetMapping("api/user/list")
+    public String userList() {
+        return "user_list";
+    }
+
     // 커뮤니티 게시판 메인 : 추후 수정 혹은 삭제 : 인규
     @GetMapping("/board/community")
     public String boardCommunity(){
