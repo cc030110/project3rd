@@ -21,7 +21,8 @@ public class UploadFileService {
 
     private final Uploadcare uploadcare;
 
-    public List<String> uploadImgFile(List<MultipartFile> files){
+    // 파일 업로드 여러장
+    public List<String> uploadImgFiles(List<MultipartFile> files){
         List<String> response = new ArrayList<>();
         for(MultipartFile imgs : files){
             try {
@@ -47,6 +48,37 @@ public class UploadFileService {
                 System.out.println("fail to upload : "+imgs.getOriginalFilename());
                 throw new RuntimeException(e);
             }
+        }
+
+        return response;
+    }
+
+    // 파일 업로드 1장
+    public String uploadImgFile(MultipartFile img){
+        String response="";
+
+        try {
+            String path = img.getOriginalFilename();
+            System.out.println("file path : "+path);
+            byte[] image = img.getBytes();
+            File file = new File(path);
+            OutputStream os = new FileOutputStream(file);
+            os.write(image);
+            String imgUrl = uploadcare.getUploadFileUrl(path);
+            os.close();
+            // 추가된 파일 삭제
+            if (file.exists()) {
+                if (file.delete()) {
+                    System.out.println("파일 삭제 성공");
+                } else {
+                    System.out.println("파일 삭제 실패");
+                }
+            }
+            response=imgUrl;
+        } catch (IOException | UploadFailureException e) {
+            response="fail";
+            System.out.println("fail to upload : "+img.getOriginalFilename());
+            throw new RuntimeException(e);
         }
 
         return response;

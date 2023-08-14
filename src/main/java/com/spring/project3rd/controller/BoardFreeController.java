@@ -69,7 +69,7 @@ public class BoardFreeController {
     @PostMapping(value = "upload/file", consumes = {"multipart/form-data"})
     public List<Response> uploadImgFile(@RequestParam("no") int boardNo, @RequestParam("img") List<MultipartFile> files){
         List<Response> responses = new ArrayList<>();
-        List<String> urls = uploadFileService.uploadImgFile(files);
+        List<String> urls = uploadFileService.uploadImgFiles(files);
         System.out.println(urls);
         if(urls!=null&&!urls.isEmpty()){
             // DB에 저장

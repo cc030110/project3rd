@@ -14,7 +14,7 @@ $(document).ready(function() {
         // 미리 보기 영역 초기화
         imgBox.empty();
 
-        if(files.length>1){
+        if(files.length>0){
             for(let i=0;i<files.length;i++){
                 let file = files[i];
                 let file_type = file.type;
