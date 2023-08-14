@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +27,16 @@ public class UploadFileService {
         List<String> response = new ArrayList<>();
         for(MultipartFile imgs : files){
             try {
-                String path = imgs.getOriginalFilename();
-                System.out.println("file path : "+path);
+                String fileName = imgs.getOriginalFilename();
+                System.out.println("인코딩 전 : "+fileName);
+                // 파일명을 UTF-8로 인코딩
+                String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+                System.out.println("인코딩 후 : "+encodedFileName);
                 byte[] image = imgs.getBytes();
-                File file = new File(path);
+                File file = new File(encodedFileName);
                 OutputStream os = new FileOutputStream(file);
                 os.write(image);
-                String imgUrl = uploadcare.getUploadFileUrl(path);
+                String imgUrl = uploadcare.getUploadFileUrl(encodedFileName);
                 os.close();
                 // 추가된 파일 삭제
                 if (file.exists()) {
