@@ -1,3 +1,4 @@
+
 function checkValue(htmlForm) {
     const id = htmlForm.id.value;
     const password = htmlForm.password.value;
@@ -10,17 +11,7 @@ function checkValue(htmlForm) {
     const liveCity = htmlForm.liveCity.value;
     const warningCount = htmlForm.warningCount.value;
     const isActive = htmlForm.isActive.value;
-    console.log(id);
-    console.log(password);
-    console.log(name);
-    console.log(gender);
-    console.log(age);
-    console.log(profileImg);
-    console.log(email);
-    console.log(liveCountry);
-    console.log(liveCity);
-    console.log(warningCount);
-    console.log(isActive);
+
 
 
     let check = true;

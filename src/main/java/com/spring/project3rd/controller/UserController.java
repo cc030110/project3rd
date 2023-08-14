@@ -1,20 +1,25 @@
 
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.boardFree.BoardFree;
+import com.spring.project3rd.domain.boardImg.BoardFreeImg;
 import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.domain.user.UserRequestDto;
 //import com.spring.project3rd.service.UserService;
+import com.spring.project3rd.service.UploadFileService;
 import com.spring.project3rd.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +33,7 @@ public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
+    private final UploadFileService uploadFileService;
 
 //    @PostMapping("login")
 //    public ResponseEntity<JwtToken> loginSuccess(@RequestBody Map<String, String> loginForm){
@@ -75,13 +81,15 @@ public class UserController {
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
     public Map join(@ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
+        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
+
         try {
             User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
                     () -> new IllegalArgumentException("ID 중복 확인")
             );
             response.put("join", "fail");
         } catch (Exception e) {
-            User newUser = new User(userRequestDto);
+            User newUser = new User(userRequestDto, url);
             userRepository.save(newUser);
             response.put("join", "success");
         }
@@ -90,11 +98,15 @@ public class UserController {
 
     /** 유저 1인 정보 불러오기(회원 수정에 쓸거)**/
     @GetMapping("{id}")
-    public User getUserById(@PathVariable String id){
-        User user = userRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 유저")
-        );
-        return user;
+    public ModelAndView showUser(@PathVariable String id){
+        ModelAndView view = new ModelAndView("user_myPage");
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElse(null);
+
+        view.addObject("user",user);
+
+        return view;
     }
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
@@ -109,9 +121,33 @@ public class UserController {
     }
 
     /** 회원 정보 수정 **/
+    @PutMapping("update")
+    public ModelAndView showUserinfo(WebRequest webRequest){
+
+        ModelAndView view = new ModelAndView();
+        String log = (String) webRequest.getAttribute("log",WebRequest.SCOPE_SESSION);
+        // 로그인 상태 확인
+        if(log!=null){ // 로그인 중
+            Optional<User> optionalUser = userRepository.findById(log);
+            User user = optionalUser.orElse(null);
+            if(user!=null){
+                view.setViewName("user_update");
+                view.addObject("user",user);
+            }else{
+                view.setViewName("login");
+            }
+        }else{
+            view.setViewName("login");
+        }
+
+        return view;
+    }
+
+
     @PutMapping(value = "{id}/update", consumes = {"multipart/form-data"})
     public Map update(WebRequest request, @PathVariable String id, @ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
+        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
 
         if(log != null){
@@ -119,7 +155,7 @@ public class UserController {
         }
         // 로그인 처리 후 수정할것
         userRequestDto.setId(log);
-        userService.updateUser(id, log, userRequestDto);
+        userService.updateUser(id, log, userRequestDto, url);
         response.put("user", "update");
         return response.toMap();
     }

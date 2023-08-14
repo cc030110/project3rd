@@ -30,7 +30,7 @@ public class User extends Timestamp {
     private Short isActive;
 
 
-    public User(UserRequestDto userRequestDto){
+    public User(UserRequestDto userRequestDto, String url){
         this.id = userRequestDto.getId();
         this.password = userRequestDto.getPassword();
         this.name = userRequestDto.getName();
@@ -38,6 +38,7 @@ public class User extends Timestamp {
         this.email = userRequestDto.getEmail();
         this.liveCountry = userRequestDto.getLiveCountry();
         this.liveCity=userRequestDto.getLiveCity();
+        this.profileImg = url;
         this.isActive = 1;
         this.warningCount = 0;
         if(userRequestDto.getGender()==null){
@@ -48,11 +49,11 @@ public class User extends Timestamp {
 
     }
 
-    public void update(UserRequestDto userRequestDto){
+    public void update(UserRequestDto userRequestDto, String url){
         this.password = userRequestDto.getPassword();
         this.gender = userRequestDto.getGender();
         this.age = userRequestDto.getAge();
-        this.profileImg = userRequestDto.getProfileImg();
+        this.profileImg = url;
         this.liveCountry = userRequestDto.getLiveCountry();
         this.liveCity = userRequestDto.getLiveCity();
         this.warningCount = userRequestDto.getWarningCount();
