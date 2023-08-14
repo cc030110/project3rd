@@ -54,7 +54,7 @@
 
         <input type="submit" value="Join" onclick="checkValue(form)">
     </form>
-    <script src="/script/userJoin.js"></script>
+    <script src="/script/user-join.js"></script>
     <c:import url="footer.jsp"/>
 
 </div>

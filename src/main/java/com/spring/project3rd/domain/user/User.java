@@ -1,18 +1,17 @@
 package com.spring.project3rd.domain.user;
 
 import com.spring.project3rd.util.Timestamp;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Table(name="user")
+@Setter
 @Entity
 @ToString
 public class User extends Timestamp {
@@ -59,7 +58,4 @@ public class User extends Timestamp {
         this.warningCount = userRequestDto.getWarningCount();
         this.isActive = userRequestDto.getIsActive();
     }
-
-
-
 }
