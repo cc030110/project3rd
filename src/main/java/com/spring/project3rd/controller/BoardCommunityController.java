@@ -3,6 +3,8 @@ package com.spring.project3rd.controller;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunity;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunityRepository;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunityRequestDto;
+import com.spring.project3rd.domain.boardFree.BoardFree;
+import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.service.BoardCommunityService;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +23,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("board/community")
-public class
-BoardCommunityController{
+public class BoardCommunityController{
 
     private final BoardCommunityRepository boardCommunityRepository;
     private final BoardCommunityService boardCommunityService;
@@ -73,7 +74,7 @@ BoardCommunityController{
     // # Create
     // 게시글 작성          <--- 추후 로그인 확인부분 넣을 것
 //    @ResponseBody <--- RestController : JSON Body 탐색 / Controller : JSP 파일 탐색
-    @PostMapping(value="/write", consumes={"multipart/form-data"})
+    /*@PostMapping(value="/write", consumes={"multipart/form-data"})
     public Response boardWrite(@ModelAttribute BoardCommunityRequestDto bcDto, WebRequest request){
         String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
 
@@ -86,7 +87,21 @@ BoardCommunityController{
         boardCommunityRepository.save(bc);
 
         return new Response("post", "success");
+    }*/
+
+    @PostMapping("/write")
+    public BoardCommunity boardWrite(@RequestBody BoardCommunityRequestDto bcDto){
+        System.out.println(bcDto);
+        BoardCommunity board = null;
+
+        if(bcDto.getId()!=null&&bcDto.getTitle()!=null&&bcDto.getContents()!=null){
+            board = new BoardCommunity(bcDto);
+            boardCommunityRepository.save(board);
+        }
+
+        return board;
     }
+
 
     // # Update
     // 게시글 수정
