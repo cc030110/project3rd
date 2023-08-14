@@ -29,7 +29,6 @@
                     <c:if test="${imgList ne null}">
                         <div class="img-box">
                             <c:forEach items="${imgList}" var="imgs" varStatus="vs">
-<%--                                <p>${vs.index} : ${imgs.img}</p>--%>
                                 <img src="${imgs.img}">
                             </c:forEach>
                         </div>

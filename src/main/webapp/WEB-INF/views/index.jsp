@@ -7,14 +7,12 @@
 
 <head>
     <title>GLOBALTIES</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="/css/reset.css">
 </head>
+<jsp:include page="header.jsp"></jsp:include>
 
 <body>
     <div class="wrap">
-        <c:import url="header.jsp"/>
+<%--        <c:import url="header.jsp"/>--%>
         <p>empty log : ${empty log}</p>
         <div class="main_con">
             <spring:message code="index.hello"/>
