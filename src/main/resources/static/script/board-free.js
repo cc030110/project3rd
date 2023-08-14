@@ -7,15 +7,6 @@ $(document).ready(function() {
             alert('최대 ' + max + '개까지 선택할 수 있습니다.');
             $(this).val(''); // 선택한 파일 초기화
         }
-
-        // let data=[];
-        // for (let i = 0; i < files.length; i++) {
-        //     console.log("File["+i+"]:"+files[i].name);
-        //     data.push({ key: i, value: files[i].name });
-        // }
-        //
-        // console.log(data);
-
     });
 });
 
@@ -46,6 +37,8 @@ function upload(){
             if(response===null){
                 alert("등록 실패");
             }else{
+                uploadImg(response.boardNo);
+                // uploadImg 실패 시 처리 어떻게?
                 alert("등록 성공");
                 window.location.href = "/board/free/"+response.boardNo;
             }
@@ -56,34 +49,40 @@ function upload(){
     }
 }
 
-// let fileInput = $('#file');
-// let files = fileInput.prop('files'); // FileList 객체
-// if(files.length!==0){
-//     uploadImg(response.boardNo);
-// }
+function uploadImg(boardNo){
+    let fileInput = $('#file');
+    let files = fileInput.prop('files'); // FileList 객체
+    // let data = [];
+    //
+    // for (let i = 0; i < files.length; i++) {
+    //     data.push({
+    //         "boardNo": boardNo,
+    //         "img": files[i]
+    //     });
+    // }
 
-// function uploadImg(boardNo){
-//     let fileInput = $('#file');
-//     let files = fileInput.prop('files'); // FileList 객체
-//     let data=[];
-//     data.push({"boardNo":boardNo});
-//     for (let i = 0; i < files.length; i++) {
-//         console.log("File["+i+"]:"+files[i].name);
-//         data.push({i:files[i].name});
-//     }
-//
-//     console.log(data);
-//
-//     $.ajax({
-//         type: 'POST',
-//         url: '/board/free/upload/file',
-//         data: JSON.stringify(data),
-//         contentType: 'application/json',
-//         // async:false
-//     }).done(function (response){
-//
-//     }).fail(function (){
-//         alert("파일 업로드 실패");
-//
-//     });
-// }
+    let formData = new FormData(); // FormData 객체 생성
+
+    for (let i = 0; i < files.length; i++) {
+        formData.append("boardNo", boardNo); // 추가 데이터 추가
+        formData.append("img", files[i]); // 파일 데이터 추가
+    }
+
+    console.log(data);
+
+    $.ajax({
+        type: 'POST',
+        url: '/board/free/upload/file',
+        // data: JSON.stringify(data),
+        // contentType: 'multipart/form-data',
+        data: formData, // FormData 객체를 바로 전송
+        contentType: false, // 필수: 파일 전송 시 false로 설정
+        processData: false, // 필수: FormData 사용 시 false로 설정
+    }).done(function (response){
+        console.log(response);
+
+    }).fail(function (){
+        alert("파일 업로드 실패");
+
+    });
+}

@@ -5,7 +5,10 @@ import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
 import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
 import com.spring.project3rd.domain.boardImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardImg.BoardFreeImgRepository;
+import com.spring.project3rd.domain.boardImg.BoardFreeImgRequestDto;
 import com.spring.project3rd.service.BoardFreeService;
+import com.spring.project3rd.util.Uploadcare;
+import com.uploadcare.upload.UploadFailureException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,6 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +31,9 @@ public class BoardFreeController {
 
     private final BoardFreeRepository boardFreeRepository;
     private final BoardFreeService boardFreeService;
+    private final Uploadcare uploadcare;
 
-    private final BoardFreeImgRepository imgRepository;
+    private final BoardFreeImgRepository boardFreeImgRepository;
 
     // 게시글 목록
     // 시작 페이지1, 검색어 없을 경우 ""
@@ -66,11 +73,25 @@ public class BoardFreeController {
 
 
     // 파일 업로드
-    @PostMapping("upload/file")
-    public String uploadImgFile(@ModelAttribute BoardFreeImg img){
+    @PostMapping(value = "upload/file", consumes = {"multipart/form-data"})
+    public BoardFreeImgRequestDto uploadImgFile(@ModelAttribute BoardFreeImgRequestDto file){
+        String fileName = file.getImg().getName();
+        System.out.println("fileName:"+fileName);
 
+//            try {
+//                String path = "test." + img.getImg().getContentType().split("/")[1];
+//                byte[] image = img.getImg().getBytes();
+//                File file = new File(path);
+//                OutputStream os = new FileOutputStream(file);
+//                os.write(image);
+//                imgUrl = uploadcare.getUploadFileUrl(path);
+//                // 디렉토리에 만들어진 파일 삭제처리 필요
+//                os.close();
+//            } catch (IOException | UploadFailureException e) {
+//                throw new RuntimeException(e);
+//            }
 
-        return "";
+        return file;
     }
 
 
@@ -86,7 +107,7 @@ public class BoardFreeController {
 
         if(board!=null){
             int boardNo = board.getBoardNo();
-            List<BoardFreeImg> imgList = imgRepository.findByBoardNo(boardNo);
+            List<BoardFreeImg> imgList = boardFreeImgRepository.findByBoardNo(boardNo);
             // 해당 게시글에 업로드된 파일이 존재할 경우
             if(!imgList.isEmpty()){
                 view.addObject("imgList",imgList);

@@ -2,6 +2,7 @@ package com.spring.project3rd.domain.boardImg;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -15,5 +16,11 @@ public class BoardFreeImg {
     private int fileNo;
     private int boardNo;
     private String img;
+
+    public BoardFreeImg(int boardNo,String url){
+        this.boardNo=boardNo;
+        this.img=url;
+    }
+
 
 }

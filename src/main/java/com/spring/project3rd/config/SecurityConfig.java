@@ -1,23 +1,23 @@
-package com.spring.project3rd.config;
-
-
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
-
-// 기본적인 보안 시작
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http
-                .authorizeRequests()
-                .antMatchers("api/hello").permitAll()
-                .anyRequest().authenticated();
-    }
-
-
-}
+//package com.spring.project3rd.config;
+//
+//
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.builders.WebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+//
+//
+//// 기본적인 보안 시작
+//@EnableWebSecurity
+//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception{
+//        http
+//                .authorizeRequests()
+//                .antMatchers("api/hello").permitAll()
+//                .anyRequest().authenticated();
+//    }
+//
+//
+//}
