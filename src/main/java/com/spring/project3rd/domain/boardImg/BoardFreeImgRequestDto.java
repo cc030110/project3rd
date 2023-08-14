@@ -1,6 +1,5 @@
 package com.spring.project3rd.domain.boardImg;
 
-import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

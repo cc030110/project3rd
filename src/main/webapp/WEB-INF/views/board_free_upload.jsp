@@ -18,7 +18,7 @@
                 <div class="img-box">
 
                 </div>
-                <input type="button" value="작성" id="submit-bnt" onclick="upload()">
+                <input type="button" value="작성" id="submit-bnt" onclick="uploadBoard()">
             </form>
         </div>
     </div>

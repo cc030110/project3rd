@@ -5,20 +5,17 @@ import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
 import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
 import com.spring.project3rd.domain.boardImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardImg.BoardFreeImgRepository;
-import com.spring.project3rd.domain.boardImg.BoardFreeImgRequestDto;
+import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.service.BoardFreeService;
-import com.spring.project3rd.util.Uploadcare;
-import com.uploadcare.upload.UploadFailureException;
+import com.spring.project3rd.service.UploadFileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +28,9 @@ public class BoardFreeController {
 
     private final BoardFreeRepository boardFreeRepository;
     private final BoardFreeService boardFreeService;
-    private final Uploadcare uploadcare;
-
     private final BoardFreeImgRepository boardFreeImgRepository;
+    private final UploadFileService uploadFileService;
+
 
     // 게시글 목록
     // 시작 페이지1, 검색어 없을 경우 ""
@@ -54,8 +51,6 @@ public class BoardFreeController {
         return view;
     }
 
-
-
     // 게시글 업로드
     @PostMapping("upload")
     public BoardFree upload(@RequestBody BoardFreeRequestDto boardDto){
@@ -70,30 +65,31 @@ public class BoardFreeController {
         return board;
     }
 
-
-
-    // 파일 업로드
+    // 게시글 이미지 업로드
     @PostMapping(value = "upload/file", consumes = {"multipart/form-data"})
-    public BoardFreeImgRequestDto uploadImgFile(@ModelAttribute BoardFreeImgRequestDto file){
-        String fileName = file.getImg().getName();
-        System.out.println("fileName:"+fileName);
-
-//            try {
-//                String path = "test." + img.getImg().getContentType().split("/")[1];
-//                byte[] image = img.getImg().getBytes();
-//                File file = new File(path);
-//                OutputStream os = new FileOutputStream(file);
-//                os.write(image);
-//                imgUrl = uploadcare.getUploadFileUrl(path);
-//                // 디렉토리에 만들어진 파일 삭제처리 필요
-//                os.close();
-//            } catch (IOException | UploadFailureException e) {
-//                throw new RuntimeException(e);
-//            }
-
-        return file;
+    public List<Response> uploadImgFile(@RequestParam("no") int boardNo, @RequestParam("img") List<MultipartFile> files){
+        List<Response> responses = new ArrayList<>();
+        List<String> urls = uploadFileService.uploadImgFile(files);
+        System.out.println(urls);
+        if(urls!=null&&!urls.isEmpty()){
+            // DB에 저장
+            for(String url : urls){
+                BoardFreeImg img = new BoardFreeImg(boardNo,url);
+                boardFreeImgRepository.save(img);
+                responses.add(new Response(url,"success"));
+            }
+        }else{
+            responses.add(new Response("urls are null","fail"));
+        }
+        return responses;
     }
 
+    // 게시글 삭제
+    @DeleteMapping("delete/{no}")
+    public ResponseEntity<String> deleteBoard(@PathVariable("no") int no){
+        boardFreeService.deleteBoard(no);
+        return ResponseEntity.ok("게시글 삭제 성공");
+    }
 
     // 게시글 하나 확인
     @GetMapping("{no}")

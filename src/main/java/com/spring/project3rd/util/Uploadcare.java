@@ -21,12 +21,13 @@ public class Uploadcare {
         String publicKey = env.getProperty("uploadcare.secret.keys.public-key");
         String secretKey = env.getProperty("uploadcare.secret.keys.secret-key");
 
-        System.out.println("publicKey : " + publicKey);
-        System.out.println("secretKey : " + secretKey);
+//        System.out.println("publicKey : " + publicKey);
+//        System.out.println("secretKey : " + secretKey);
 
         Client client = new Client(publicKey, secretKey);
 
-        System.out.println("LOCAL_FILE_NAME : " + LOCAL_FILE_NAME);
+//        System.out.println("LOCAL_FILE_NAME : " + LOCAL_FILE_NAME);
+
         java.io.File localFile = new java.io.File(LOCAL_FILE_NAME);
 
 //        java.io.File localFile = new java.io.File(Optional.ofNullable(getClass().getClassLoader()

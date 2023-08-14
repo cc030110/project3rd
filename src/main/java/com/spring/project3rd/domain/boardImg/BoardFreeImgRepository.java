@@ -8,4 +8,5 @@ public interface BoardFreeImgRepository extends JpaRepository<BoardFreeImg,Integ
 
     public List<BoardFreeImg> findByBoardNo(int boardNo);
 
+
 }
