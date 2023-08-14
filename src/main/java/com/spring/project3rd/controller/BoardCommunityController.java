@@ -15,12 +15,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //@Controller
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/board/community")
-public class BoardCommunityController{
+@RequestMapping("board/community")
+public class
+BoardCommunityController{
 
     private final BoardCommunityRepository boardCommunityRepository;
     private final BoardCommunityService boardCommunityService;
@@ -36,11 +38,11 @@ public class BoardCommunityController{
 
     // # Read
     // 커뮤니티 게시판 전체 조회
-    @GetMapping("list/{page}")
+    @GetMapping("/main/{page}")
     public ModelAndView showList(@PathVariable("page") int page,
                                  @RequestParam(defaultValue = "") String keyword,
                                  @PageableDefault(size = 5) Pageable pageable){
-        ModelAndView view = new ModelAndView("board_community");
+        ModelAndView view = new ModelAndView("board_community_main");
         List<BoardCommunity> list=new ArrayList<>();
         if(!keyword.isEmpty()){
             list = boardCommunityRepository.findByTitleContaining(keyword, pageable.withPage(page-1));
@@ -54,11 +56,24 @@ public class BoardCommunityController{
         return view;
     }
 
+    // 커뮤니티 게시판 게시글 한개 조회
+    @GetMapping("/{boardNum}")
+    public ModelAndView showBoard(@PathVariable int boardNum){
+        ModelAndView view = new ModelAndView("board_community");
+
+        Optional<BoardCommunity> optionalBoard = boardCommunityRepository.findById(boardNum);
+        BoardCommunity board = optionalBoard.orElse(null);
+
+        view.addObject("board",board);
+
+        // 파일처리 부분 추가필요
+        return view;
+    }
 
     // # Create
     // 게시글 작성          <--- 추후 로그인 확인부분 넣을 것
 //    @ResponseBody <--- RestController : JSON Body 탐색 / Controller : JSP 파일 탐색
-    @PostMapping(value="write", consumes={"multipart/form-data"})
+    @PostMapping(value="/write", consumes={"multipart/form-data"})
     public Response boardWrite(@ModelAttribute BoardCommunityRequestDto bcDto, WebRequest request){
         String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
 
@@ -75,7 +90,7 @@ public class BoardCommunityController{
 
     // # Update
     // 게시글 수정
-    @PutMapping(value="/{boardNo}/update", consumes={"multipart/form-data"})
+    @PutMapping(value="/update/{boardNo}", consumes={"multipart/form-data"})
     public Response boardUpdate(@PathVariable int boardNo, @ModelAttribute BoardCommunityRequestDto bcDto, WebRequest request){
         String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
         short modifyCheck=1;
@@ -93,7 +108,7 @@ public class BoardCommunityController{
 
     // # Delete
     // 게시글 삭제
-    @DeleteMapping(value="/{boardNo}/delete")
+    @DeleteMapping(value="/delete/{boardNo}")
     public Response deleteBoard(@PathVariable int boardNo, WebRequest request){
         String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
 

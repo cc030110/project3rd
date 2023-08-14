@@ -1,8 +1,10 @@
+
 package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.domain.user.UserRequestDto;
+//import com.spring.project3rd.service.UserService;
 import com.spring.project3rd.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
@@ -33,13 +35,13 @@ public class UserController {
 //        return ResponseEntity.ok(token);
 //    }
 
-//    @SessionScope
-//    @PostMapping("login")
-//    public ModelAndView login(@RequestBody User user) {
-//        ModelAndView modelAndView = new ModelAndView("index");
-//        modelAndView.addObject("log", user.getId());
-//        return modelAndView;
-//    }
+    /*@SessionScope
+    @PostMapping("login")
+    public ModelAndView login(@RequestBody User user) {
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("log", user.getId());
+        return modelAndView;
+    }*/
 
     @SessionScope
     @PostMapping("login")
@@ -59,6 +61,7 @@ public class UserController {
         return ResponseEntity.ok(resultMsg);
     }
 
+    /*
     @PostMapping("logout")
     public String logout(WebRequest request, SessionStatus status){
         // 우선 호출 후,
@@ -152,4 +155,5 @@ public class UserController {
 
 
 }
+
 

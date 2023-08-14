@@ -17,45 +17,58 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main_con">
-        <ul>
-            <li>
-                <label for="platform">플랫폼</label>
-                <select name="platform" id="platform">
+        <form>
+            <ul>
+                <li>
+                    <label for="platform">플랫폼</label>
+                    <select name="platform" id="platform">
+                        <option value="platform">Discord</option>
+                    </select>
+                </li>
 
-                </select>
-            </li>
+                <li>
+                    <label for="title">
+                        <spring:message code="board_community_upload.title"/>
+                    </label>
+                    <input type="text" id="title" name="title">
+                </li>
 
-            <li>
-                <label for="title">
-                    <spring:message code="board_community_upload.title"/>
-                </label>
-                <input type="text" id="title" name="title">
-            </li>
+                <li>
+                    <label for="creator">작성자</label>
+                    <%--                <p id="creator" name="creator">${sessionScope.log}</p>--%>
+                    <input type="text" id="creator" name="creator" value="${sessionScope.log}" readonly>
+                </li>
 
-            <li>
-                <label for="content">
-                    <spring:message code="board_community_upload.content"/>
-                </label>
-                <textarea id="content" name="content"></textarea>
-            </li>
+                <li>
+                    <label for="contents">
+                        <spring:message code="board_community_upload.content"/>
+                    </label>
+                    <textarea id="contents" name="contents"></textarea>
+                </li>
 
-            <li>
-                <label for="participants">
-                    <spring:message code="board_community_upload.participants"/>
-                </label>
-                <input type="text" id="participants" name="participants">
-            </li>
+                <li>
+                    <label for="participants">
+                        <spring:message code="board_community_upload.participants"/>
+                    </label>
+                    <input type="text" id="participants" name="participants">
+                </li>
 
-            <li>
-                <label for="deadline">
-                    <spring:message code="board_community_upload.deadline"/>
-                </label>
-                <input type="date" id="deadline" name="deadline"/>
-            </li>
+                <li>
+                    <label for="deadline">
+                        <spring:message code="board_community_upload.deadline"/>
+                    </label>
+                    <input type="date" id="deadline" name="deadline"/>
+                </li>
 
-        </ul>
+                <li>
+                    <input type="button" value="등록" id="submit_btn" onclick="write()">
+                </li>
+
+            </ul>
+        </form>
     </div>
     <c:import url="footer.jsp"/>
 </div>
+<script src="/script/board-community.js"></script>
 </body>
 </html>
