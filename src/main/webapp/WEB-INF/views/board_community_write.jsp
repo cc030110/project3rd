@@ -89,6 +89,15 @@
                 </li>
 
                 <li>
+                    <label for="file">첨부파일</label>
+                    <input type="file" id="file" name="file" accept="image/png, image/jpg, image/jpeg, image.gif" multiple>
+
+                    <div class="img_box">
+
+                    </div>
+                </li>
+
+                <li>
                     <input type="button" value="등록" id="btn">
                 </li>
 
