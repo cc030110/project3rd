@@ -1,4 +1,4 @@
-package com.spring.project3rd.domain.boardImg;
+package com.spring.project3rd.domain.boardCommunityImg;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardFreeImgRequestDto {
+public class BoardCommunityImgRequestDto {
     private int fileNo;
     private int boardNo;
-//    private String img;
     private MultipartFile img;
-
 }

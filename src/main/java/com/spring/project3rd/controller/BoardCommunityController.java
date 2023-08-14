@@ -3,16 +3,20 @@ package com.spring.project3rd.controller;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunity;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunityRepository;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunityRequestDto;
-import com.spring.project3rd.domain.boardFree.BoardFree;
-import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
+import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImg;
+import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImgRepository;
+import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
+import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.service.BoardCommunityService;
+import com.spring.project3rd.service.UploadFileService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -27,6 +31,8 @@ public class BoardCommunityController{
 
     private final BoardCommunityRepository boardCommunityRepository;
     private final BoardCommunityService boardCommunityService;
+    private final BoardCommunityImgRepository boardCommunityImgRepository;
+    private final UploadFileService uploadFileService;
 
     // 게시글 번호로 게시글 가져오기
     public BoardCommunity getBoardByBoardNo(int boardNo){
@@ -48,7 +54,7 @@ public class BoardCommunityController{
         if(!keyword.isEmpty()){
             list = boardCommunityRepository.findByTitleContaining(keyword, pageable.withPage(page-1));
         }else{
-            list=boardCommunityRepository.findAll(pageable.withPage(page-1)).getContent();
+            list = boardCommunityRepository.findAll(pageable.withPage(page-1)).getContent();
         }
 
         // 가져온 리스트를 view에 저장
@@ -67,28 +73,20 @@ public class BoardCommunityController{
 
         view.addObject("board",board);
 
-        // 파일처리 부분 추가필요
+        if(board!=null){
+            int boardNo = board.getBoardNo();
+            List<BoardCommunityImg> imgList = boardCommunityImgRepository.findByBoardNo(boardNo);
+            // 해당 게시글에 업로드된 파일이 존재할 경우
+            if(!imgList.isEmpty()){
+                view.addObject("imgList",imgList);
+            }
+        }
+
         return view;
     }
 
     // # Create
-    // 게시글 작성          <--- 추후 로그인 확인부분 넣을 것
-//    @ResponseBody <--- RestController : JSON Body 탐색 / Controller : JSP 파일 탐색
-    /*@PostMapping(value="/write", consumes={"multipart/form-data"})
-    public Response boardWrite(@ModelAttribute BoardCommunityRequestDto bcDto, WebRequest request){
-        String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
-
-        if(log==null){
-            return new Response("post","fail");
-        }
-
-        bcDto.setId(log);
-        BoardCommunity bc=new BoardCommunity(bcDto);
-        boardCommunityRepository.save(bc);
-
-        return new Response("post", "success");
-    }*/
-
+    // 게시글 작성
     @PostMapping("/write")
     public BoardCommunity boardWrite(@RequestBody BoardCommunityRequestDto bcDto){
         System.out.println(bcDto);
@@ -98,10 +96,28 @@ public class BoardCommunityController{
             board = new BoardCommunity(bcDto);
             boardCommunityRepository.save(board);
         }
-
         return board;
     }
 
+    // 게시글 이미지 첨부
+    @PostMapping(value="write/file", consumes={"multipart/form-data"})
+    public List<Response> uploadImgFile(@RequestParam("boardNo") int boardNo, @RequestParam("img") List<MultipartFile> files){
+        List<Response> responses = new ArrayList<>();
+        List<String> urls=uploadFileService.uploadImgFiles(files);
+        System.out.println(urls);
+
+        if(urls!=null && !urls.isEmpty()){
+            // DB 저장
+            for(String url : urls){
+                BoardCommunityImg img = new BoardCommunityImg(boardNo,url);
+                boardCommunityImgRepository.save(img);
+                responses.add(new Response(url,"success"));
+            }
+        }else{
+            responses.add(new Response("urls are null","fail"));
+        }
+        return responses;
+    }
 
     // # Update
     // 게시글 수정
@@ -141,3 +157,26 @@ public class BoardCommunityController{
         return new Response("delete","success");
     }
 }
+
+
+
+
+
+
+// 이전 버전
+// 게시글 작성          <--- 추후 로그인 확인부분 넣을 것
+//    @ResponseBody <--- RestController : JSON Body 탐색 / Controller : JSP 파일 탐색
+    /*@PostMapping(value="/write", consumes={"multipart/form-data"})
+    public Response boardWrite(@ModelAttribute BoardCommunityRequestDto bcDto, WebRequest request){
+        String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
+
+        if(log==null){
+            return new Response("post","fail");
+        }
+
+        bcDto.setId(log);
+        BoardCommunity bc=new BoardCommunity(bcDto);
+        boardCommunityRepository.save(bc);
+
+        return new Response("post", "success");
+    }*/

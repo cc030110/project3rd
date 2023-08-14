@@ -1,8 +1,7 @@
-package com.spring.project3rd.domain.boardImg;
+package com.spring.project3rd.domain.boardFreeImg;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -21,6 +20,4 @@ public class BoardFreeImg {
         this.boardNo=boardNo;
         this.img=url;
     }
-
-
 }

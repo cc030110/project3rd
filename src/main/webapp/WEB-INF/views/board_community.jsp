@@ -55,6 +55,14 @@
                     <p>작성일 : ${board.createdAt}</p>
                 </li>
 
+                <c:if test="${imgList ne null}">
+                    <div class="img-box">
+                        <c:forEach items="${imgList}" var="imgs" varStatus="vs">
+                            <img src="${imgs.img}">
+                        </c:forEach>
+                    </div>
+                </c:if>
+
             </ul>
 
             <div>
