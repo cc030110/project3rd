@@ -1,3 +1,4 @@
+/*
 package com.spring.project3rd.config;
 
 import com.spring.project3rd.config.jwt.JwtAuthenticationFilter;
@@ -43,3 +44,4 @@ public class SecurityConfig {
     }
 
 }
+*/

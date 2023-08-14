@@ -1,3 +1,4 @@
+/*
 package com.spring.project3rd.config.jwt;
 
 import lombok.AllArgsConstructor;
@@ -13,3 +14,4 @@ public class JwtToken {
     private String accessToken;
     private String refreshToken;
 }
+*/

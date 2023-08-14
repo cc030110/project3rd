@@ -1,26 +1,27 @@
+/*
 package com.spring.project3rd.service;
 
-import com.spring.project3rd.config.jwt.JwtToken;
-import com.spring.project3rd.config.jwt.JwtTokenProvider;
+//import com.spring.project3rd.config.jwt.JwtToken;
+//import com.spring.project3rd.config.jwt.JwtTokenProvider;
 import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.domain.user.UserRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+//import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.transaction.Transactional;
 
 @Service
 public class UserService {
 
-    private final BCryptPasswordEncoder encoder;
+//    private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final JwtTokenProvider jwtTokenProvider;
+//    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+//    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
     public void updateUser(String id, String log, UserRequestDto userRequestDto) {
@@ -55,3 +56,4 @@ public class UserService {
     }
 }
 
+*/

@@ -16,9 +16,53 @@
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
-    <div>
-        <spring:message code="board_community.board"/>
-    </div>
+    <c:choose>
+        <c:when test="${board eq null}">
+            <p>존재하지 않는 게시글입니다.</p>
+        </c:when>
+
+        <c:otherwise>
+            <ul>
+                <li>
+                    <p>게시글 번호 : ${board.boardNo}</p>
+                </li>
+
+                <li>
+                    <p>플랫폼 : ${board.platformName}</p>
+                </li>
+
+                <li>
+                    <p>제목 : ${board.title}</p>
+                </li>
+
+                <li>
+                    <p>작성자 : ${board.id}</p>
+                </li>
+
+                <li>
+                    <p>내용 : ${board.contents}</p>
+                </li>
+
+                <li>
+                    <p>참가자 수 : ${board.participantsNum}</p>
+                </li>
+
+                <li>
+                    <p>마감일 : ${board.deadline}</p>
+                </li>
+
+                <li>
+                    <p>작성일 : ${board.createdAt}</p>
+                </li>
+
+            </ul>
+
+            <div>
+                <spring:message code="board_community.board"/>
+            </div>
+        </c:otherwise>
+    </c:choose>
+
     <c:import url="footer.jsp"/>
 </div>
 </body>

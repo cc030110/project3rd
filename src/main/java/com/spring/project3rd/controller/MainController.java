@@ -20,25 +20,24 @@ public class MainController {
         return "login";
     }
 
-
-
-
     // 회원가입
     @GetMapping("api/user/join")
     public String showJoinForm() {
         return "user_join";
     }
 
-    // 커뮤니티 게시판 메인 : 추후 수정 혹은 삭제 : 인규
-    @GetMapping("/board/community")
-    public String boardCommunity(){
-        return "board_community";
-    }
-
     // 커뮤니티 게시판 - 게시글 작성
     @GetMapping("/board/community/write")
-    public String boardCommunityWrite(){
-        return "board_community_write";
+    public String boardCommunityWrite(WebRequest request){
+        // 세션에 있는 로그인 정보 가져오기
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        System.out.println("log" + log);
+        // 로그인 확인
+        if(log!=null){
+            return "board_community_write";
+        }
+
+        return "login";
     }
 
     // 자유게시판 - 게시글 업로드
