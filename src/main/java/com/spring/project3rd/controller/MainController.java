@@ -22,9 +22,10 @@ public class MainController {
 
     // 회원가입
     @GetMapping("api/user/join")
-    public String showJoinForm() {
+    public String JoinForm() {
         return "user_join";
     }
+
 
     // 유저 리스트(프로필 게시판)
     @GetMapping("api/user/list")

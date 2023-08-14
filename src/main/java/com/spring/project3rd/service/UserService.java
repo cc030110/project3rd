@@ -14,11 +14,11 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void updateUser(String id, String log, UserRequestDto userRequestDto) {
+    public void updateUser(String id, String log, UserRequestDto userRequestDto, String url) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 사용자")
         );
-        user.update(userRequestDto);
+        user.update(userRequestDto, url);
     }
     @Transactional
     public void deleteUser(String id){
