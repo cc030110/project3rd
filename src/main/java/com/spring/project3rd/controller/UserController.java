@@ -5,25 +5,28 @@ import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.domain.user.UserRequestDto;
 //import com.spring.project3rd.service.UserService;
+import com.spring.project3rd.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/user")
-// 세션 로그인
 @SessionAttributes({"log"})
 public class UserController {
 
-//    private final UserService userService;
+    private final UserService userService;
     private final UserRepository userRepository;
 
 //    @PostMapping("login")
@@ -68,7 +71,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    // 회원 가입
+    /** 회원 가입 **/
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
     public Map join(@ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
@@ -92,7 +95,7 @@ public class UserController {
         return response.toMap();
     }
 
-    // 유저 1인 정보 불러오기(회원 수정에 쓸거)
+    /** 유저 1인 정보 불러오기(회원 수정에 쓸거)**/
     @GetMapping("{id}")
     public User getUserById(@PathVariable String id){
         User user = userRepository.findById(id).orElseThrow(
@@ -101,22 +104,34 @@ public class UserController {
         return user;
     }
 
-    // 회원 정보 수정
+    /**유저 10인 정보 불러오기(프로필 게시판)**/
+    @GetMapping("list/{pageNumber}")
+    public List<User> getUserAll(@PathVariable() int pageNumber, @RequestParam(required = false) String keyword, @PageableDefault(size = 10) Pageable pageable){
+        if(keyword != null && !keyword.equals("")) {
+            String pattern = "%" + keyword + "%";
+            return userRepository.findAllByIdLike(pattern, pageable.withPage(pageNumber-1));
+        } else {
+            return userRepository.findAll(pageable.withPage(pageNumber-1)).getContent();
+        }
+    }
+
+    /** 회원 정보 수정 **/
     @PutMapping(value = "{id}/update", consumes = {"multipart/form-data"})
     public Map update(WebRequest request, @PathVariable String id, @ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
 
         if(log != null){
-            response.put("user", "update");
             return null;
         }
         // 로그인 처리 후 수정할것
-
+        userRequestDto.setId(log);
+        userService.updateUser(id, log, userRequestDto);
+        response.put("user", "update");
         return response.toMap();
     }
 
-    // 회원 탈퇴
+    /** 회원 탈퇴 **/
     @DeleteMapping("{id}/delete")
     public Map delete(WebRequest request, @PathVariable String id, UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
@@ -137,7 +152,7 @@ public class UserController {
 
         return response.toMap();
     }
-*/
+
 
 }
 

@@ -25,8 +25,12 @@
                     <p>제목 : ${board.title}</p>
                     <p>내용 : ${board.contents}</p>
                     <p>작성일 : ${board.createdAt}</p>
-                    <c:if test="${imgList != null}">
-
+                    <c:if test="${imgList ne null}">
+                        <div class="img-box">
+                            <c:forEach items="${imgList}" var="imgs" varStatus="vs">
+                                <p>${vs.index} : ${imgs.img}</p>
+                            </c:forEach>
+                        </div>
                     </c:if>
                 </c:otherwise>
             </c:choose>
