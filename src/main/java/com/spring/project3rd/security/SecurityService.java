@@ -17,7 +17,7 @@ public class SecurityService {
     // 로그인 서비스 던질때 같이
     public String createToken(String subject, long expTime) {
         if (expTime <= 0) {
-            throw new RuntimeException("만료시간이 0보다 커야함~");
+            throw new RuntimeException("만료시간이 0보다 작음");
         }
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 

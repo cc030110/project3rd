@@ -79,16 +79,9 @@ public class UserController {
             User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
                     () -> new IllegalArgumentException("ID 중복 확인")
             );
-//            user = userRepository.findById(userRequestDto.getId()).orElseThrow(
-//                    () -> new IllegalArgumentException("ID 중복 확인")
-//            );
-//            user = userRepository.findById(userRequestDto.getId()).orElseThrow(
-//                    () -> new IllegalArgumentException("ID 중복 확인")
-//            );
             response.put("join", "fail");
         } catch (Exception e) {
             User newUser = new User(userRequestDto);
-            System.out.println(newUser.getGender());
             userRepository.save(newUser);
             response.put("join", "success");
         }
