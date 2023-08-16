@@ -29,7 +29,6 @@ import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("user")
-@SessionAttributes({"log"})
 public class UserController {
 
     private final UserService userService;
@@ -75,6 +74,22 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
+    // 로그아웃
+    @DeleteMapping("/logout")
+    public ResponseEntity logout(HttpServletResponse response) {
+        // 만료된 쿠키를 생성하여 현재 시간보다 이전으로 설정
+        Cookie expiredAccessTokenCookie = new Cookie("accessToken", "");
+        expiredAccessTokenCookie.setMaxAge(0); // 쿠키 기한을 0으로 설정
+        expiredAccessTokenCookie.setPath("/");
+
+        // 응답에 만료된 쿠키 추가
+        response.addCookie(expiredAccessTokenCookie);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
     /** 회원 가입 **/
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
     public Map join(@ModelAttribute UserRequestDto userRequestDto){
@@ -103,9 +118,9 @@ public class UserController {
         Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
         String id = claims.get("id", String.class);
         String name = claims.get("name", String.class);
-
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
+
         if(user!=null){
             UserResponseDto userResponseDto = new UserResponseDto(user);
             view.addObject("user",userResponseDto);
@@ -113,11 +128,10 @@ public class UserController {
             return view;
         }
         return null;
-
     }
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
-    @GetMapping("list/{pageNumber}")
+    @GetMapping("/list/{pageNumber}")
     public List<User> getUserAll(@PathVariable() int pageNumber, @RequestParam(required = false) String keyword, @PageableDefault(size = 10) Pageable pageable){
         if(keyword != null && !keyword.equals("")) {
             String pattern = "%" + keyword + "%";
@@ -128,39 +142,39 @@ public class UserController {
     }
 
     /** 회원 정보 수정 **/
-    @PutMapping("update")
-    public ModelAndView showUserinfo(WebRequest webRequest){
+    @PutMapping(value = "update", consumes = {"multipart/form-data"})
+    public Map update(@CookieValue(value = "accessToken", required = false) String accessToken, @ModelAttribute UserRequestDto userRequestDto){
+        JSONObject response = new JSONObject();
+        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
+        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+        String id = claims.get("id", String.class);
+        String name = claims.get("name", String.class);
 
-        ModelAndView view = new ModelAndView();
-        String log = (String) webRequest.getAttribute("log",WebRequest.SCOPE_SESSION);
-        // 로그인 상태 확인
-        if(log!=null){ // 로그인 중
-            Optional<User> optionalUser = userRepository.findById(log);
+        if(id != null){
+            Optional<User> optionalUser = userRepository.findById(id);
             User user = optionalUser.orElse(null);
-            if(user!=null){
-                view.setViewName("user_update");
-                view.addObject("user",user);
-            }else{
-                view.setViewName("login");
-            }
-        }else{
-            view.setViewName("login");
+            userRequestDto.setId(id);
+            userService.updateUser(id, name, userRequestDto, url);
+            response.put("user", "update");
+            return response.toMap();
         }
-
-        return view;
+        return null;
     }
 
+
     /** 회원 탈퇴 **/
-    @DeleteMapping("{id}/delete")
-    public Map delete(WebRequest request, @PathVariable String id, UserRequestDto userRequestDto){
+    @DeleteMapping("/delete")
+    public Map delete(@CookieValue(value = "accessToken", required = false) String accessToken, UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
 
-        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        User user = userRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 유저")
-        );
-        System.out.println(log);
-        if(log != null )
+        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+        String id = claims.get("id", String.class);
+        String name = claims.get("name", String.class);
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElse(null);
+
+        if(id.equals(user.getId()))
         //&& log.equals(user.getId())
         {
             userService.deleteUser(id);

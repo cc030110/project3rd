@@ -15,6 +15,7 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
     <form>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <label for="id">ID:</label>
         <input type="text" id="id" name="id" value="${user.id}" readonly><br>
 
