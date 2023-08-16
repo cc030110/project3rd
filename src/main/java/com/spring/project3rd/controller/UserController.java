@@ -2,7 +2,6 @@
 package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.user.*;
-//import com.spring.project3rd.service.UserService;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.UploadFileService;
 import com.spring.project3rd.service.UserService;
@@ -12,12 +11,9 @@ import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -78,7 +74,6 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-    
 
     /** 회원 가입 **/
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
@@ -194,7 +189,4 @@ public class UserController {
         return response.toMap();
     }
 
-
 }
-
-

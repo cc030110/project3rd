@@ -14,15 +14,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -44,34 +41,6 @@ public class BoardFreeController {
         ModelAndView view = new ModelAndView("board_free_list");
 
         return view;
-    }
-
-    
-    // 토큰 확인용
-    @GetMapping("token")
-    public String showToken(@RequestHeader HttpHeaders headers){
-
-        //        String accessToken = headers.getFirst("Authorization");
-
-        String accessToken = String.valueOf(headers.get("Authorization"));
-//        List<String> authorizationHeaders = headers.get("Authorization");
-//        String accessToken = "";
-//        if(authorizationHeaders!=null){
-//            accessToken = authorizationHeaders.get(0);
-//        }
-        System.out.println("getToken: "+accessToken);
-        if (accessToken.startsWith("Bearer ")) {
-            accessToken = accessToken.substring(7); // substring(7) -> 'Bearer ' 제외
-            System.out.println("accessToken: "+accessToken);
-            // accessToken에서 정보 조회
-            Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-            String name = claims.get("name", String.class);
-            System.out.println(name);
-        }else {
-            accessToken = "no access token";
-        }
-
-        return accessToken;
     }
 
     // 게시글 업로드
@@ -137,8 +106,5 @@ public class BoardFreeController {
 
         return view;
     }
-
-
-
 
 }
