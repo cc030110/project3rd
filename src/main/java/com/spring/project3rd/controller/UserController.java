@@ -36,37 +36,6 @@ public class UserController {
     private final UploadFileService uploadFileService;
     private final JwtTokenizer jwtTokenizer;
 
-//    @PostMapping("login")
-//    public ResponseEntity<JwtToken> loginSuccess(@RequestBody Map<String, String> loginForm){
-//        JwtToken token = userService.login(loginForm.get("id"), loginForm.get("password"));
-//        return ResponseEntity.ok(token);
-//    }
-
-    /*@SessionScope
-    @PostMapping("login")
-    public ModelAndView login(@RequestBody User user) {
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("log", user.getId());
-        return modelAndView;
-    }*/
-
-//    @SessionScope
-//    @PostMapping("login")
-//    public ResponseEntity<String> login(WebRequest request, @RequestBody User requestUser) {
-//        String resultMsg = "";
-//
-//        Optional<User> optionalUser = userRepository.findById(requestUser.getId());
-//        // 해당 값이 없으면 null
-//        User user = optionalUser.orElse(null);
-//
-//        if(user!=null&&user.getPassword().equals(requestUser.getPassword())){
-//            request.setAttribute("log",user.getId(), WebRequest.SCOPE_SESSION);
-//            resultMsg = "success";
-//        }else{
-//            resultMsg = "fail";
-//        }
-//        return ResponseEntity.ok(resultMsg);
-//    }
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto) {
 
@@ -80,7 +49,6 @@ public class UserController {
         User user = optionalUser.orElse(null);
 
         if(user!=null&&user.getPassword().equals(loginDto.getPassword())){
-            List<String> roles = List.of("ROLE_USER");
             String name = user.getName();
             String accessToken = jwtTokenizer.createAccessToken(id, name);
             String refreshToken = jwtTokenizer.createRefreshToken(id, name);
@@ -101,16 +69,7 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
-
-    /*
-    @PostMapping("logout")
-    public String logout(WebRequest request, SessionStatus status){
-        // 우선 호출 후,
-        status.setComplete();
-        // 세션 속성을 수정
-        request.removeAttribute("log", WebRequest.SCOPE_SESSION);
-        return "redirect:/";
-    }
+    
 
     /** 회원 가입 **/
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
@@ -122,6 +81,7 @@ public class UserController {
             User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
                     () -> new IllegalArgumentException("ID 중복 확인")
             );
+            // admin table의 id도 사용 불가능 <- 확인 필요
             response.put("join", "fail");
         } catch (Exception e) {
             User newUser = new User(userRequestDto, url);

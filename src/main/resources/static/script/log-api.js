@@ -41,9 +41,10 @@ function login(){
         }).done(function (result){
             console.log(result);
             if(result!==""){
-                console.log(result);
+                let path = window.location.pathname.split('/');
+                console.log("path : "+path);
                 alert("로그인되었습니다.");
-                if(window.location.pathname==="/user/login"){
+                if(path[2]==="login"){
                     window.location.href="/";
                 }else{
                     window.location.reload();

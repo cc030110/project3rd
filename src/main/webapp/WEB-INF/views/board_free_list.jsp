@@ -19,6 +19,10 @@
     <div class="main">
         <h2>자유 게시판</h2>
         <div class="list-container">
+            <div>
+                <h2>토큰 확인용</h2>
+                <p>${accessToken}</p>
+            </div>
             <ul>
                 <li>
                     <div class="number">
