@@ -19,7 +19,7 @@ import java.util.Map;
 @Component
 public class JwtTokenizer {
 
-    private final byte[] accessSecret;
+    public final byte[] accessSecret;
     private final byte[] refreshSecret;
 
     public final static Long ACCESS_TOKEN_EXPIRE_COUNT = 30 * 60 * 1000L; // 30 minutes

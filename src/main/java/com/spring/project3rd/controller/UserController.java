@@ -6,6 +6,7 @@ import com.spring.project3rd.domain.user.*;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.UploadFileService;
 import com.spring.project3rd.service.UserService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +21,14 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_EXPIRE_COUNT;
 
 @RequiredArgsConstructor
 @RestController
@@ -68,7 +73,7 @@ public class UserController {
 //        return ResponseEntity.ok(resultMsg);
 //    }
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto) {
+    public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
 
         // TODO email에 해당하는 사용자 정보를 읽어와서 암호가 맞는지 검사하는 코드가 있어야 한다.
         String id = loginDto.getId();
@@ -93,8 +98,12 @@ public class UserController {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + accessToken); // 헤더에 토큰 추가
 
-            System.out.println(accessToken);
-            System.out.println(refreshToken);
+            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+            accessTokenCookie.setHttpOnly(true); // JavaScript로 쿠키 접근 방지
+            accessTokenCookie.setSecure(true); // HTTPS에서만 전송
+            accessTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
+            accessTokenCookie.setMaxAge(ACCESS_TOKEN_EXPIRE_COUNT.intValue() / 1000); // 유효기간 설정
+            response.addCookie(accessTokenCookie);
 
             return ResponseEntity.ok().headers(headers).body(loginResponse);
         }
@@ -114,7 +123,7 @@ public class UserController {
 
     /** 회원 가입 **/
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
-    public Map join(@ModelAttribute UserRequestDto userRequestDto){
+    public Map join(@ModelAttribute UserRequestDto userRequestDto, @RequestHeader("Authorization") HttpHeaders headers){
         JSONObject response = new JSONObject();
         String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
 
@@ -133,8 +142,12 @@ public class UserController {
 
     /** 유저 1인 정보 불러오기(회원 수정에 쓸거)**/
     @GetMapping("{id}")
-    public ModelAndView showUser(@PathVariable String id){
+    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("user_myPage");
+
+        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+        String id = claims.get("id", String.class);
+        String name = claims.get("name", String.class);
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
