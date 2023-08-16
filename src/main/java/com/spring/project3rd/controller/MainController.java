@@ -15,13 +15,13 @@ public class MainController {
     }
 
     // 로그인 페이지
-    @GetMapping("user/login")
+    @GetMapping("/user/login")
     public String login(){
         return "login";
     }
 
     // 회원가입
-    @GetMapping("user/join")
+    @GetMapping("/user/join")
     public String JoinForm() {
         return "user_join";
     }
@@ -54,7 +54,7 @@ public class MainController {
     }
 
     // 자유게시판 - 게시글 업로드
-    @GetMapping("board/free/upload")
+    @GetMapping("/board/free/upload")
     public String uploadPage(WebRequest request){
         // 세션에 있는 로그인 정보 가져오기
         String log = (String) request.getAttribute("log",WebRequest.SCOPE_SESSION);

@@ -13,14 +13,14 @@
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
-
-    <p>${user.id}</p>
-    <p>${user.password}</p>
-    <p>${user.gender}</p>
-    <p>${user.liveCountry}</p>
-    <p>${user.liveCity}</p>
-    <img src="${user.profileImg}">
-
+    <div class="main">
+        <p>${user.id}</p>
+        <p>${user.password}</p>
+        <p>${user.gender}</p>
+        <p>${user.liveCountry}</p>
+        <p>${user.liveCity}</p>
+        <img src="${user.profileImg}">
+    </div>
     <c:import url="footer.jsp"/>
 </div>
 </body>

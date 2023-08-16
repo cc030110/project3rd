@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%><
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
     <link rel="stylesheet" href="/css/login.css">
@@ -16,7 +16,7 @@
 <body>
     <div class="wrap">
         <c:import url="header.jsp"/>
-        <div class="main-section">
+        <div class="main">
             <h2>로그인</h2>
             <form>
                 <label for="id">아이디</label>

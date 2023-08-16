@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%><
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
     <title>자유 게시판</title>
@@ -19,10 +19,6 @@
     <div class="main">
         <h2>자유 게시판</h2>
         <div class="list-container">
-            <div>
-                <h2>토큰 확인용</h2>
-                <p>${accessToken}</p>
-            </div>
             <ul>
                 <li>
                     <div class="number">
@@ -42,8 +38,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="page">
-            </div>
+
         </div>
     </div>
     <c:import url="footer.jsp"/>

@@ -20,9 +20,9 @@
     </div>
     <div class="header-menu">
         <ul>
-            <li><a href="#">회원게시판</a></li>
+            <li><a href="/user/list">회원게시판</a></li>
             <li><a href="/board/free/list/1">자유게시판</a></li>
-            <li><a href="#">모집게시판</a></li>
+            <li><a href="/board/community">모집게시판</a></li>
         </ul>
     </div>
     <div class="login" id="login">
