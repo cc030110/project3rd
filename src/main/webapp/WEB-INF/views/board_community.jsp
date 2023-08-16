@@ -22,6 +22,8 @@
         </c:when>
 
         <c:otherwise>
+            <input type="hidden" id="board_num_hidden" value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
+
             <ul>
                 <li>
                     <p id="board_num">게시글 번호 : ${board.boardNo}</p>
@@ -64,8 +66,11 @@
                 </c:if>
 
                 <li>
-                    <input type="button" id="modify_btn" value="수정하기">
-                    <input type="button" id="delete_btn" value="삭제하기" onclick="deleteBoard()">
+                    <c:if test="${board.id == sessionScope.log}">
+                        <input type="button" id="modify_btn" value="수정하기" onclick="moveToUpdate()">
+                        <input type="button" id="delete_btn" value="삭제하기" onclick="deleteBoard()">
+                    </c:if>
+
                     <input type="button" id="back_btn" value="뒤로가기">
                 </li>
             </ul>

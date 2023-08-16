@@ -23,8 +23,9 @@
                     <label for="platform">
                         <spring:message code="board.community_write.platform"/>
                     </label>
+
                     <div class="platform" id="platform">
-                        <input type="radio" id="platform_0" name="platform" value="Off line">
+                        <input type="radio" id="platform_0" name="platform" value="Off line" checked>
                         <label for="platform_0">Off-line</label>
 
                         <input type="radio" id="platform_1" name="platform" value="Discord">
@@ -65,7 +66,6 @@
                     <label for="creator">
                         <spring:message code="board_community_write.creator"/>
                     </label>
-<%--                    <p id="creator" name="creator">${sessionScope.log}</p>--%>
                     <input type="text" id="creator" name="creator" value="${sessionScope.log}" readonly>
                 </li>
 
