@@ -16,7 +16,7 @@
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
-        <div class="main_con">
+        <div class="main">
             <c:forEach items="${list}" var="listItem" varStatus="vs">
                 <p>작성일: ${listItem.createdAt}</p>
                 <p>플랫폼 : ${listItem.platformName}</p>
