@@ -5,26 +5,21 @@ import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
 import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
-import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.payload.Response;
+import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BoardFreeService;
 import com.spring.project3rd.service.UploadFileService;
-import com.spring.project3rd.service.UserService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -35,60 +30,15 @@ public class BoardFreeController {
     private final BoardFreeService boardFreeService;
     private final BoardFreeImgRepository boardFreeImgRepository;
     private final UploadFileService uploadFileService;
-    private final UserService userService;
 
+    private final JwtTokenizer jwtTokenizer;
 
     // 게시글 목록
     // 시작 페이지 1, 제목/작성자 검색
     @GetMapping("list/{page}")
-    public ModelAndView showList(@PathVariable("page") int page,
-                                 @RequestParam(required = false) String title,
-                                 @RequestParam(required = false) String author,
-                                 @PageableDefault(size = 5) Pageable pageable,
-                                 WebRequest webRequest) {
+    public ModelAndView showList(@PathVariable("page") int page) {
         // board_free_list로 해당 정보 가져감
         ModelAndView view = new ModelAndView("board_free_list");
-//        // 가져올 BoardFree Page<T> 리스트
-//        Page<BoardFree> boardList = null;
-//
-//        // is_active가 0인 유저의 id들
-//        List<String> excludingUserList = new ArrayList<>();
-//        excludingUserList = userService.getNotActiveUserId();
-//
-//        System.out.println("제외 id");
-//        for(String str : excludingUserList){
-//            System.out.println(str);
-//        }
-
-        // 만약 로그인 중이라면 excludingUserList에 block한 유저의 id들도 추가
-//        String log = (String) webRequest.getAttribute("log",WebRequest.SCOPE_SESSION);
-//        if(log!=null){
-//
-//        }
-
-//        if (!title.isEmpty()) { // 제목 검색
-//            boardList = boardFreeRepository.findByTitleContainingAndIdNotIn(title, excludingUserList, pageable.withPage(page - 1));
-//        } else if(!author.isEmpty()) { // 작성자 검색
-//            boardList = boardFreeRepository.findByIdContainingAndIdNotIn(author, excludingUserList, pageable.withPage(page-1));
-//        } else{ // 검색 기능 사용하지 않음
-//            boardList = boardFreeRepository.findByIdNotIn(excludingUserList,pageable.withPage(page-1));
-//        }
-//
-//        // 가져온 boardList에서 유저 name만 저장할 리스트
-//        List<String> userNameList = new ArrayList<>();
-//        if(!boardList.isEmpty()){
-//            // 먼저 boardList에서 id List 가져옴
-//            List<String> ids = new ArrayList<>();
-//            for(BoardFree board : boardList){
-//                ids.add(board.getId());
-//            }
-//            // 해당 id List를 넘겨주어 name List로 리턴해주는 userService의 함수 호출
-//            userNameList = userService.getNameListByIdList(ids);
-//        }
-//
-//        // 리스트를 view에 저장
-//        view.addObject("boardList",boardList);
-//        view.addObject("authorList",userNameList);
 
         return view;
     }
@@ -156,8 +106,5 @@ public class BoardFreeController {
 
         return view;
     }
-
-
-
 
 }
