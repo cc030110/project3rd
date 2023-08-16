@@ -4,7 +4,6 @@ $(document).ready(function(){
 
 function moveToUpdate(){
     let boardNo = $('#board_num_hidden').val();
-    console.log(boardNo);
 
     window.location.href='/board/community/'+boardNo+'/update';
 }

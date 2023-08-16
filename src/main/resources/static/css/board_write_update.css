@@ -1,0 +1,14 @@
+nav.platform{
+    width: fit-content;
+    border: 1px solid black;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+nav.platform>ul>li{
+    border-bottom:1px solid gray;
+}
+
+

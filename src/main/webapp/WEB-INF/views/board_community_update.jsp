@@ -18,8 +18,8 @@
     <c:import url="header.jsp"/>
     <div class="main_con">
         <div>
-            <input type="hidden" id="board_no" value=${board.boardNo}>
-            <input type="hidden" id="platform_data" value=${board.platformName}>
+            <input type="hidden" id="board_num_hidden" value="${board.boardNo}">
+            <input type="hidden" id="platform_name_hidden" value="${board.platformName}">
 
             <ul>
                 <li>
@@ -27,7 +27,7 @@
                         <spring:message code="board.community_write.platform"/>
                     </label>
                     <div class="platform" id="platform">
-                        <input type="radio" id="platform_0" name="platfoㅌrm" value="Off line">
+                        <input type="radio" id="platform_0" name="platform" value="Off line">
                         <label for="platform_0">Off-line</label>
 
                         <input type="radio" id="platform_1" name="platform" value="Discord">
@@ -67,7 +67,6 @@
                     <label for="creator">
                         <spring:message code="board_community_write.creator"/>
                     </label>
-<%--                    <p id="creator" name="creator">${sessionScope.log}</p>--%>
                     <input type="text" id="creator" name="creator" value="${board.id}" readonly>
                 </li>
 
@@ -98,14 +97,18 @@
                     </label>
                     <input type="file" id="file" name="file" accept="image/png, image/jpg, image/jpeg, image.gif" multiple>
 
-                    <div class="img_box">
-
-                    </div>
+                    <c:if test="${imgList ne null}">
+                        <div class="img-box">
+                            <c:forEach items="${imgList}" var="imgs" varStatus="vs">
+                                <img src="${imgs.img}">
+                            </c:forEach>
+                        </div>
+                    </c:if>
                 </li>
 
                 <li>
                     <input type="button" id="modify_btn" value="수정하기">
-                    <input type="button" id="back_btn" value="뒤로가기">
+                    <input type="button" id="back_btn" value="뒤로가기" onclick="back()">
                 </li>
 
             </ul>
