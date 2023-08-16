@@ -81,7 +81,27 @@ public class BoardCommunityController{
                 view.addObject("imgList",imgList);
             }
         }
+        return view;
+    }
 
+    // 업데이트용 게시판 조회
+    @GetMapping("/{boardNum}/update")
+    public ModelAndView showBoardForUpdate(@PathVariable int boardNum){
+        ModelAndView view = new ModelAndView("board_community_update");
+
+        Optional<BoardCommunity> optionalBoardUpdate = boardCommunityRepository.findById(boardNum);
+        BoardCommunity board = optionalBoardUpdate.orElse(null);
+
+        view.addObject("board",board);
+
+        if(board!=null){
+            int boardNo = board.getBoardNo();
+            List<BoardCommunityImg> imgList = boardCommunityImgRepository.findByBoardNo(boardNo);
+            // 해당 게시글에 업로드된 파일이 존재할 경우
+            if(!imgList.isEmpty()){
+                view.addObject("imgList",imgList);
+            }
+        }
         return view;
     }
 
@@ -136,6 +156,8 @@ public class BoardCommunityController{
 
         return new Response("Board Update","success");
     }
+
+    // 게시글 이미지 수정
 
     // # Delete
     // 게시글 삭제

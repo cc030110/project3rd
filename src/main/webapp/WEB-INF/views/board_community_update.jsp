@@ -18,13 +18,16 @@
     <c:import url="header.jsp"/>
     <div class="main_con">
         <div>
+            <input type="hidden" id="board_num_hidden" value="${board.boardNo}">
+            <input type="hidden" id="platform_name_hidden" value="${board.platformName}">
+
             <ul>
                 <li>
                     <label for="platform">
                         <spring:message code="board.community_write.platform"/>
                     </label>
                     <div class="platform" id="platform">
-                        <input type="radio" id="platform_0" name="platform" value="Off line" checked>
+                        <input type="radio" id="platform_0" name="platform" value="Off line">
                         <label for="platform_0">Off-line</label>
 
                         <input type="radio" id="platform_1" name="platform" value="Discord">
@@ -57,36 +60,35 @@
                     <label for="title">
                         <spring:message code="board_community_write.title"/>
                     </label>
-                    <input type="text" id="title" name="title">
+                    <input type="text" id="title" name="title" value="${board.title}">
                 </li>
 
                 <li>
                     <label for="creator">
                         <spring:message code="board_community_write.creator"/>
                     </label>
-<%--                    <p id="creator" name="creator">${sessionScope.log}</p>--%>
-                    <input type="text" id="creator" name="creator" value="${sessionScope.log}" readonly>
+                    <input type="text" id="creator" name="creator" value="${board.id}" readonly>
                 </li>
 
                 <li>
                     <label for="contents">
                         <spring:message code="board_community_write.content"/>
                     </label>
-                    <textarea id="contents" name="contents"></textarea>
+                    <textarea id="contents" name="contents">${board.contents}</textarea>
                 </li>
 
                 <li>
                     <label for="participants">
                         <spring:message code="board_community_write.participants"/>
                     </label>
-                    <input type="text" id="participants" name="participants">
+                    <input type="text" id="participants" name="participants" value="${board.participantsNum}">
                 </li>
 
                 <li>
                     <label for="deadline">
                         <spring:message code="board_community_write.deadline"/>
                     </label>
-                    <input type="date" id="deadline" name="deadline">
+                    <input type="date" id="deadline" name="deadline" value="${board.deadline}">
                 </li>
 
                 <li>
@@ -95,15 +97,18 @@
                     </label>
                     <input type="file" id="file" name="file" accept="image/png, image/jpg, image/jpeg, image.gif" multiple>
 
-                    <div class="img_box">
-
-                    </div>
+                    <c:if test="${imgList ne null}">
+                        <div class="img-box">
+                            <c:forEach items="${imgList}" var="imgs" varStatus="vs">
+                                <img src="${imgs.img}">
+                            </c:forEach>
+                        </div>
+                    </c:if>
                 </li>
 
                 <li>
                     <input type="button" id="modify_btn" value="수정하기">
-                    <input type="button" id="delete_btn" value="삭제하기">
-                    <input type="button" id="back_btn" value="뒤로가기">>
+                    <input type="button" id="back_btn" value="뒤로가기" onclick="back()">
                 </li>
 
             </ul>
@@ -112,5 +117,6 @@
     <c:import url="footer.jsp"/>
 </div>
 
+<script src="/script/board-community-update.js"></script>
 </body>
 </html>
