@@ -107,12 +107,8 @@
                     <input type="button" id="write_btn" value=<spring:message code="board_community_write.submit"/>>
                     <input type="button" id="back_btn" value=<spring:message code="board_community_write.back"/>>
                 </li>
-
             </ul>
-        </div>
-    </div>
     <c:import url="footer.jsp"/>
-
 </div>
 
 <script src="/script/board-community-write.js"></script>
