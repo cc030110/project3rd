@@ -1,5 +1,9 @@
 @import url(reset.css);
 
+html{
+    font-size: 20px;
+}
+
 .wrap{
     display: grid;
     grid-template-rows: 120px 1fr 100px;
@@ -10,10 +14,21 @@
     'footer';
 }
 
+h1{
+    font-size: 1.8rem;
+}
+
+a,a:active,a:visited{
+    color: black;
+    text-decoration: none;
+}
+
 .header{
     grid-area: header;
     background-color: bisque; /* 확인용 */
-
+    display: flex;
+    align-items: center;
+    text-align: center;
 }
 
 .main{
@@ -23,5 +38,35 @@
 
 .footer{
     grid-area: footer;
-    background-color:cyan;
+    background-color:bisque; /* 확인용 */
+}
+
+.logo{
+    flex-grow: 1;
+}
+
+.header-menu{
+    flex-grow: 4;
+}
+
+.login{
+    flex-grow: 1;
+}
+
+.join{
+    flex-grow: 1;
+}
+
+.lang-select{
+    flex-grow: 1;
+}
+
+.header-menu li{
+    display: inline-block;
+    margin: 0 5%;
+}
+
+.header-menu a:hover{
+    color: brown;
+    border-bottom: 2px solid salmon;
 }

@@ -3,12 +3,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%><!-- 다국어 처리 -->
 
 <html>
-
 <head>
-    <title>Title</title>
-
     <!-- css -->
-<%--    <link rel="stylesheet" href="/css/header.css">--%>
     <link rel="stylesheet" href="/css/grid.css">
 
     <!-- JS -->
@@ -20,18 +16,26 @@
 <body>
     <div class="header">
         <div class="logo">
-            <h1>GLOBALTIES</h1>
+            <h1><a href="/">GLOBALTIES</a></h1>
         </div>
-
+        <div class="header-menu">
+            <ul>
+                <li><a href="#">회원게시판</a></li>
+                <li><a href="board/free/list/1">자유게시판</a></li>
+                <li><a href="#">모집게시판</a></li>
+            </ul>
+        </div>
         <div class="login" id="login">
-            <spring:message code="header.login"/>
+            <a href="/login">
+                <spring:message code="header.login"/>
+            </a>
         </div>
-
         <div class="join" id="join">
-            <spring:message code="header.join"/>
+            <a href="user/join">
+                <spring:message code="header.join"/>
+            </a>
         </div>
-
-        <div class="lang_select">
+        <div class="lang-select">
                 <select name="locales" id="locales">
                     <option value="en" selected>English</option>
                     <option value="ko">한국어</option>

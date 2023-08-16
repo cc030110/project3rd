@@ -21,14 +21,14 @@ public class MainController {
     }
 
     // 회원가입
-    @GetMapping("api/user/join")
+    @GetMapping("/user/join")
     public String JoinForm() {
         return "user_join";
     }
 
 
     // 유저 리스트(프로필 게시판)
-    @GetMapping("api/user/list")
+    @GetMapping("/user/list")
     public String userList() {
         return "user_list";
     }

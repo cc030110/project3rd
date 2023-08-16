@@ -13,4 +13,5 @@ public class BoardFreeRequestDto {
     private String title;
     private String contents;
     private short isModified;
+    private int views;
 }

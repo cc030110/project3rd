@@ -31,7 +31,7 @@ function login(){
             "password" : pwdVal
         }
         $.ajax({
-            url:'/api/user/login',
+            url:'/user/login',
             type:'POST',
             data: JSON.stringify(data), // 데이터를 JSON 형식으로 변환하여 보냄
             contentType: 'application/json', // 데이터의 타입을 JSON으로 지정

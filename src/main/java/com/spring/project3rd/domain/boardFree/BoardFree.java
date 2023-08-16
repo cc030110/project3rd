@@ -24,12 +24,14 @@ public class BoardFree extends Timestamp {
     @Column(length = 4000, nullable = false)
     private String contents;
     private short isModified;
+    private int views;
 
     public BoardFree(BoardFreeRequestDto boardDto){
         this.id = boardDto.getId();
         this.title = boardDto.getTitle();
         this.contents = boardDto.getContents();
         this.isModified = 0;
+        this.views = 0;
     }
 
 }

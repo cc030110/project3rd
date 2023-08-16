@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 });
 
-function deleteBoard(boardNo){
+function deleteBoard(){
     $.ajax({
         method:'DELETE',
         url:`/board/community/delete/${boardNo}`,

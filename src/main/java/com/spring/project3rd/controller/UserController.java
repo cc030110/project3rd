@@ -27,7 +27,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("user")
 @SessionAttributes({"log"})
 public class UserController {
 

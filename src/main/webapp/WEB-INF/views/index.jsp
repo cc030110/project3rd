@@ -14,7 +14,6 @@
         <div class="main">
             <spring:message code="index.hello"/>
             <div style="width: 100%;">
-                <h2>세션 확인용</h2>
                 <c:choose>
                     <c:when test="${not empty log}">
                         <p>로그인 된 사용자: ${log}</p>
