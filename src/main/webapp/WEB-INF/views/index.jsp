@@ -11,8 +11,7 @@
 <body>
     <div class="wrap">
         <c:import url="header.jsp"/>
-        <p>empty log : ${empty log}</p>
-        <div class="main_con">
+        <div class="main">
             <spring:message code="index.hello"/>
             <div style="width: 100%;">
                 <h2>세션 확인용</h2>

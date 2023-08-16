@@ -1,12 +1,27 @@
 @import url(reset.css);
 
-
+.wrap{
+    display: grid;
+    grid-template-rows: 120px 1fr 100px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+    'header'
+    'main'
+    'footer';
+}
 
 .header{
-    border-bottom:1px solid black;
-    background-color:cyan;
+    grid-area: header;
+    background-color: bisque; /* 확인용 */
+
+}
+
+.main{
+    grid-area: main;
+    min-height: 80vh;
 }
 
 .footer{
+    grid-area: footer;
     background-color:cyan;
 }
