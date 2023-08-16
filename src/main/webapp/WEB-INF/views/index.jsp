@@ -26,6 +26,31 @@
         </div>
         <c:import url="footer.jsp"/>
     </div>
+
+    <script>
+        // 토큰 가져오기
+        const token = localStorage.getItem("jwtToken");
+        console.log(token);
+
+        const tokenHeader = document.querySelector("meta[name='jwt-token']").getAttribute("content");
+        const accessToken = tokenHeader.replace("Bearer ", "");
+
+        if (token) {
+            // 토큰 디코딩
+            const tokenParts = token.split(".");
+            const tokenPayload = JSON.parse(atob(tokenParts[1]));
+
+            // 필요한 정보를 HTML에 표시
+            const userInfoDiv = document.getElementById("userInfo");
+            userInfoDiv.innerHTML = `
+                <p>User ID: ${tokenPayload.id}</p>
+                <p>Name: ${tokenPayload.name}</p>
+            `;
+        } else {
+            // 토큰이 없는 경우 처리
+            console.log("Token not found.");
+        }
+    </script>
 </body>
 
 </html>
