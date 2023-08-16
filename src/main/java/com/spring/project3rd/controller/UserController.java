@@ -2,7 +2,7 @@
 package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.boardFree.BoardFree;
-import com.spring.project3rd.domain.boardImg.BoardFreeImg;
+import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
 import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.domain.user.UserRequestDto;

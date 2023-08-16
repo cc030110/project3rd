@@ -24,7 +24,7 @@
                         <spring:message code="board.community_write.platform"/>
                     </label>
                     <div class="platform" id="platform">
-                        <input type="radio" id="platform_0" name="platform" value="Off line">
+                        <input type="radio" id="platform_0" name="platform" value="Off line" checked>
                         <label for="platform_0">Off-line</label>
 
                         <input type="radio" id="platform_1" name="platform" value="Discord">
@@ -34,7 +34,6 @@
                         <label for="platform_2">Google Meet</label>
 
                         <input type="radio" id="platform_3" name="platform" value="Line">
-
                         <label for="platform_3">Line</label>
 
                         <input type="radio" id="platform_4" name="platform" value="Microsoft Teams">
@@ -102,17 +101,16 @@
                 </li>
 
                 <li>
-                    <input type="button" id="write_btn" value=<spring:message code="board_community_write.submit"/>>
-                    <input type="button" id="back_btn" value=<spring:message code="board_community_write.back"/>>
+                    <input type="button" id="modify_btn" value="수정하기">
+                    <input type="button" id="delete_btn" value="삭제하기">
+                    <input type="button" id="back_btn" value="뒤로가기">>
                 </li>
 
             </ul>
         </div>
     </div>
     <c:import url="footer.jsp"/>
-
 </div>
 
-<script src="/script/board-community-write.js"></script>
 </body>
 </html>

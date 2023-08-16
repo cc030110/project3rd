@@ -8,7 +8,7 @@
 
 <head>
     <!-- CSS -->
-    <link rel="stylesheet" href="/css/gird.css">
+    <link rel="stylesheet" href="/css/grid.css">
 
     <title>GLOBALTIES</title>
 </head>
@@ -24,35 +24,35 @@
         <c:otherwise>
             <ul>
                 <li>
-                    <p>게시글 번호 : ${board.boardNo}</p>
+                    <p id="board_num">게시글 번호 : ${board.boardNo}</p>
                 </li>
 
                 <li>
-                    <p>플랫폼 : ${board.platformName}</p>
+                    <p id="platform">플랫폼 : ${board.platformName}</p>
                 </li>
 
                 <li>
-                    <p>제목 : ${board.title}</p>
+                    <p id="title">제목 : ${board.title}</p>
                 </li>
 
                 <li>
-                    <p>작성자 : ${board.id}</p>
+                    <p id="creator">작성자 : ${board.id}</p>
                 </li>
 
                 <li>
-                    <p>내용 : ${board.contents}</p>
+                    <p id="content">내용 : ${board.contents}</p>
                 </li>
 
                 <li>
-                    <p>참가자 수 : ${board.participantsNum}</p>
+                    <p id="participants">참가자 수 : ${board.participantsNum}</p>
                 </li>
 
                 <li>
-                    <p>마감일 : ${board.deadline}</p>
+                    <p id="deadline">마감일 : ${board.deadline}</p>
                 </li>
 
                 <li>
-                    <p>작성일 : ${board.createdAt}</p>
+                    <p id="created_at">작성일 : ${board.createdAt}</p>
                 </li>
 
                 <c:if test="${imgList ne null}">
@@ -63,15 +63,17 @@
                     </div>
                 </c:if>
 
+                <li>
+                    <input type="button" id="modify_btn" value="수정하기">
+                    <input type="button" id="delete_btn" value="삭제하기" onclick="deleteBoard()">
+                    <input type="button" id="back_btn" value="뒤로가기">
+                </li>
             </ul>
-
-            <div>
-                <spring:message code="board_community.board"/>
-            </div>
         </c:otherwise>
     </c:choose>
 
     <c:import url="footer.jsp"/>
 </div>
+<script src="/script/board-community.js"></script>
 </body>
 </html>
