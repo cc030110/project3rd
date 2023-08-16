@@ -150,23 +150,6 @@ public class UserController {
         return view;
     }
 
-
-    @PutMapping(value = "{id}/update", consumes = {"multipart/form-data"})
-    public Map update(WebRequest request, @PathVariable String id, @ModelAttribute UserRequestDto userRequestDto){
-        JSONObject response = new JSONObject();
-        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
-        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-
-        if(log != null){
-            return null;
-        }
-        // 로그인 처리 후 수정할것
-        userRequestDto.setId(log);
-        userService.updateUser(id, log, userRequestDto, url);
-        response.put("user", "update");
-        return response.toMap();
-    }
-
     /** 회원 탈퇴 **/
     @DeleteMapping("{id}/delete")
     public Map delete(WebRequest request, @PathVariable String id, UserRequestDto userRequestDto){
