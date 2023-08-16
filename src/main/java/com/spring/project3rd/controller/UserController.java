@@ -1,80 +1,78 @@
 
 package com.spring.project3rd.controller;
 
-import com.spring.project3rd.domain.boardFree.BoardFree;
-import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
-import com.spring.project3rd.domain.user.User;
-import com.spring.project3rd.domain.user.UserRepository;
-import com.spring.project3rd.domain.user.UserRequestDto;
-//import com.spring.project3rd.service.UserService;
+import com.spring.project3rd.domain.user.*;
+import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.UploadFileService;
 import com.spring.project3rd.service.UserService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_EXPIRE_COUNT;
+
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("user")
 @SessionAttributes({"log"})
 public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
     private final UploadFileService uploadFileService;
+    private final JwtTokenizer jwtTokenizer;
 
-//    @PostMapping("login")
-//    public ResponseEntity<JwtToken> loginSuccess(@RequestBody Map<String, String> loginForm){
-//        JwtToken token = userService.login(loginForm.get("id"), loginForm.get("password"));
-//        return ResponseEntity.ok(token);
-//    }
-
-    /*@SessionScope
     @PostMapping("login")
-    public ModelAndView login(@RequestBody User user) {
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("log", user.getId());
-        return modelAndView;
-    }*/
+    public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
 
-    @SessionScope
-    @PostMapping("login")
-    public ResponseEntity<String> login(WebRequest request, @RequestBody User requestUser) {
-        String resultMsg = "";
+        // TODO email에 해당하는 사용자 정보를 읽어와서 암호가 맞는지 검사하는 코드가 있어야 한다.
+        String id = loginDto.getId();
+        String password = loginDto.getPassword();
+        System.out.println(id);
+        System.out.println(password);
 
-        Optional<User> optionalUser = userRepository.findById(requestUser.getId());
-        // 해당 값이 없으면 null
+        Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
 
-        if(user!=null&&user.getPassword().equals(requestUser.getPassword())){
-            request.setAttribute("log",user.getId(), WebRequest.SCOPE_SESSION);
-            resultMsg = "success";
-        }else{
-            resultMsg = "fail";
-        }
-        return ResponseEntity.ok(resultMsg);
-    }
+        if(user!=null&&user.getPassword().equals(loginDto.getPassword())){
+            String name = user.getName();
+            String accessToken = jwtTokenizer.createAccessToken(id, name);
+            String refreshToken = jwtTokenizer.createRefreshToken(id, name);
 
-    /*
-    @PostMapping("logout")
-    public String logout(WebRequest request, SessionStatus status){
-        // 우선 호출 후,
-        status.setComplete();
-        // 세션 속성을 수정
-        request.removeAttribute("log", WebRequest.SCOPE_SESSION);
-        return "redirect:/";
+            MemberLoginResponseDto loginResponse = MemberLoginResponseDto.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + accessToken); // 헤더에 토큰 추가
+
+            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+            accessTokenCookie.setHttpOnly(true); // JavaScript로 쿠키 접근 방지
+            accessTokenCookie.setSecure(true); // HTTPS에서만 전송
+            accessTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
+            accessTokenCookie.setMaxAge(ACCESS_TOKEN_EXPIRE_COUNT.intValue() / 1000); // 유효기간 설정
+            response.addCookie(accessTokenCookie);
+
+            return ResponseEntity.ok().headers(headers).body(loginResponse);
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     /** 회원 가입 **/
@@ -87,6 +85,7 @@ public class UserController {
             User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
                     () -> new IllegalArgumentException("ID 중복 확인")
             );
+            // admin table의 id도 사용 불가능 <- 확인 필요
             response.put("join", "fail");
         } catch (Exception e) {
             User newUser = new User(userRequestDto, url);
@@ -98,15 +97,23 @@ public class UserController {
 
     /** 유저 1인 정보 불러오기(회원 수정에 쓸거)**/
     @GetMapping("{id}")
-    public ModelAndView showUser(@PathVariable String id){
+    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("user_myPage");
+
+        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+        String id = claims.get("id", String.class);
+        String name = claims.get("name", String.class);
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
+        if(user!=null){
+            UserResponseDto userResponseDto = new UserResponseDto(user);
+            view.addObject("user",userResponseDto);
 
-        view.addObject("user",user);
+            return view;
+        }
+        return null;
 
-        return view;
     }
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
@@ -182,7 +189,4 @@ public class UserController {
         return response.toMap();
     }
 
-
 }
-
-

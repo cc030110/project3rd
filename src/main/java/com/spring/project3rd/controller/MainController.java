@@ -15,20 +15,20 @@ public class MainController {
     }
 
     // 로그인 페이지
-    @GetMapping("login")
+    @GetMapping("user/login")
     public String login(){
         return "login";
     }
 
     // 회원가입
-    @GetMapping("api/user/join")
+    @GetMapping("user/join")
     public String JoinForm() {
         return "user_join";
     }
 
 
     // 유저 리스트(프로필 게시판)
-    @GetMapping("api/user/list")
+    @GetMapping("/user/list")
     public String userList() {
         return "user_list";
     }

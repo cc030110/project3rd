@@ -15,7 +15,7 @@
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
-    <form id="joinForm" action="/api/user/join" method="post" enctype="multipart/form-data">
+    <form id="joinForm" action="/user/join" method="post" enctype="multipart/form-data">
         <label for="id">ID:</label>
         <input type="text" id="id" name="id" value="${user.id}" required><br>
 

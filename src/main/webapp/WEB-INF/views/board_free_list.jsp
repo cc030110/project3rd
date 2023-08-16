@@ -11,18 +11,36 @@
 <html>
 <head>
     <title>자유 게시판</title>
+    <link rel="stylesheet" href="/css/board-free-list.css">
 </head>
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
-    <h2>자유 게시판</h2>
-    <div class="list-container">
-        <c:forEach items="${list}" var="listItem" varStatus="vs">
-            <p>제목 : ${listItem.title}</p>
-            <p>내용 : ${listItem.contents}</p>
-            <p>생성일: ${listItem.createdAt}</p>
-        </c:forEach>
-
+    <div class="main">
+        <h2>자유 게시판</h2>
+        <div class="list-container">
+            <ul>
+                <li>
+                    <div class="number">
+                        <p>번호</p>
+                    </div>
+                    <div class="title">
+                        <p>제목</p>
+                    </div>
+                    <div class="author">
+                        <p>작성자</p>
+                    </div>
+                    <div class="created">
+                        <p>작성일</p>
+                    </div>
+                    <div class="views">
+                        <p>조회수</p>
+                    </div>
+                </li>
+            </ul>
+            <div class="page">
+            </div>
+        </div>
     </div>
     <c:import url="footer.jsp"/>
 </div>

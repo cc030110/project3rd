@@ -6,11 +6,12 @@ import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
 import com.spring.project3rd.payload.Response;
+import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BoardFreeService;
 import com.spring.project3rd.service.UploadFileService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -31,22 +31,14 @@ public class BoardFreeController {
     private final BoardFreeImgRepository boardFreeImgRepository;
     private final UploadFileService uploadFileService;
 
+    private final JwtTokenizer jwtTokenizer;
 
     // 게시글 목록
-    // 시작 페이지1, 검색어 없을 경우 ""
+    // 시작 페이지 1, 제목/작성자 검색
     @GetMapping("list/{page}")
-    public ModelAndView showList(@PathVariable("page") int page,
-                                 @RequestParam(defaultValue = "") String keyword,
-                                 @PageableDefault(size = 5) Pageable pageable) {
-        ModelAndView view = new ModelAndView    ("board_free_list");
-        List<BoardFree> list = new ArrayList<>();
-        if (!keyword.isEmpty()) {
-            list = boardFreeRepository.findByTitleContaining(keyword, pageable.withPage(page - 1));
-        } else {
-            list = boardFreeRepository.findAll(pageable.withPage(page - 1)).getContent();
-        }
-        // 가져온 리스트를 view에 저장
-        view.addObject("list",list);
+    public ModelAndView showList(@PathVariable("page") int page) {
+        // board_free_list로 해당 정보 가져감
+        ModelAndView view = new ModelAndView("board_free_list");
 
         return view;
     }
@@ -99,9 +91,9 @@ public class BoardFreeController {
         Optional<BoardFree> optionalBoard = boardFreeRepository.findById(no);
         BoardFree board = optionalBoard.orElse(null);
 
-        view.addObject("board",board);
-
         if(board!=null){
+            // 해당 board의 views(조회수) 1 증가
+            // 코드 작성 필요
             int boardNo = board.getBoardNo();
             List<BoardFreeImg> imgList = boardFreeImgRepository.findByBoardNo(boardNo);
             // 해당 게시글에 업로드된 파일이 존재할 경우
@@ -110,10 +102,9 @@ public class BoardFreeController {
             }
         }
 
+        view.addObject("board",board);
+
         return view;
     }
-
-
-
 
 }
