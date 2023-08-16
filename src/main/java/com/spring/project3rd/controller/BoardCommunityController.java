@@ -92,7 +92,7 @@ public class BoardCommunityController{
         System.out.println(bcDto);
         BoardCommunity board = null;
 
-        if(bcDto.getId()!=null&&bcDto.getTitle()!=null&&bcDto.getContents()!=null){
+        if(bcDto.getId()!=null && bcDto.getTitle()!=null && bcDto.getContents()!=null){
             board = new BoardCommunity(bcDto);
             boardCommunityRepository.save(board);
         }
@@ -140,7 +140,7 @@ public class BoardCommunityController{
     // # Delete
     // 게시글 삭제
     @DeleteMapping(value="/delete/{boardNo}")
-    public Response deleteBoard(@PathVariable int boardNo, WebRequest request){
+    public Response boardDelete(@PathVariable int boardNo, WebRequest request){
         String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
 
         if(log==null){
