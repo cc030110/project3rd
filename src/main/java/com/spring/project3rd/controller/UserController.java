@@ -1,19 +1,18 @@
 
 package com.spring.project3rd.controller;
 
-import com.spring.project3rd.domain.boardFree.BoardFree;
-import com.spring.project3rd.domain.boardImg.BoardFreeImg;
-import com.spring.project3rd.domain.user.User;
-import com.spring.project3rd.domain.user.UserRepository;
-import com.spring.project3rd.domain.user.UserRequestDto;
+import com.spring.project3rd.domain.user.*;
 //import com.spring.project3rd.service.UserService;
+import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.UploadFileService;
 import com.spring.project3rd.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -21,19 +20,21 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("user")
 @SessionAttributes({"log"})
 public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
     private final UploadFileService uploadFileService;
+    private final JwtTokenizer jwtTokenizer;
 
 //    @PostMapping("login")
 //    public ResponseEntity<JwtToken> loginSuccess(@RequestBody Map<String, String> loginForm){
@@ -49,22 +50,56 @@ public class UserController {
         return modelAndView;
     }*/
 
-    @SessionScope
+//    @SessionScope
+//    @PostMapping("login")
+//    public ResponseEntity<String> login(WebRequest request, @RequestBody User requestUser) {
+//        String resultMsg = "";
+//
+//        Optional<User> optionalUser = userRepository.findById(requestUser.getId());
+//        // 해당 값이 없으면 null
+//        User user = optionalUser.orElse(null);
+//
+//        if(user!=null&&user.getPassword().equals(requestUser.getPassword())){
+//            request.setAttribute("log",user.getId(), WebRequest.SCOPE_SESSION);
+//            resultMsg = "success";
+//        }else{
+//            resultMsg = "fail";
+//        }
+//        return ResponseEntity.ok(resultMsg);
+//    }
     @PostMapping("login")
-    public ResponseEntity<String> login(WebRequest request, @RequestBody User requestUser) {
-        String resultMsg = "";
+    public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto) {
 
-        Optional<User> optionalUser = userRepository.findById(requestUser.getId());
-        // 해당 값이 없으면 null
+        // TODO email에 해당하는 사용자 정보를 읽어와서 암호가 맞는지 검사하는 코드가 있어야 한다.
+        String id = loginDto.getId();
+        String password = loginDto.getPassword();
+        System.out.println(id);
+        System.out.println(password);
+
+        Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
 
-        if(user!=null&&user.getPassword().equals(requestUser.getPassword())){
-            request.setAttribute("log",user.getId(), WebRequest.SCOPE_SESSION);
-            resultMsg = "success";
-        }else{
-            resultMsg = "fail";
+        if(user!=null&&user.getPassword().equals(loginDto.getPassword())){
+            List<String> roles = List.of("ROLE_USER");
+            String name = user.getName();
+            String accessToken = jwtTokenizer.createAccessToken(id, name);
+            String refreshToken = jwtTokenizer.createRefreshToken(id, name);
+
+            MemberLoginResponseDto loginResponse = MemberLoginResponseDto.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + accessToken); // 헤더에 토큰 추가
+
+            System.out.println(accessToken);
+            System.out.println(refreshToken);
+
+            return ResponseEntity.ok().headers(headers).body(loginResponse);
         }
-        return ResponseEntity.ok(resultMsg);
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     /*

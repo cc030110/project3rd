@@ -1,4 +1,4 @@
-package com.spring.project3rd.util;
+package com.spring.project3rd.security.jwt.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -33,24 +33,24 @@ public class JwtTokenizer {
     /**
      * AccessToken 생성
      */
-    public String createAccessToken(Long id, String email, List<String> roles) {
-        return createToken(id, email, roles, ACCESS_TOKEN_EXPIRE_COUNT, accessSecret);
+    public String createAccessToken(String id, String name) {
+        return createToken(id, name, ACCESS_TOKEN_EXPIRE_COUNT, accessSecret);
     }
 
     /**
      * RefreshToken 생성
      */
-    public String createRefreshToken(Long id, String email, List<String> roles) {
-        return createToken(id, email, roles, REFRESH_TOKEN_EXPIRE_COUNT, refreshSecret);
+    public String createRefreshToken(String id, String name) {
+        return createToken(id, name, REFRESH_TOKEN_EXPIRE_COUNT, refreshSecret);
     }
 
 
-    private String createToken(Long id, String email, List<String> roles,
+    private String createToken(String id, String name,
                                Long expire, byte[] secretKey) {
-        Claims claims = Jwts.claims().setSubject(email);
+        Claims claims = Jwts.claims().setSubject(id);
 
-        claims.put("roles", roles);
-        claims.put("userId", id);
+        claims.put("id", id);
+        claims.put("name", name);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -67,7 +67,7 @@ public class JwtTokenizer {
         String[] tokenArr = token.split(" ");
         token = tokenArr[1];
         Claims claims = parseToken(token, accessSecret);
-        return Long.valueOf((Integer)claims.get("userId"));
+        return Long.valueOf((Integer)claims.get("id"));
     }
 
     public Claims parseAccessToken(String accessToken) {
@@ -95,29 +95,10 @@ public class JwtTokenizer {
         return Keys.hmacShaKeyFor(secretKey);
     }
 
-//    /**
-//     * 토큰 검증
-//     * @param jwt
-//     * @return
-//     * @throws UnsupportedEncodingException
-//     */
-//    public Map<String, Object> checkJwt(String jwt) throws UnsupportedEncodingException {
-//        Map<String, Object> claimMap = null;
-//        try {
-//            Claims claims = Jwts.parserBuilder().build()
-//                    .
-//                    .setSigningKey(accessSecret) // 키 설정
-//                    .parseClaimsJws(jwt) // jwt의 정보를 파싱해서 시그니처 값을 검증한다.
-//                    .getBody();
-//
-//            claimMap = claims;
-//
-//        } catch (ExpiredJwtException e) { // 토큰이 만료되었을 경우
-//            System.out.println(e);
-//
-//        } catch (Exception e) { // 나머지 에러의 경우
-//            System.out.println(e);
-//        }
-//        return claimMap;
-//    }
+    /**
+     * 토큰 검증
+     * @param jwt
+     * @return
+     * @throws UnsupportedEncodingException
+     */
 }
