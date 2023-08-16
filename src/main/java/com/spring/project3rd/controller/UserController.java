@@ -123,7 +123,7 @@ public class UserController {
 
     /** 회원 가입 **/
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
-    public Map join(@ModelAttribute UserRequestDto userRequestDto, @RequestHeader("Authorization") HttpHeaders headers){
+    public Map join(@ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
         String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
 
@@ -151,10 +151,14 @@ public class UserController {
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
+        if(user!=null){
+            UserResponseDto userResponseDto = new UserResponseDto(user);
+            view.addObject("user",userResponseDto);
 
-        view.addObject("user",user);
+            return view;
+        }
+        return null;
 
-        return view;
     }
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
