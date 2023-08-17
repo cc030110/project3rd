@@ -55,12 +55,8 @@ public class MainController {
 
     // 자유게시판 - 게시글 업로드
     @GetMapping("/board/free/upload")
-    public String uploadPage(WebRequest request){
-        // 세션에 있는 로그인 정보 가져오기
-        String log = (String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
-        System.out.println("log:"+log); // 확인용
-        // 로그인 확인
-        if(log!=null){
+    public String uploadPage(@CookieValue(value = "accessToken", required = false) String accessToken){
+        if(accessToken!=null){
             return "board_free_upload";
         }
         return "login";

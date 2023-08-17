@@ -14,4 +14,6 @@ public class BoardFreeResponseDto {
     private String contents;
     private short isModified;
     private int views;
+    // 유저 name 필드 추가
+    private String name;
 }

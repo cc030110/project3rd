@@ -38,7 +38,6 @@
                     </div>
                 </li>
             </ul>
-
         </div>
     </div>
     <c:import url="footer.jsp"/>

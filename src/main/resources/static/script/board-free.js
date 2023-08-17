@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function() {
     $('#file').on('change', function() {
         let files = $('#file').prop('files'); // FileList 객체
@@ -27,13 +30,11 @@ $(document).ready(function() {
                 }
             }
         }
-
     });
-
 });
 
+
 function uploadBoard(){
-    const author = $('#name').val();
     const title = $('#title').val();
     const contents = $('#contents').val();
 
@@ -43,7 +44,6 @@ function uploadBoard(){
         alert("내용 입력");
     }else{
         let write = {
-            "id":author,
             "title":title,
             "contents":contents
         }

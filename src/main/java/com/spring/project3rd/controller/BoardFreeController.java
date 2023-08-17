@@ -3,8 +3,10 @@ package com.spring.project3rd.controller;
 import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
 import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
+import com.spring.project3rd.domain.boardFree.BoardFreeResponseDto;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
+import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BlockService;
@@ -50,10 +52,10 @@ public class BoardFreeController {
                                     @PageableDefault(size = 5) Pageable pageable,
                                     @CookieValue(value = "accessToken", required = false) String accessToken) {
         // board_free_list로 해당 정보 가져감
-//        ModelAndView view = new ModelAndView("board_free_list");
+        ModelAndView view = new ModelAndView("board_free_list");
 
         // 게시글 목록
-        Page<BoardFree> boardList = null;
+        Page<BoardFree> getBoardList = null;
 
         // 제외할 게시글 작성자 목록
         List<String> excludeIds = new ArrayList<>();
@@ -72,29 +74,48 @@ public class BoardFreeController {
             }
         }
 
-        boardList = boardFreeRepository.findByIdNotIn(excludeIds,pageable.withPage(page-1));
+        // 검색어 구분 
+        if(title != null && !title.isEmpty()){ // 제목 검색
+            getBoardList = boardFreeRepository.findByTitleContainingAndIdNotInOrderByBoardNoDesc(title,excludeIds,pageable.withPage(page-1));
+        }else if(author != null && !author.isEmpty()){ // 작성자 검색
+            getBoardList = boardFreeRepository.findByIdContainingAndIdNotInOrderByBoardNoDesc(author,excludeIds,pageable.withPage(page-1));
+        }else{ // 검색 없음
+            getBoardList = boardFreeRepository.findByIdNotInOrderByBoardNoDesc(excludeIds,pageable.withPage(page-1));
+        }
 
-//        // 검색어 구분
-//        if(title != null && !title.isEmpty()){ // 제목 검색
-////            boardList =
-//        }else if(author != null && !author.isEmpty()){ // 작성자 검색
+//        List<BoardFree> boardFreeList = getBoardList.getContent();
 //
-//        }else{
-//
+//        if(!getBoardList.getContent().isEmpty()){ // 가져온 리스트가 하나라도 있을 경우
+//            // getBoardList의 id를 이용하여 해당 id 유저의 name 정보 가져오기
+//            List<String> getAuthorList = new ArrayList<>();
+//            for(int i=0;i<boardFreeList.size();i++){
+//                String id = boardFreeList.get(i).getId();
+//                String name = userService.getUserName(id);
+//            }
 //        }
+//
+//        // 해당 boardList를 userId가 아닌 userName 정보가 들어있는 dto리스트로 변경
+//        List<BoardFreeResponseDto> boardList = new ArrayList<>();
+
+
+        // 완성된 게시판 리스트 view에 추가
+        view.addObject("boardList",getBoardList);
+
 //        return view;
 
-        return boardList;
+        return getBoardList;
 
     }
 
     // 게시글 업로드
     @PostMapping("upload")
-    public BoardFree upload(@RequestBody BoardFreeRequestDto boardDto){
-        System.out.println(boardDto);
+    public BoardFree upload(@RequestBody BoardFreeRequestDto boardDto,
+                            @CookieValue(value = "accessToken", required = false) String accessToken){
         BoardFree board = null;
-
-        if(boardDto.getId()!=null&&boardDto.getTitle()!=null&&boardDto.getContents()!=null){
+        if(accessToken!=null&&boardDto.getTitle()!=null&&boardDto.getContents()!=null){
+            Claims claims = jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+            String id = claims.get("id", String.class);
+            boardDto.setId(id);
             board = new BoardFree(boardDto);
             boardFreeRepository.save(board);
         }

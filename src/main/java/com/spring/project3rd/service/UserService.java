@@ -26,7 +26,6 @@ public class UserService {
     @Transactional
     public void deleteUser(String id){
         userRepository.deleteById(id);
-
     }
 
     // 비활성화된 유저 아이디 목록
@@ -37,6 +36,16 @@ public class UserService {
         return list;
     }
 
+    // 유저 아이디를 받아 해당 유저의 name 리턴
+    public String getUserName(String id){
+        String name = "";
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElse(null);
+        if(user!=null){
+            name=user.getName();
+        }
+        return name;
+    }
 
 }
 

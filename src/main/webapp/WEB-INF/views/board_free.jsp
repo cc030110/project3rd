@@ -35,7 +35,6 @@
                     </c:if>
                 </c:otherwise>
             </c:choose>
-
         </div>
     <c:import url="footer.jsp"/>
 </div>
