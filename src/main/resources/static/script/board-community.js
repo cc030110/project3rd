@@ -8,6 +8,10 @@ function moveToUpdate(){
     window.location.href='/board/community/'+boardNo+'/update';
 }
 
+function moveToMain(){
+    window.location.href='/board/community/main/1'
+}
+
 function deleteBoard(){
     // Trouble shooting : html 측에서 받아올 boardNo가 존재하지 않았음
     let boardNo=$('#board_num_hidden').val();

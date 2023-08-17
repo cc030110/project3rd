@@ -23,7 +23,8 @@
                 <p>존재하지 않는 게시글입니다.</p>
             </c:when>
             <c:otherwise>
-                <input type="hidden" id="board_num_hidden" value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
+                <input type="hidden" id="board_num_hidden"
+                       value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
                 <ul>
                     <li>
                         <p id="board_num">게시글 번호 : ${board.boardNo}</p>
@@ -64,21 +65,20 @@
                             </c:forEach>
                         </div>
                     </c:if>
-
                     <li>
-                        <c:if test="${board.id == sessionScope.log}">
+                        <c:if test="${cookie.accessToken.value ne null}">
+                            <p>${cookie.accessToken.value}</p>
                             <input type="button" id="modify_btn" value="수정하기" onclick="moveToUpdate()">
                             <input type="button" id="delete_btn" value="삭제하기" onclick="deleteBoard()">
                         </c:if>
-
-                        <input type="button" id="back_btn" value="뒤로가기">
+                        <input type="button" id="back_btn" value="뒤로가기" onclick="moveToMain()">
                     </li>
                 </ul>
             </c:otherwise>
         </c:choose>
+
+        <c:import url="footer.jsp"/>
     </div>
-    <c:import url="footer.jsp"/>
-</div>
-<script src="/script/board-community.js"></script>
+    <script src="/script/board-community.js"></script>
 </body>
 </html>
