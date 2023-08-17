@@ -26,5 +26,4 @@ public class UserRequestDto {
     private String liveCity;
     private Short warningCount;
     private Short isActive;
-
 }
