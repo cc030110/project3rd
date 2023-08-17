@@ -66,12 +66,14 @@
                 </c:if>
 
                 <li>
-                    <c:if test="${board.id == sessionScope.log}">
+
+                    <c:if test="${cookie.accessToken.value ne null}">
+                        <p>${cookie.accessToken.value}</p>
                         <input type="button" id="modify_btn" value="수정하기" onclick="moveToUpdate()">
                         <input type="button" id="delete_btn" value="삭제하기" onclick="deleteBoard()">
                     </c:if>
 
-                    <input type="button" id="back_btn" value="뒤로가기">
+                    <input type="button" id="back_btn" value="뒤로가기" onclick="moveToMain()">
                 </li>
             </ul>
         </c:otherwise>

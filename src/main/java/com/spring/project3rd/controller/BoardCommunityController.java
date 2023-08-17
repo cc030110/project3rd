@@ -105,7 +105,6 @@ public class BoardCommunityController{
         return view;
     }
 
-    // # Create
     // 게시글 작성
     @PostMapping("/write")
     public BoardCommunity boardWrite(@RequestBody BoardCommunityRequestDto bcDto){
@@ -156,8 +155,6 @@ public class BoardCommunityController{
 
         return new Response("Board Update","success");
     }
-
-    // 게시글 이미지 수정
 
     // # Delete
     // 게시글 삭제
