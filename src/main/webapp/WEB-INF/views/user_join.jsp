@@ -9,55 +9,60 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <link rel="stylesheet" href="/css/join.css">
     <title>회원가입</title>
 </head>
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
+
         <form id="joinForm" action="/user/join" method="post" enctype="multipart/form-data">
-            <label for="id">ID:</label>
-            <input type="text" id="id" name="id" value="${user.id}" required><br>
+            <div class="join-box-left">
+                <label for="id">아이디:</label>
+                <input type="text" id="id" name="id" value="${user.id}" required><br>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
+                <label for="password">비밀번호:</label>
+                <input type="password" id="password" name="password" required><br>
+                <label for="password-chk">비밀번호 확인:</label>
+                <input type="password-chk" id="password-chk" name="password-chk" required><br>
+                <label for="name">닉네임</label>
+                <input type="text" id="name" name="name" value="${user.name}" required><br>
+                <label for="email">이메일:</label>
+                <input type="email" id="email" name="email" value="${user.email}" required><br>
+                <label>성별:</label>
+                <input type="radio" id="male" name="gender" value="남">
+                <label for="male">남성</label>
+                <input type="radio" id="female" name="gender" value="여">
+                <label for="female">여성</label><br>
 
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" value="${user.name}" required><br>
+                <label for="age">나이:</label>
+                <input type="number" id="age" name="age" value="${user.age}" required><br>
 
-            <label for="gender">Gender:</label>
-            <input type="radio" id="male" name="gender" value="남">
-            <label for="male">Male</label>
-            <input type="radio" id="female" name="gender" value="여">
-            <label for="female">Female</label><br>
 
-            <label for="age">Age:</label>
-            <input type="number" id="age" name="age" value="${user.age}" required><br>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="${user.email}" required><br>
 
-            <label for="liveCountry">Living Country:</label>
-            <input type="text" id="liveCountry" name="liveCountry" value="${user.liveCountry}" required><br>
-
-            <label for="liveCity">Living City:</label>
-            <input type="text" id="liveCity" name="liveCity" value="${user.liveCity}" required><br>
-
-            <label for="profileImg">Profile Image:</label>
-            <input type="file" id="profileImg" name="profileImg"><br>
-
-            <label for="warningCount">Warning Count:</label>
-            <input type="number" id="warningCount" name="warningCount" value="${user.warningCount}" required><br>
-
-            <label for="isActive">Is Active:</label>
-            <input type="number" id="isActive" name="isActive" value="${user.isActive}" required><br>
-
-            <input type="submit" value="Join" onclick="checkValue(form)">
+            </div>
+            <div class="join-box-right">
+                <label for="profileImg">프로필 사진:</label>
+                <input type="file" id="profileImg" name="profileImg"><br>
+                <label for="liveCountry">거주 국가:</label>
+                <input type="text" id="liveCountry" name="liveCountry" value="${user.liveCountry}" required><br>
+                <label for="liveCity">거주 도시:</label>
+                <input type="text" id="liveCity" name="liveCity" value="${user.liveCity}" required><br>
+                <label for="useLang">사용하는 언어:</label>
+                <input type="useLang" id="useLang" name="useLang" value="${user.useLang}" required><br>
+                <label for="wishLang">학습할 언어:</label>
+                <input type="wishLang" id="wishLang" name="wishLang" value="${user.wishLang}" required><br>
+                <input type="submit" value="Join" onclick="checkValue(form)">
+            </div>
         </form>
 
     </div>
     <c:import url="footer.jsp"/>
 </div>
+
+
 <script src="/script/user-join.js"></script>
 </body>
 </html>

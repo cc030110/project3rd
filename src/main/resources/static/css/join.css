@@ -1,0 +1,25 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+#joinForm {
+    display: flex;
+    flex-wrap: wrap;
+}
+.join-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.join-box-left{
+    border-right: 1px solid black;
+}
+.join-box-left, .join-box-right {
+    flex: 0 0 48%;
+    padding: 10px;
+    box-sizing: border-box;
+}
