@@ -4,3 +4,52 @@
     display: none;
     color: red;
 }
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.login-box {
+    display: flex;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 70px;
+    width: 800px; /* 반으로 나누어진 너비 */
+    padding: 20px;
+    height: 400px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-box-right {
+    flex: 1; /* 오른쪽 영역이 반 너비를 가짐 */
+    padding: 20px;
+    display: flex;
+    border-right: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.login-box-left {
+    flex: 1; /* 왼쪽 영역이 반 너비를 가짐 */
+    padding: 20px;
+
+}
+.login-box-left form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-box-left h1{
+    margin: 10px;
+}
+.login-box-left label, input, .err, input[type="button"] {
+    margin: 10px 0;
+}
+.join{
+    color : #6868e5;
+}
