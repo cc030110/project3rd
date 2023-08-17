@@ -13,4 +13,8 @@ import javax.persistence.*;
 public class Block {
     @EmbeddedId
     private BlockId id;
+
+    public Block(BlockId blockId){
+        this.id = blockId;
+    }
 }
