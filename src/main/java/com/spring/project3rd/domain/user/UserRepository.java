@@ -19,6 +19,9 @@ public interface UserRepository extends JpaRepository<User, String> {
     @EntityGraph(attributePaths ="authorities")
     Optional<User> findOneWithAuthoritiesById(String id);
 
+    // is_active=0 인 유저 id 리스트
+    @Query(value = "SELECT `id` FROM `user` WHERE `is_active`=0",nativeQuery = true)
+    public List<String> findInactiveUserIds();
 
 }
 

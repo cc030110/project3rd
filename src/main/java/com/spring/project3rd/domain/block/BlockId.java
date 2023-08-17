@@ -13,7 +13,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class BlockId implements Serializable{
+    @Column(length = 20)
     private String userId;
-    private String blockId;
 
+    @Column(length = 20)
+    private String blockId;
 }

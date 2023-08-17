@@ -29,5 +29,14 @@ public class UserService {
 
     }
 
+    // 비활성화된 유저 아이디 목록
+    public List<String> inactiveUserIds(){
+        List<String> list = userRepository.findInactiveUserIds();
+        // 찾는 아이디가 없을 경우 null이 아닌 빈 문자열을 리턴하므로
+        // 리스트 확인 시 isEmpty() 이용 필요
+        return list;
+    }
+
+
 }
 

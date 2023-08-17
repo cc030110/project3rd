@@ -14,7 +14,7 @@ public class Block {
     @EmbeddedId
     private BlockId id;
 
-    public Block(BlockId blockId){
-        this.id = blockId;
+    public Block(String userId, String blockId) {
+        this.id = new BlockId(userId, blockId);
     }
 }

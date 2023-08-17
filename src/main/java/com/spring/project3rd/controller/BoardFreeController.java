@@ -7,10 +7,15 @@ import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
+import com.spring.project3rd.service.BlockService;
 import com.spring.project3rd.service.BoardFreeService;
 import com.spring.project3rd.service.UploadFileService;
+import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,18 +34,58 @@ public class BoardFreeController {
     private final BoardFreeRepository boardFreeRepository;
     private final BoardFreeService boardFreeService;
     private final BoardFreeImgRepository boardFreeImgRepository;
-    private final UploadFileService uploadFileService;
 
+    private final UserService userService;
+    private final BlockService blockService;
+
+    private final UploadFileService uploadFileService;
     private final JwtTokenizer jwtTokenizer;
 
     // 게시글 목록
     // 시작 페이지 1, 제목/작성자 검색
     @GetMapping("list/{page}")
-    public ModelAndView showList(@PathVariable("page") int page) {
+    public Page<BoardFree> showList(@PathVariable("page") int page,
+                                    @RequestParam(required = false) String title,
+                                    @RequestParam(required = false) String author,
+                                    @PageableDefault(size = 5) Pageable pageable,
+                                    @CookieValue(value = "accessToken", required = false) String accessToken) {
         // board_free_list로 해당 정보 가져감
-        ModelAndView view = new ModelAndView("board_free_list");
+//        ModelAndView view = new ModelAndView("board_free_list");
 
-        return view;
+        // 게시글 목록
+        Page<BoardFree> boardList = null;
+
+        // 제외할 게시글 작성자 목록
+        List<String> excludeIds = new ArrayList<>();
+
+        // is_active = 0 인 유저 제외
+        excludeIds = userService.inactiveUserIds();
+
+        // 로그인 중일 경우 차단한 유저 제외
+        if(accessToken!=null){
+            Claims claims = jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+            String id = claims.get("id",String.class);
+            List<String> blockList = blockService.blockList(id);
+            // 해당 유저가 차단한 유저가 존재할 경우
+            if(!blockList.isEmpty()){
+                excludeIds.addAll(blockList);
+            }
+        }
+
+        boardList = boardFreeRepository.findByIdNotIn(excludeIds,pageable.withPage(page-1));
+
+//        // 검색어 구분
+//        if(title != null && !title.isEmpty()){ // 제목 검색
+////            boardList =
+//        }else if(author != null && !author.isEmpty()){ // 작성자 검색
+//
+//        }else{
+//
+//        }
+//        return view;
+
+        return boardList;
+
     }
 
     // 게시글 업로드
