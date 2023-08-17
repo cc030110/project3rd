@@ -97,13 +97,13 @@
                     </label>
                     <input type="file" id="file" name="file" accept="image/png, image/jpg, image/jpeg, image.gif" multiple>
 
+                    <div class="img-box">
                     <c:if test="${imgList ne null}">
-                        <div class="img-box">
                             <c:forEach items="${imgList}" var="imgs" varStatus="vs">
                                 <img src="${imgs.img}">
                             </c:forEach>
-                        </div>
                     </c:if>
+                    </div>
                 </li>
 
                 <li>

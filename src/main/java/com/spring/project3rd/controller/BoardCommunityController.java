@@ -5,8 +5,6 @@ import com.spring.project3rd.domain.boardCommunity.BoardCommunityRepository;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunityRequestDto;
 import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImg;
 import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImgRepository;
-import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
-import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BoardCommunityService;

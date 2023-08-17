@@ -93,8 +93,36 @@
             </c:otherwise>
         </c:choose>
 
+        <div class="card">
+            <div class="card_header">댓글 목록</div>
+            <ul>
+                <li id="comment_1" class="list-group-item d-flex justify-content-between">
+                    <div>댓글 내용</div>
+                    <div class="d_flex">
+                        <div class="font-italic">작성자 : </div>
+                        <button class="badge">삭제</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <br>
+
+        <div class="card">
+            <div class="card-body">
+                <textarea class="form_contorl" rows="1"></textarea>
+            </div>
+
+            <div class="card_footer">
+                <button class="btn_primary">등록</button>
+            </div>
+        </div>
+
         <c:import url="footer.jsp"/>
     </div>
+
+
+
     <script src="/script/board-community.js"></script>
 
 </body>

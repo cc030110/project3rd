@@ -1,3 +1,4 @@
+/*
 package com.spring.project3rd.domain.boardCommunityComment;
 
 import lombok.Getter;
@@ -14,3 +15,4 @@ public class BoardCommunityCommentRequestDto {
     private String contents;
     private short isModified;
 }
+*/

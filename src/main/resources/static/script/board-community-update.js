@@ -9,39 +9,39 @@ $(document).ready(function(){
         }
     })
 
+});
 
-    // 파일 업로드처리
-    $('#file').on('change', function() {
-        let files = $('#file').prop('files'); // FileList 객체
-        let max = 3; // 최대 선택 파일 개수
+// 파일 업로드처리
+$('#file').on('change', function() {
+    let files = $('#file').prop('files'); // FileList 객체
+    let max = 3; // 최대 선택 파일 개수
 
-        if (files.length > max) {
-            alert('최대 ' + max + '개까지 선택할 수 있습니다.');
-            $(this).val(''); // 선택한 파일 초기화
-        }
+    if (files.length > max) {
+        alert('최대 ' + max + '개까지 선택할 수 있습니다.');
+        $(this).val(''); // 선택한 파일 초기화
+    }
 
-        // 이미지 미리보기
-        let imgBox = $('.img_box');
+    // 이미지 미리보기
+    let imgBox = $('.img_box');
 
-        // 미리 보기 영역 초기화
-        imgBox.empty();
+    // 미리 보기 영역 초기화
+    imgBox.empty();
 
-        if(files.length>0){
-            for(let i=0;i<files.length;i++){
-                let file = files[i];
-                let file_type = file.type;
+    if(files.length>0){
+        for(let i=0;i<files.length;i++){
+            let file = files[i];
+            let file_type = file.type;
 
-                // 이미지 파일인 경우에만 미리 보기 추가
-                if (file_type.startsWith('image/')) {
-                    let preview_url = URL.createObjectURL(file);
-                    let img = $('<img>').attr('src', preview_url).addClass('preview-image');
-                    $('.img_box').append(img);
-                }
+            // 이미지 파일인 경우에만 미리 보기 추가
+            if (file_type.startsWith('image/')) {
+                let preview_url = URL.createObjectURL(file);
+                let img = $('<img>').attr('src', preview_url).addClass('preview-image');
+                $('.img_box').append(img);
             }
         }
-    });
-
+    }
 });
+
 
 // 수정하기
 function update(){

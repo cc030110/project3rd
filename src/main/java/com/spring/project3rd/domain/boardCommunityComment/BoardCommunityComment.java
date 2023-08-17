@@ -1,3 +1,4 @@
+/*
 package com.spring.project3rd.domain.boardCommunityComment;
 
 import com.spring.project3rd.util.Timestamp;
@@ -22,6 +23,7 @@ public class BoardCommunityComment extends Timestamp {
     @Column
     private int boardNo;
 
+    @ManyToOne
     @Column
     private String id;
 
@@ -43,3 +45,4 @@ public class BoardCommunityComment extends Timestamp {
         this.isModified=bccDto.getIsModified();
     }
 }
+*/
