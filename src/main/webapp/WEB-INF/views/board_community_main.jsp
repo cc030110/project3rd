@@ -16,6 +16,7 @@
 <style>
     div.con_list{
         border:1px solid black;
+        margin : 20px 0;
     }
 </style>
 
