@@ -12,6 +12,21 @@
     <link rel="stylesheet" href="/css/grid.css">
 
     <title>GLOBALTIES</title>
+
+    <script>
+        const token="${cookie.accessToken.value}";
+        const tokenParts = token.split('.');
+
+        if(tokenParts.length === 3){
+            const payloadBase64 = tokenParts[1];
+            const payload = JSON.parse(atob(payloadBase64));
+
+            const userId=payload.userid;
+            console.log(userId);
+        }else{
+            console.log("토큰형식이 잘못되었습니다.");
+        }
+    </script>
 </head>
 
 <body>
@@ -65,9 +80,10 @@
                             </c:forEach>
                         </div>
                     </c:if>
+
+                    <!-- 보류 -->
                     <li>
-                        <c:if test="${cookie.accessToken.value ne null}">
-                            <p>${cookie.accessToken.value}</p>
+                        <c:if test="${cookie.id==board.id}">
                             <input type="button" id="modify_btn" value="수정하기" onclick="moveToUpdate()">
                             <input type="button" id="delete_btn" value="삭제하기" onclick="deleteBoard()">
                         </c:if>
@@ -80,5 +96,6 @@
         <c:import url="footer.jsp"/>
     </div>
     <script src="/script/board-community.js"></script>
+
 </body>
 </html>

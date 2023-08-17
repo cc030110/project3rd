@@ -69,7 +69,7 @@
                     <label for="creator">
                         <spring:message code="board_community_write.creator"/>
                     </label>
-                    <input type="text" id="creator" name="creator" value="${sessionScope.log}" readonly>
+                    <input type="text" id="creator" name="creator"  readonly>
                 </li>
 
                 <li>

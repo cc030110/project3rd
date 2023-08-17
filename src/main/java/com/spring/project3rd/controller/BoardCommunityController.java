@@ -8,8 +8,10 @@ import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImgRepositor
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
 import com.spring.project3rd.payload.Response;
+import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BoardCommunityService;
 import com.spring.project3rd.service.UploadFileService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,7 @@ public class BoardCommunityController{
     private final BoardCommunityService boardCommunityService;
     private final BoardCommunityImgRepository boardCommunityImgRepository;
     private final UploadFileService uploadFileService;
+    private final JwtTokenizer jwtTokenizer;
 
     // 게시글 번호로 게시글 가져오기
     public BoardCommunity getBoardByBoardNo(int boardNo){
@@ -65,13 +68,18 @@ public class BoardCommunityController{
 
     // 커뮤니티 게시판 게시글 한개 조회
     @GetMapping("/{boardNum}")
-    public ModelAndView showBoard(@PathVariable int boardNum){
+    public ModelAndView showBoard(@PathVariable int boardNum,
+                                  @CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("board_community");
+
+        Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+        String id=claims.get("id",String.class);
 
         Optional<BoardCommunity> optionalBoard = boardCommunityRepository.findById(boardNum);
         BoardCommunity board = optionalBoard.orElse(null);
 
         view.addObject("board",board);
+        view.addObject("cookie",id);
 
         if(board!=null){
             int boardNo = board.getBoardNo();
@@ -107,15 +115,18 @@ public class BoardCommunityController{
 
     // 게시글 작성
     @PostMapping("/write")
-    public BoardCommunity boardWrite(@RequestBody BoardCommunityRequestDto bcDto){
-        System.out.println(bcDto);
-        BoardCommunity board = null;
-
-        if(bcDto.getId()!=null && bcDto.getTitle()!=null && bcDto.getContents()!=null){
-            board = new BoardCommunity(bcDto);
-            boardCommunityRepository.save(board);
+    public BoardCommunity boardWrite(@RequestBody BoardCommunityRequestDto bcDto,
+                                     @CookieValue(value ="accessToken",required = false) String accessToken){
+        BoardCommunity bc=null;
+        if(accessToken!=null && bcDto.getTitle()!=null && bcDto.getContents()!=null){
+            Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+            String id=claims.get("id", String.class);
+            bcDto.setId(id);
+            bc = new BoardCommunity(bcDto);
+            boardCommunityRepository.save(bc);
         }
-        return board;
+
+        return bc;
     }
 
     // 게시글 이미지 첨부
@@ -156,9 +167,53 @@ public class BoardCommunityController{
         return new Response("Board Update","success");
     }
 
-    // # Delete
     // 게시글 삭제
     @DeleteMapping(value="/delete/{boardNo}")
+    public Response boardDelete(@PathVariable int boardNo,
+                                @CookieValue(value = "accessToken", required = false) String accessToken){
+
+        Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+        String id=claims.get("id",String.class);
+        System.out.println(id);
+
+        if(id==null){
+            return new Response("Board Delete","Fail");
+        }
+
+        BoardCommunity bc=getBoardByBoardNo(boardNo);
+        if(!bc.getId().equals(id)){
+            return new Response("delete","fail : not correct user");
+        }
+
+        boardCommunityService.deleteBoardByBoardNo(boardNo);
+
+        return new Response("delete","success");
+    }
+}
+
+
+
+
+
+
+
+
+
+// 게시글 작성
+/*@PostMapping("/write")
+    public BoardCommunity boardWrite(@RequestBody BoardCommunityRequestDto bcDto){
+        System.out.println(bcDto);
+        BoardCommunity board = null;
+
+        if(bcDto.getId()!=null && bcDto.getTitle()!=null && bcDto.getContents()!=null){
+            board = new BoardCommunity(bcDto);
+            boardCommunityRepository.save(board);
+        }
+        return board;
+    }*/
+
+// 게시글 삭제
+/*@DeleteMapping(value="/delete/{boardNo}")
     public Response boardDelete(@PathVariable int boardNo, WebRequest request){
         String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
 
@@ -174,16 +229,10 @@ public class BoardCommunityController{
         boardCommunityService.deleteBoardByBoardNo(boardNo);
 
         return new Response("delete","success");
-    }
-}
-
-
-
-
-
+    }*/
 
 // 이전 버전
-// 게시글 작성          <--- 추후 로그인 확인부분 넣을 것
+// 게시글 작성 : api용        <--- 추후 로그인 확인부분 넣을 것
 //    @ResponseBody <--- RestController : JSON Body 탐색 / Controller : JSP 파일 탐색
     /*@PostMapping(value="/write", consumes={"multipart/form-data"})
     public Response boardWrite(@ModelAttribute BoardCommunityRequestDto bcDto, WebRequest request){

@@ -24,6 +24,8 @@ function deleteBoard(){
             async:false
         }).done(function (response){
             console.log(response);
+            alert("게시글이 삭제되었습니다.");
+            window.location.href="/board/community/main/1"
         }).fail(function(){
             console.log("게시글 삭제 실패");
         })
