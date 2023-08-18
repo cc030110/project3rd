@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
     <link rel="stylesheet" href="/css/join.css">
@@ -42,10 +43,6 @@
 
                 <label for="age">나이:</label>
                 <input type="number" id="age" name="age" value="${user.age}" required><br>
-
-
-
-
             </div>
             <div class="join-box-right">
                 <label for="profileImg">프로필 사진:</label>
@@ -59,6 +56,17 @@
                 <label for="wishLang">학습할 언어:</label>
                 <input type="wishLang" id="wishLang" name="wishLang" value="${user.wishLang}" required><br>
                 <input type="submit" value="Join" onclick="joinForm()">
+                <!-- 트롭다운 이런식으로 -->
+                <select>
+                    <option value="" disabled selected>
+                        <spring:message code="user_join.selLang"/>
+                    </option>
+                    <c:forEach var="lang" items="${languageCode}" varStatus="vs">
+                        <option id="${lang}">
+                            <spring:message code="user_join.sel${lang}"/>
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
         </form>
 

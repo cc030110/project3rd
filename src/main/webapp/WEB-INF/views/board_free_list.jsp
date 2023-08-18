@@ -20,8 +20,7 @@
         <h2><a href="/board/free/list/1">자유게시판</a></h2>
         <div>
             <span>총 ${boardList.totalElements} 건</span>
-            <span>[${boardList.number}/${boardList.totalPages}]</span>
-            ${boardList.}
+            <span>[${boardList.number+1}/${boardList.totalPages}]</span>
         </div>
         <div class="search-box">
             <select>
@@ -67,27 +66,8 @@
                 </c:if>
             </tbody>
         </table>
-        <div id="paging">
-            <div class="page-link">
-                <a href="/board/free/list/1" ${boardList.hasPrevious() ? '' : 'class="disabled-link"'}>&lt;&lt;</a>
-            </div>
-            <div class="page-link">
-                <a href="/board/free/list/${boardList.c}" ${boardList.hasPrevious() ? '' : 'class="disabled-link"'}>&lt;</a>
-            </div>
+        <div class="paging">
 
-            <c:forEach var="pageNumber" begin="${boardList.startPageNumber}" end="${boardList.endPageNumber}">
-                <c:choose>
-                    <c:when test="${pageNumber == boardList.pageNumber}">
-                        <div class="page-link current"><a href="/board/free/list/${pageNumber}">${pageNumber}</a></div>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="page-link"><a href="/board/free/list/${pageNumber}">${pageNumber}</a></div>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-
-            <div class="page-link"><a href="/board/free/list/${boardList.nextOrLastPageNumber}">&gt;</a></div>
-            <div class="page-link"><a href="/board/free/list/${boardList.totalPages}">&gt;&gt;</a></div>
         </div>
     </div>
     <c:import url="footer.jsp"/>

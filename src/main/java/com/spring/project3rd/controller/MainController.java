@@ -23,10 +23,10 @@ public class MainController {
     }
 
     // 회원가입
-    @GetMapping("/user/join")
-    public String JoinForm() {
-        return "user_join";
-    }
+//    @GetMapping("/user/join")
+//    public String JoinForm() {
+//        return "user_join";
+//    }
 
 
     // 유저 리스트(프로필 게시판)

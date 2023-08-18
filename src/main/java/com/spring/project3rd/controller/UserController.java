@@ -1,6 +1,8 @@
 
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.language.Language;
+import com.spring.project3rd.domain.language.LanguageRepository;
 import com.spring.project3rd.domain.user.*;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.UploadFileService;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -34,6 +37,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UploadFileService uploadFileService;
     private final JwtTokenizer jwtTokenizer;
+    private final LanguageRepository languageRepository;
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
@@ -87,8 +91,22 @@ public class UserController {
     }
 
 
-
     /** 회원 가입 **/
+    @GetMapping("join")
+    public ModelAndView JoinForm() {
+        ModelAndView view = new ModelAndView("user_join");
+        List<Language> languages = languageRepository.findAll();
+        if(!languages.isEmpty()){
+            List<String> languageCode = new ArrayList<>();
+            for (Language language : languages) {
+                languageCode.add(language.getLanguageCode());
+            }
+            view.addObject("languageCode",languageCode);
+        }
+
+        return view;
+    }
+
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
     public Map join(@ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
