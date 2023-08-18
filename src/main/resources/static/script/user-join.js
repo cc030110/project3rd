@@ -4,12 +4,26 @@ function joinForm() {
     const passwordChk = $('#password-chk').val();
     const name = $('#name').val();
     const email = $('#email').val();
-    const gender = $('#gender').val();
+    const gender = $('.gender').val();
     const age = $('#age').val();
-    const profileImg = $('#profileImg').val();
     const liveCountry = $('#liveCountry').val();
     const liveCity = $('#liveCity').val();
 
+    const useSel = document.getElementsByClassName("use-sel");
+    const wishSel = document.getElementsByClassName("wish-sel");
+
+    const useLang = [];
+    const needLang = [];
+
+    for (var i = 0; i < useSel.length; i++) {
+        useLang.push(useSel[i].textContent);
+    }
+    for (var i = 0; i < wishSel.length; i++) {
+        needLang.push(wishSel[i].textContent);
+    }
+
+    console.log(useLang);
+    console.log(needLang);
 
     if(id==="" && password==="" && name==="" && email==="" && liveCountry){
         alert("필수 정보를 입력해주세요");
@@ -22,17 +36,18 @@ function joinForm() {
             "name":name,
             "gender":gender,
             "age":age,
-            "profileImg":profileImg,
             "email":email,
             "liveCountry":liveCountry,
-            "liveCity":liveCity
+            "liveCity":liveCity,
+            "useLang":useLang,
+            "needLang":needLang
         }
         console.log(join);
 
         $.ajax({
             method:'POST',
             url:'/user/join',
-            data:JSON.stringify(join),
+            data: JSON.stringify(join),
             contentType: 'application/json',
             async:false
         }).done(function (response){
@@ -50,33 +65,49 @@ function joinForm() {
             alert("등록 오류")
         });
     }
-
 }
 
-function uploadImg(boardNo) {
-    let fileInput = $('#file');
-    let files = fileInput.prop('files'); // FileList 객체
 
-    let formData = new FormData(); // FormData 객체 생성
 
-    for (let i = 0; i < files.length; i++) {
-        formData.append("img", files[i]); // 파일 데이터 추가
+
+// 사용하는 언어 셀렉트 추가함수
+$("#use-lang").change(function() {
+    let selectedValue = $(this).val();
+
+    // 이미 선택된 값인지 확인
+    let isDuplicate = $(".use-lang-box").find(".sel[value='" + selectedValue + "']").length > 0;
+
+    if (!isDuplicate) {
+        // 선택한 옵션의 값을 포함하는 <div> 생성
+        var newDiv = $("<div>", {
+            "class": "use-sel",
+            "id": selectedValue,
+            "value": selectedValue,
+            html: selectedValue + '<img src=""/>'
+        });
+
+        // 생성한 <div>를 #sel-box에 추가
+        $(".use-lang-box").append(newDiv);
     }
+});
 
-    console.log(formData);
+// 배울 언어 셀렉트 추가함수
+$("#wish-lang").change(function() {
+    let selectedValue = $(this).val();
 
-    $.ajax({
-        type: 'POST',
-        url: `/board/free/upload/file?no=${boardNo}`,
-        data: formData, // FormData 객체를 바로 전송
-        contentType: false, // 파일 전송 시 false
-        processData: false, // FormData 사용 시 false
-        async: false
-    }).done(function (response) {
-        alert("게시글이 등록되었습니다.");
-    }).fail(function () {
-        alert("파일 업로드 실패");
-        // 해당 boardNo의 게시판 삭제
-        deleteBoard(boardNo);
-    });
-}
+    // 이미 선택된 값인지 확인
+    let isDuplicate = $(".wish-lang-box").find(".sel[value='" + selectedValue + "']").length > 0;
+
+    if (!isDuplicate) {
+        // 선택한 옵션의 값을 포함하는 <div> 생성
+        var newDiv = $("<div>", {
+            "class": "wish-sel",
+            "id": selectedValue,
+            "value": selectedValue,
+            html: selectedValue + '<img src=""/>'
+        });
+
+        // 생성한 <div>를 #sel-box에 추가
+        $(".wish-lang-box").append(newDiv);
+    }
+});

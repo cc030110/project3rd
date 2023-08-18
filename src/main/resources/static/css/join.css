@@ -23,3 +23,27 @@
     padding: 10px;
     box-sizing: border-box;
 }
+/*.join-box-right select {*/
+/*    display: block;*/
+/*    margin-bottom: 10px; !* 각 요소 사이에 여백 추가 *!*/
+/*}*/
+
+
+.lang-choose {
+    display: flex; /* 가로 정렬을 위한 flex 컨테이너로 설정 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+.use-lang-box, .wish-lang-box{
+    flex: 1; /* 남은 공간을 채우도록 flex-grow 설정 */
+    margin-right: 10px; /* 오른쪽 여백 추가 */
+}
+
+.use-lang-box  div, .wish-lang-box div {
+    display: inline-block; /* 내용을 한 줄에 나란히 표시 */
+    vertical-align: top; /* 상단 정렬 */
+}
+
+.line{
+    margin-bottom: 30px;
+}
