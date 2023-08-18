@@ -110,21 +110,21 @@ public class UserController {
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
     public Map join(@ModelAttribute UserRequestDto userRequestDto){
         JSONObject response = new JSONObject();
-        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
 
-        try {
-            User user = userRepository.findById(userRequestDto.getId()).orElseThrow(
-                    () -> new IllegalArgumentException("ID 중복 확인")
-            );
 
-            // admin table의 id도 사용 불가능 <- 확인 필요
+//        User user = userRepository.findById(userRequestDto.getId()).orElse(null);
+//        System.out.println(user);
 
-            response.put("join", "fail");
-        } catch (Exception e) {
-            User newUser = new User(userRequestDto, url);
-            userRepository.save(newUser);
-            response.put("join", "success");
-        }
+//        // admin 계정을 위해서 if else로 수정
+//        if (user==null){
+//            // admin table의 id도 사용 불가능 <- 확인 필요
+//            User newUser = new User(userRequestDto);
+//            userRepository.save(newUser);
+//            response.put("join", "success");
+//        } else {
+//            response.put("join", "fail");
+//        }
+        response.put("join", "success");
         return response.toMap();
     }
 
@@ -160,24 +160,24 @@ public class UserController {
     }
 
     /** 회원 정보 수정 **/
-    @PutMapping(value = "update", consumes = {"multipart/form-data"})
-    public Map update(@CookieValue(value = "accessToken", required = false) String accessToken, @ModelAttribute UserRequestDto userRequestDto){
-        JSONObject response = new JSONObject();
-        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
-        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-        String id = claims.get("id", String.class);
-        String name = claims.get("name", String.class);
-
-        if(id != null){
-            Optional<User> optionalUser = userRepository.findById(id);
-            User user = optionalUser.orElse(null);
-            userRequestDto.setId(id);
-            userService.updateUser(id, name, userRequestDto, url);
-            response.put("user", "update");
-            return response.toMap();
-        }
-        return null;
-    }
+//    @PutMapping(value = "update", consumes = {"multipart/form-data"})
+//    public Map update(@CookieValue(value = "accessToken", required = false) String accessToken, @ModelAttribute UserRequestDto userRequestDto){
+//        JSONObject response = new JSONObject();
+//        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
+//        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+//        String id = claims.get("id", String.class);
+//        String name = claims.get("name", String.class);
+//
+//        if(id != null){
+//            Optional<User> optionalUser = userRepository.findById(id);
+//            User user = optionalUser.orElse(null);
+//            userRequestDto.setId(id);
+//            userService.updateUser(id, name, userRequestDto, url);
+//            response.put("user", "update");
+//            return response.toMap();
+//        }
+//        return null;
+//    }
 
 
     /** 회원 탈퇴 **/

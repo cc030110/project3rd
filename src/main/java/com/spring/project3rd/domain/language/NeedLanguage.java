@@ -1,4 +1,4 @@
-package com.spring.project3rd.domain.user;
+package com.spring.project3rd.domain.language;
 
 import lombok.*;
 
@@ -10,13 +10,14 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(name="use_language")
+@Table(name="need_language")
 @Setter
 @ToString
-public class UseLanguage {
+public class NeedLanguage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int usedNo;
+    private int needNo;
     private String id;
     private String languageName;
 }

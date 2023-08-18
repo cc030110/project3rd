@@ -21,7 +21,7 @@ public class UserRequestDto {
     private String email;
     private String gender;
     private Short age;
-    private MultipartFile profileImg;
+    private String profileImg;
     private String liveCountry;
     private String liveCity;
     private Short warningCount;
