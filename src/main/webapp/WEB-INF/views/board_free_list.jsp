@@ -18,7 +18,54 @@
     <c:import url="header.jsp"/>
     <div class="main">
         <h2><a href="/board/free/list/1">자유게시판</a></h2>
-        <div></div>
+        <div>
+            <span>총 ${boardList.getTotalElements()} 건</span>
+            <span>[${boardList.getNumber()+1}/${boardList.getTotalPages()}]</span>
+        </div>
+        <div class="search-box">
+            <select>
+                <option value="title" selected>제목</option>
+                <option value="author">작성자</option>
+            </select>
+            <input type="text">
+            <input type="button" onclock="search()" value="검색">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:if test="${not empty boardList.content}">
+                    <c:forEach items="${boardList.content}" var="board" varStatus="vs">
+                        <tr>
+                            <td class="no">
+                                ${board.boardNo}
+                            </td>
+                            <td class="title">
+                                <a href="/board/free/${board.boardNo}">
+                                    ${board.title}
+                                </a>
+                            </td>
+                            <td class="author">
+                                ${authorList.get(vs.index)}
+                            </td>
+                            <td class="createdAt">
+                                ${board.createdAt}
+                            </td>
+                            <td class="views">
+                                ${board.views}
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:if>
+            </tbody>
+        </table>
     </div>
     <c:import url="footer.jsp"/>
 </div>

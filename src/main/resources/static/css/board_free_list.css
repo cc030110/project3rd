@@ -1,4 +1,33 @@
+.main{
+    padding: 5%;
+    background-color: #6868e5;
+}
+
 h2{
     text-align: center;
-
 }
+
+h2>a{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+table{
+    border-top: 1px solid black;
+    border-collapse: collapse;
+}
+
+thead{
+    background-color: silver;
+}
+
+th,td{
+    padding: 10px;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+th:first-child, td:first-child {
+    border-left: none;
+}
+

@@ -26,7 +26,6 @@ a,a:active,a:visited{
 }
 
 .header{
-    width: 100%;
     grid-area: header;
     background-color: bisque; /* 확인용 */
     display: flex;
@@ -35,13 +34,11 @@ a,a:active,a:visited{
 }
 
 .main{
-    width: 100%;
     grid-area: main;
     min-height: 80vh;
 }
 
 .footer{
-    width: 100%;
     grid-area: footer;
     background-color:bisque; /* 확인용 */
 }

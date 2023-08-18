@@ -83,7 +83,7 @@ public class BoardFreeController {
             }
         }
 
-        // 검색어 구분 
+        // 검색어 구분
         if (title != null && !title.isEmpty()) { // 제목 검색
             getBoardList = boardFreeRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page - 1));
         } else if (author != null && !author.isEmpty()) { // 작성자 검색
@@ -91,8 +91,6 @@ public class BoardFreeController {
         } else { // 검색 없음
             getBoardList = boardFreeRepository.findByIdNotIn(excludeIds, pageable.withPage(page - 1));
         }
-
-        System.out.println(getBoardList);
 
         // 게시판 리스트 view에 추가 (boardList는 Page<BoardFree> 타입, 페이지 정보도 포함)
         view.addObject("boardList", getBoardList);
@@ -110,7 +108,6 @@ public class BoardFreeController {
             }
             // 게시판 리스트 작성 유저의 name 리스트 view에 추가
             view.addObject("authorList",getAuthorList);
-            System.out.println(getAuthorList);
         }
 
         return view;
