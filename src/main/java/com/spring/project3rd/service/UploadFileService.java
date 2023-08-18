@@ -23,7 +23,7 @@ public class UploadFileService {
     private final Uploadcare uploadcare;
 
     // 파일 업로드 여러장
-    public List<String> uploadImgFiles(List<MultipartFile> files){
+    public List<String>     uploadImgFiles(List<MultipartFile> files){
         List<String> response = new ArrayList<>();
         for(MultipartFile imgs : files){
             try {

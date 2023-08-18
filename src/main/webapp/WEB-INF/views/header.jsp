@@ -20,9 +20,9 @@
     </div>
     <div class="header-menu">
         <ul>
-            <li><a href="/user/list">회원게시판</a></li>
-            <li><a href="/board/free/list/1">자유게시판</a></li>
-            <li><a href="/board/community/main/1">모집게시판</a></li>
+            <li><a href="/user/list"><spring:message code="header.profile"/></a></li>
+            <li><a href="/board/free/list/1"><spring:message code="header.free"/></a></li>
+            <li><a href="/board/community/main/1"><spring:message code="header.community"/></a></li>
         </ul>
     </div>
     <div class="login" id="login">

@@ -7,5 +7,4 @@ import java.util.List;
 public interface BoardCommunityImgRepository extends JpaRepository<BoardCommunityImg,Integer> {
 
     public List<BoardCommunityImg> findByBoardNo(int boardNo);
-
 }

@@ -1,6 +1,7 @@
 package com.spring.project3rd.domain.boardCommunity;
 
 
+import com.spring.project3rd.domain.platform.Platform;
 import com.spring.project3rd.util.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +41,7 @@ public class BoardCommunity extends Timestamp{
 
     @Column
     private short isModified;
+
 
     public BoardCommunity(BoardCommunityRequestDto bcDto) {
         super();
