@@ -5,6 +5,8 @@ import com.spring.project3rd.domain.boardCommunity.BoardCommunityRepository;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunityRequestDto;
 import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImg;
 import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImgRepository;
+import com.spring.project3rd.domain.platform.Platform;
+import com.spring.project3rd.domain.platform.PlatformRepository;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BoardCommunityService;
@@ -12,8 +14,10 @@ import com.spring.project3rd.service.UploadFileService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +38,7 @@ public class BoardCommunityController{
     private final BoardCommunityImgRepository boardCommunityImgRepository;
     private final UploadFileService uploadFileService;
     private final JwtTokenizer jwtTokenizer;
+    private final PlatformRepository platformRepository;
 
     // 게시글 번호로 게시글 가져오기
     public BoardCommunity getBoardByBoardNo(int boardNo){
@@ -43,6 +48,15 @@ public class BoardCommunityController{
         return bc;
     }
 
+    // 플렛폼 아이디로 플랫폼 이미지 가져오기
+    /*@GetMapping("/platform/{platformName}")
+    public String getPlatformByName(@PathVariable String platformName, Model model) {
+        Platform platform = platformRepository.findByPlatformName(platformName);
+        if (platform != null) {
+            model.addAttribute("platform", platform);
+        }
+        return "board_community_main"; // JSP 페이지 이름
+    }*/
 
     // # Read
     // 커뮤니티 게시판 전체 조회
@@ -80,6 +94,9 @@ public class BoardCommunityController{
         view.addObject("cookie",id);
 
         if(board!=null){
+            Platform platform=platformRepository.findByPlatformName(board.getPlatformName());
+            view.addObject("platform",platform);
+
             int boardNo = board.getBoardNo();
             List<BoardCommunityImg> imgList = boardCommunityImgRepository.findByBoardNo(boardNo);
             // 해당 게시글에 업로드된 파일이 존재할 경우
@@ -150,17 +167,20 @@ public class BoardCommunityController{
     // # Update
     // 게시글 수정
     @PutMapping(value="/update/{boardNo}", consumes={"multipart/form-data"})
-    public Response boardUpdate(@PathVariable int boardNo, @ModelAttribute BoardCommunityRequestDto bcDto, WebRequest request){
-        String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
+    public Response boardUpdate(@PathVariable int boardNo, @ModelAttribute BoardCommunityRequestDto bcDto,
+                                @CookieValue(value="accessToken",required = false) String accessToken){
+        Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+        String id=claims.get("id",String.class);
+
         short modifyCheck=1;
 
-        if(log==null){
+        if(id==null){
             return new Response("update","fail:have to log in");
         }
 
-        bcDto.setId(log);
+        bcDto.setId(id);
         bcDto.setIsModified(modifyCheck);
-        boardCommunityService.updateBoardByBoardNo(boardNo,log,bcDto);
+        boardCommunityService.updateBoardByBoardNo(boardNo,id,bcDto);
 
         return new Response("Board Update","success");
     }

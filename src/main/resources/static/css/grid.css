@@ -55,8 +55,18 @@ a,a:active,a:visited{
     flex-grow: 1;
 }
 
+.login a:hover{
+    color: brown;
+    border-bottom: 2px solid salmon;
+}
+
 .join{
     flex-grow: 1;
+}
+
+.join a:hover{
+    color: brown;
+    border-bottom: 2px solid salmon;
 }
 
 .lang-select{
