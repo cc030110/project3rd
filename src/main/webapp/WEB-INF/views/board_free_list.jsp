@@ -53,7 +53,7 @@
                                 </a>
                             </td>
                             <td class="author">
-                                ${authorList.get(vs.index)}
+                                ${authorList.get(board.id)}
                             </td>
                             <td class="createdAt">
                                 ${board.createdAt}

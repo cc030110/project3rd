@@ -27,9 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -100,14 +98,15 @@ public class BoardFreeController {
         // 가져온 리스트가 하나라도 있을 경우
         if(!boardFreeList.isEmpty()){
             // getBoardList의 id를 이용하여 해당 id 유저의 name 정보 가져오기
-            List<String> getAuthorList = new ArrayList<>();
+            // hashmap(key-value)로 넣기
+            Map<String,String> authorList = new HashMap<>();
             for (BoardFree boardFree : boardFreeList) {
                 String id = boardFree.getId();
                 String name = userService.getUserName(id);
-                getAuthorList.add(name);
+                authorList.put(id,name);
             }
             // 게시판 리스트 작성 유저의 name 리스트 view에 추가
-            view.addObject("authorList",getAuthorList);
+            view.addObject("authorList",authorList);
         }
 
         return view;
