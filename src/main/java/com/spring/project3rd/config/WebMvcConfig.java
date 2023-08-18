@@ -2,6 +2,8 @@
 
 package com.spring.project3rd.config;
 
+
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.LocaleResolver;
@@ -29,7 +31,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     // 프론트엔드는 3000번 포트(React.js), 백엔드는 8080번 포트
     // http://localhost:3000 ---> 8080 api를 호출할 수 있도록 설정.
 
-
     @Bean
     public LocaleResolver localeResolver(){
         SessionLocaleResolver slr=new SessionLocaleResolver();
@@ -39,6 +40,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return slr;
     }
 
+    // 2023.08.18 주석처리
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor(){
         LocaleChangeInterceptor localeChangeInterceptor=new LocaleChangeInterceptor();
@@ -48,9 +50,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override // 인터셉터에 추가
     public void addInterceptors(InterceptorRegistry registry){
-
         registry.addInterceptor(localeChangeInterceptor());
     }
+
 }
 
 

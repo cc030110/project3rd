@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface PlatformRepository extends JpaRepository<Platform,String> {
 
-    public Platform findByPlatformName(String platformName);
 }

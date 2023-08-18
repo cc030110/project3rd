@@ -2,12 +2,9 @@
 
 $(document).ready(function() {
     let selLang = localStorage.getItem("locales");
-
     $('#locales').val(selLang ? selLang : 'en');
-
     $("#locales").change(function() {
         let selectedOption = $('#locales').val();
-
         if (selectedOption) {
             window.location.replace('?lang=' + selectedOption);
             localStorage.setItem("locales", selectedOption);

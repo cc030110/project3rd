@@ -23,16 +23,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 //@Controller
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("board/community")
 public class BoardCommunityController{
-
     private final BoardCommunityRepository boardCommunityRepository;
     private final BoardCommunityService boardCommunityService;
     private final BoardCommunityImgRepository boardCommunityImgRepository;
@@ -47,16 +44,6 @@ public class BoardCommunityController{
         );
         return bc;
     }
-
-    // 플렛폼 아이디로 플랫폼 이미지 가져오기
-    /*@GetMapping("/platform/{platformName}")
-    public String getPlatformByName(@PathVariable String platformName, Model model) {
-        Platform platform = platformRepository.findByPlatformName(platformName);
-        if (platform != null) {
-            model.addAttribute("platform", platform);
-        }
-        return "board_community_main"; // JSP 페이지 이름
-    }*/
 
     // # Read
     // 커뮤니티 게시판 전체 조회
@@ -75,6 +62,15 @@ public class BoardCommunityController{
         // 가져온 리스트를 view에 저장
         view.addObject("list",list);
 
+        // 플랫폼 객체 가져오기
+        Map<String,String> platforms = new HashMap<>();
+        List<Platform> platformList = platformRepository.findAll();
+        for (Platform platform : platformList) {
+            platforms.put(platform.getPlatformName(), platform.getPlatformImg());
+        }
+
+        view.addObject("platform", platforms);  // 플랫폼을 view에 저장
+
         return view;
     }
 
@@ -84,24 +80,25 @@ public class BoardCommunityController{
                                   @CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("board_community");
 
-        Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
-        String id=claims.get("id",String.class);
-
         Optional<BoardCommunity> optionalBoard = boardCommunityRepository.findById(boardNum);
         BoardCommunity board = optionalBoard.orElse(null);
 
         view.addObject("board",board);
-        view.addObject("cookie",id);
 
         if(board!=null){
-            Platform platform=platformRepository.findByPlatformName(board.getPlatformName());
-            view.addObject("platform",platform);
-
             int boardNo = board.getBoardNo();
             List<BoardCommunityImg> imgList = boardCommunityImgRepository.findByBoardNo(boardNo);
+
             // 해당 게시글에 업로드된 파일이 존재할 경우
             if(!imgList.isEmpty()){
                 view.addObject("imgList",imgList);
+            }
+
+            // 로그인 상태 확인 및 전달
+            if(accessToken!=null){
+                Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+                String id=claims.get("id",String.class);
+                view.addObject("id",id);
             }
         }
         return view;
