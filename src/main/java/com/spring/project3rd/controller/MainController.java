@@ -46,7 +46,6 @@ public class MainController {
         if(accessToken!=null){
             return "board_community_write";
         }
-
         return "login";
     }
 

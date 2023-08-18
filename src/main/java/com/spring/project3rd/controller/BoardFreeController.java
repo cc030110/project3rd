@@ -191,20 +191,24 @@ public class BoardFreeController {
     public ModelAndView boardFreeUpdate(@PathVariable("no")int no,@CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("board_free_update");
 
-        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-        String id = claims.get("id",String.class);
+        String id="";
+        if(accessToken!=null){
+            Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+            id = claims.get("id",String.class);
+        }
+
         BoardFree board = boardFreeRepository.findById(no).orElse(null);
 
         // err 존재할 경우 html onload 시 해당 메세지를 출력 후 다른 페이지로 이동
         if(board==null){
             view.addObject("err-board","게시글이 존재하지 않습니다.");
-        }else if(id==null){
+        }else if(id.isEmpty()){
             view.addObject("err-login","로그인 후 이용 가능한 서비스입니다.");
-        }else if(id.equals(board.getId())){
+        }else if(!id.equals(board.getId())){
+            view.addObject("err-author","게시글 작성자만 수정 가능합니다.");
+        }else{
             view.addObject("author",id);
             view.addObject("board",board);
-        }else{
-            view.addObject("err-author","게시글 작성자만 수정 가능합니다.");
         }
 
         return view;
