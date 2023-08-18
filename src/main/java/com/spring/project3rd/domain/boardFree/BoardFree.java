@@ -34,4 +34,13 @@ public class BoardFree extends Timestamp {
         this.views = 0;
     }
 
+    public void viewPlus(){
+        this.views+=1;
+    }
+
+    public void update(BoardFreeRequestDto boardDto){
+        this.title = boardDto.getTitle();
+        this.contents = boardDto.getContents();
+        this.isModified = 1;
+    }
 }

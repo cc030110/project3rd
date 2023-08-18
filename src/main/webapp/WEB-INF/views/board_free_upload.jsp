@@ -17,16 +17,13 @@
                 <textarea id="contents" name="contents" placeholder="내용"></textarea>
                 <input type="file" id="file" name="file" accept="image/png, image/jpg, image/jpeg, image.gif" multiple>
                 <div class="img-box">
-
                 </div>
                 <input type="button" value="작성" id="submit-bnt" onclick="uploadBoard()">
             </form>
-
-
         </div>
     </div>
     <c:import url="footer.jsp"/>
 </div>
-<script src="/script/board-free.js"></script>
+<script src="/script/board-free-upload.js"></script>
 </body>
 </html>

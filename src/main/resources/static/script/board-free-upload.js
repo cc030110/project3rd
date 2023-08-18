@@ -1,6 +1,3 @@
-
-
-
 $(document).ready(function() {
     $('#file').on('change', function() {
         let files = $('#file').prop('files'); // FileList 객체

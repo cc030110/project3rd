@@ -1,9 +1,11 @@
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.boardFree.BoardFree;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MainController {
@@ -50,12 +52,14 @@ public class MainController {
 
     // 자유게시판 - 게시글 업로드
     @GetMapping("/board/free/upload")
-    public String uploadPage(@CookieValue(value = "accessToken", required = false) String accessToken){
+    public String boardFreeUpload(@CookieValue(value = "accessToken", required = false) String accessToken){
         if(accessToken!=null){
             return "board_free_upload";
         }
         return "login";
     }
+
+
 }
 
 

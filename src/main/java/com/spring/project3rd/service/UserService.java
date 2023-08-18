@@ -39,8 +39,7 @@ public class UserService {
     // 유저 아이디를 받아 해당 유저의 name 리턴
     public String getUserName(String id){
         String name = "";
-        Optional<User> optionalUser = userRepository.findById(id);
-        User user = optionalUser.orElse(null);
+        User user = userRepository.findById(id).orElse(null);
         if(user!=null){
             name=user.getName();
         }

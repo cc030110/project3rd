@@ -12,14 +12,14 @@ public interface BoardFreeRepository extends JpaRepository<BoardFree,Integer> {
     public List<BoardFree> findByTitleContaining(String keyword, Pageable pageable);
 
     // 게시판 목록 - 검색 X, 특정 유저(정지 및 블락) 제외
-    public Page<BoardFree> findByIdNotInOrderByBoardNoDesc(List<String> excludedIds, Pageable pageable);
+    public Page<BoardFree> findByIdNotIn(List<String> excludedIds, Pageable pageable);
 
     // 게시판 목록 - 제목 검색(특정 유저 제외)
-    public Page<BoardFree> findByTitleContainingAndIdNotInOrderByBoardNoDesc(String title, List<String> excludedIds, Pageable pageable);
+    public Page<BoardFree> findByTitleContainingAndIdNotIn(String title, List<String> excludedIds, Pageable pageable);
 
     // 게시판 목록 - 작성자 검색(특정 유저 제외)
-    public Page<BoardFree> findByIdContainingAndIdNotInOrderByBoardNoDesc(String id, List<String> excludedIds, Pageable page);
+    public Page<BoardFree> findByIdContainingAndIdNotIn(String id, List<String> excludedIds, Pageable page);
 
-    // 게시판 목록 -
+
 
 }
