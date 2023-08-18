@@ -13,7 +13,7 @@
 
     <title>GLOBALTIES</title>
 
-    <script>
+    <%--<script>
         const token="${cookie.accessToken.value}";
         const tokenParts = token.split('.');
 
@@ -26,7 +26,7 @@
         }else{
             console.log("토큰형식이 잘못되었습니다.");
         }
-    </script>
+    </script>--%>
 </head>
 
 <body>
@@ -82,8 +82,9 @@
                     </c:if>
 
                     <!-- 보류 -->
+
                     <li>
-                        <c:if test="${cookie.id==board.id}">
+                        <c:if test="${board.id==id}">
                             <input type="button" id="modify_btn" value="수정하기" onclick="moveToUpdate()">
                             <input type="button" id="delete_btn" value="삭제하기" onclick="deleteBoard()">
                         </c:if>

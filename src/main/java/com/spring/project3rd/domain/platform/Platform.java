@@ -17,9 +17,4 @@ public class Platform {
 
     @Column
     private String platformImg;
-
-    public Platform(String platformName, String url){
-        this.platformName=platformName;
-        this.platformImg=url;
-    }
 }

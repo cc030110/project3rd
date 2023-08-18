@@ -33,11 +33,16 @@
         padding:20px;
     }
 
+    div.con_list a:hover{
+        cursor:pointer;
+        border:1px solid red;
+    }
+
     div.con_platform{
         float:left;
     }
 
-    div.con_platform_img{
+    div.con_platform>img{
         width:150px;
         height:150px;
         border:1px solid gray;
@@ -61,28 +66,26 @@
     <c:import url="header.jsp"/>
         <div class="main">
             <c:forEach items="${list}" var="listItem" varStatus="vs">
-                <div class="con_list">
-                    <!-- 게시판에 넣을 플랫폼 -->
-                    <div class="con_platform">
-                        <div class="con_platform_img">
-                            <p>${listItem.platformName}</p>
-<%--                            <img src="${listItem.}" alt="${listItem.platformName}">--%>
-                        </div>
+                <a href="/board/community/${listItem.boardNo}">
+                    <div class="con_list">
+                        <!-- 게시판에 넣을 플랫폼 -->
+                            <div class="con_platform">
+                                <img src="${platform.get(listItem.platformName)}" alt="이미지 불러오기 실패">
+                                <div class="con_platform_name">
+                                    <p>${listItem.platformName}</p>
+                                </div>
+                            </div>
 
-                        <div class="con_platform_name">
-                            <p>${listItem.platformName}</p>
-                        </div>
+                            <div class="con_text">
+                                <p>${listItem.title}</p><!-- 제목 -->
+                                <p>${listItem.contents}</p><!-- 내용 -->
+                                <p><spring:message code="board_community_main.author"/> : ${listItem.id}</p>
+                                <p><spring:message code="board_community_main.participants"/>: ${listItem.participantsNum}</p>
+                                <p><spring:message code="board_community_main.createdAt"/> : ${listItem.createdAt}</p>
+                                <p><spring:message code="board_community_main.deadline"/>: ${listItem.deadline}</p>
+                            </div>
                     </div>
-
-                    <div class="con_text">
-                        <p>${listItem.title}</p><!-- 제목 -->
-                        <p>${listItem.contents}</p><!-- 내용 -->
-                        <p><spring:message code="board_community_main.author"/> : ${listItem.id}</p>
-                        <p><spring:message code="board_community_main.participants"/>: ${listItem.participantsNum}</p>
-                        <p><spring:message code="board_community_main.createdAt"/> : ${listItem.createdAt}</p>
-                        <p><spring:message code="board_community_main.deadline"/>: ${listItem.deadline}</p>
-                    </div>
-                </div>
+                </a>
             </c:forEach>
         </div>
     <c:import url="footer.jsp"/>
