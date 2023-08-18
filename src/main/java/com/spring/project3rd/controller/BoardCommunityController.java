@@ -94,9 +94,6 @@ public class BoardCommunityController{
         view.addObject("cookie",id);
 
         if(board!=null){
-            Platform platform=platformRepository.findByPlatformName(board.getPlatformName());
-            view.addObject("platform",platform);
-
             int boardNo = board.getBoardNo();
             List<BoardCommunityImg> imgList = boardCommunityImgRepository.findByBoardNo(boardNo);
             // 해당 게시글에 업로드된 파일이 존재할 경우
