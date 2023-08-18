@@ -13,20 +13,6 @@
 
     <title>GLOBALTIES</title>
 
-    <%--<script>
-        const token="${cookie.accessToken.value}";
-        const tokenParts = token.split('.');
-
-        if(tokenParts.length === 3){
-            const payloadBase64 = tokenParts[1];
-            const payload = JSON.parse(atob(payloadBase64));
-
-            const userId=payload.userid;
-            console.log(userId);
-        }else{
-            console.log("토큰형식이 잘못되었습니다.");
-        }
-    </script>--%>
 </head>
 
 <body>
@@ -121,8 +107,6 @@
 
         <c:import url="footer.jsp"/>
     </div>
-
-
 
     <script src="/script/board-community.js"></script>
 

@@ -22,13 +22,6 @@ public class MainController {
         return "login";
     }
 
-    // 회원가입
-//    @GetMapping("/user/join")
-//    public String JoinForm() {
-//        return "user_join";
-//    }
-
-
     // 유저 리스트(프로필 게시판)
     @GetMapping("/user/list")
     public String userList() {
