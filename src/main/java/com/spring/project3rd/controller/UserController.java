@@ -1,6 +1,7 @@
 
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.language.Language;
 import com.spring.project3rd.domain.language.LanguageRepository;
 import com.spring.project3rd.domain.user.*;
@@ -11,7 +12,9 @@ import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -106,7 +109,6 @@ public class UserController {
             }
             view.addObject("languageCode",languageCode);
         }
-
         return view;
     }
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
@@ -175,15 +177,24 @@ public class UserController {
     }
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
-    @GetMapping("/list/{pageNumber}")
-    public List<User> getUserAll(@PathVariable() int pageNumber, @RequestParam(required = false) String keyword, @PageableDefault(size = 10) Pageable pageable){
-        if(keyword != null && !keyword.equals("")) {
-            String pattern = "%" + keyword + "%";
-            return userRepository.findAllByIdLike(pattern, pageable.withPage(pageNumber-1));
-        } else {
-            return userRepository.findAll(pageable.withPage(pageNumber-1)).getContent();
-        }
+    @GetMapping("list/{page}")
+    public ModelAndView userList(@PathVariable("page") int page,
+                                 @RequestParam(defaultValue = "") String keyword,
+                                 @PageableDefault(size = 3) Pageable pageable,
+                                 @CookieValue(value = "accessToken", required = false) String accessToken){
+
+        ModelAndView view = new ModelAndView("user_list");
+        Page<User> getUserList = null;
+
+        getUserList = userRepository.findAll(pageable);
+
+        view.addObject("userList", getUserList);
+
+        return view;
     }
+
+
+
 
     /** 회원 정보 수정 **/
 //    @PutMapping(value = "update", consumes = {"multipart/form-data"})
