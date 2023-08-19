@@ -1,0 +1,45 @@
+body{
+    width:100%;
+    padding:0;
+    margin:0;
+}
+
+div.main{
+    width:100%;
+    margin:0 auto;
+}
+
+div.con_list{
+    width:1000px;
+    height:200px;
+    border:1px solid black;
+    margin:20px 0;
+    padding:20px;
+}
+
+div.con_list a:hover{
+    cursor:pointer;
+    border:1px solid red;
+}
+
+div.con_platform{
+    float:left;
+}
+
+div.con_platform>img{
+    width:150px;
+    height:150px;
+    border:1px solid gray;
+}
+
+div.con_platform_name{
+    width:80px;
+    margin-top:10px;
+    padding:10px;
+    border:1px solid gray;
+    text-align:center;
+}
+
+div.con_text{
+    margin-left:200px;
+}

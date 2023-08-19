@@ -26,11 +26,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return messageSource;
     }*/
 
-    // CORS에 대한 설정, CORS는 Cross Origin Resource Sharing의 약자
-    // 프론트엔드, 백엔드 개발
-    // 프론트엔드는 3000번 포트(React.js), 백엔드는 8080번 포트
-    // http://localhost:3000 ---> 8080 api를 호출할 수 있도록 설정.
-
     @Bean
     public LocaleResolver localeResolver(){
         SessionLocaleResolver slr=new SessionLocaleResolver();
