@@ -8,11 +8,7 @@
 <html>
 
 <head>
-    <!-- CSS -->
-    <link rel="stylesheet" href="/css/grid.css">
-
     <title>GLOBALTIES</title>
-
 </head>
 
 <body>
@@ -66,8 +62,6 @@
                             </c:forEach>
                         </div>
                     </c:if>
-
-                    <!-- 보류 -->
 
                     <li>
                         <c:if test="${board.id==id}">

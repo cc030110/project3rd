@@ -80,3 +80,31 @@ a,a:active,a:visited{
     color: brown;
     border-bottom: 2px solid salmon;
 }
+
+/* 푸터 CSS   --황인규*/
+div.footer{
+    display : flex;
+    justify-content:center;
+    flex-direction : column;
+    align-items : center;
+}
+
+div.footer_logo{
+    font-weight:800;
+}
+
+div.footer_detail{
+    margin-top:10px;
+}
+
+div.footer_detail>ul{
+    list-style:none;
+    display:flex;
+    padding:0;
+}
+
+div.footer_detail>ul>li{
+    margin-right:10px;
+    font-size:0.8rem;
+    color:black;
+}

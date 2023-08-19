@@ -7,9 +7,6 @@
 <html>
 
 <head>
-    <!-- CSS -->
-    <link rel="stylesheet" href="/css/grid.css">
-
     <title>GLOBALTIES</title>
 </head>
 

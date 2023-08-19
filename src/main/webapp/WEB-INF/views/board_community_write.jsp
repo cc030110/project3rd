@@ -8,7 +8,6 @@
 
 <head>
     <!-- CSS -->
-    <link rel="stylesheet" href="/css/grid.css">
     <link rel="stylesheet" href="/css/board_write_update.css">
 
     <title>GLOBALTIES</title>
