@@ -47,3 +47,31 @@
 .line{
     margin-bottom: 30px;
 }
+
+
+/* 프로필 이미지 선택 input file을 보이지 않게 하고, 대신 라벨 클릭 시 버튼 기능으로 만듦 */
+input[type=file]#profileImg{
+    visibility: hidden;
+}
+#profileImgBtn{ /* 나중에 괜찮은 버튼 모양으로 바꿔주세요 */
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: silver;
+    cursor: pointer;
+}
+
+/* 프로필 이미지 크기 조정 필요 */
+.profile-img-box>img{
+    width: 100px;
+    height: 100px;
+}
+
+/* error은 input, err는 p */
+.error{
+    border-color: red;
+}
+
+.err{
+    display: none;
+    color: red;
+}

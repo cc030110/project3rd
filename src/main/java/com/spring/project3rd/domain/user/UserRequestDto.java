@@ -21,7 +21,8 @@ public class UserRequestDto {
     private String email;
     private String gender;
     private Short age;
-    private String profileImg;
+    // request는 이미지 파일을 url로 받지 않으므로 mulipartfile
+    private MultipartFile profileImg;
     private String liveCountry;
     private String liveCity;
     private Short warningCount;

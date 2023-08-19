@@ -4,6 +4,7 @@ package com.spring.project3rd.controller;
 import com.spring.project3rd.domain.language.Language;
 import com.spring.project3rd.domain.language.LanguageRepository;
 import com.spring.project3rd.domain.user.*;
+import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.UploadFileService;
 import com.spring.project3rd.service.UserService;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
@@ -96,6 +98,7 @@ public class UserController {
     public ModelAndView JoinForm() {
         ModelAndView view = new ModelAndView("user_join");
         List<Language> languages = languageRepository.findAll();
+        // DB에 저장되어있는 언어코드 목록 가져오기
         if(!languages.isEmpty()){
             List<String> languageCode = new ArrayList<>();
             for (Language language : languages) {
@@ -106,26 +109,49 @@ public class UserController {
 
         return view;
     }
-
     @PostMapping(value = "join", consumes = {"multipart/form-data"})
-    public Map join(@ModelAttribute UserRequestDto userRequestDto){
-        JSONObject response = new JSONObject();
+    public Response join(@RequestBody Map<String,Object> userData){
+        UserRequestDto userDto = (UserRequestDto) userData.get("user");
+        // 아이디 중복 검사
+        String id = userDto.getId();
+        User user = userRepository.findById(id).orElse(null);
+        if(user!=null){
+            return new Response("join-err-id","중복되는 아이디 사용 불가");
+        }
+        // 이메일 중복 검사
+        String email = userDto.getEmail();
+        user = userRepository.findByEmail(email);
+        if(user!=null){
+            return new Response("join-err-email","중복되는 이메일 사용 불가");
+        }
+        // 이름(닉네임) 중복 검사
+        String name = userDto.getName();
+        user = userRepository.findByName(name);
+        if(user!=null){
+            return new Response("join-err-name","중복되는 닉네임 사용 불가");
+        }
 
+        // 프로필 이미지 등록
+        MultipartFile profileImg = userDto.getProfileImg();
+        String profileUrl = null;
+        if(profileImg!=null){
+            profileUrl = uploadFileService.uploadImgFile(profileImg);
+            System.out.println(profileUrl);
+            if(profileUrl.equals("fail")){
+                return new Response("join-err-profile","프로필 이미지 업로드 실패");
+            }
+        }
 
-//        User user = userRepository.findById(userRequestDto.getId()).orElse(null);
-//        System.out.println(user);
+        User joinUser = new User(userDto,profileUrl);
 
-//        // admin 계정을 위해서 if else로 수정
-//        if (user==null){
-//            // admin table의 id도 사용 불가능 <- 확인 필요
-//            User newUser = new User(userRequestDto);
-//            userRepository.save(newUser);
-//            response.put("join", "success");
-//        } else {
-//            response.put("join", "fail");
-//        }
-        response.put("join", "success");
-        return response.toMap();
+        try{
+            // 만약 save중 에러가 날 경우 catch로...
+            userRepository.save(joinUser);
+        }catch (Exception e){
+            return new Response("join-err","회원가입 실패");
+        }
+
+        return new Response("join-success","회원가입 성공");
     }
 
     /** 유저 1인 정보 불러오기(회원 수정에 쓸거)**/

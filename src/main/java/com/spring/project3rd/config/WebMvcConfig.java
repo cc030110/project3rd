@@ -34,7 +34,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver(){
         SessionLocaleResolver slr=new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.US); // 1차 수정
+//        slr.setDefaultLocale(Locale.US); // 기본 US
+        slr.setDefaultLocale(Locale.KOREA); // 기본 한국 설정
         slr.setLocaleAttributeName("session.current.locale");
 //        slr.setTimeZoneAttributeName("session.current.timezone");
         return slr;
