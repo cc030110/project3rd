@@ -1,14 +1,14 @@
 $(document).ready(function() {
     // 입력 필드가 변경될 때 에러 클래스 및 에러 메시지 제거
-    $('input').on('input', function() {
+    $('input, select').on('input change', function() {
         $(this).removeClass('error');
-        $(this).next('.err').hide()
+        $(this).next('.err').hide();
     });
 
 });
 
 // 유효성 검사 함수
-// 검사할 input 태그, 조건
+// 검사할 input , 조건
 function validateInput(input, condition) {
     // 유효한 정보가 아닐 경우
     if (!condition) {
@@ -24,6 +24,7 @@ function validateInput(input, condition) {
 }
 
 
+
 function joinForm() {
     const id = $('#id');
     const password = $('#password');
@@ -34,55 +35,138 @@ function joinForm() {
     const age = $('#age');
     const liveCountry = $('#liveCountry');
     const liveCity = $('#liveCity');
-    // need-lang과 use-lang 선택 내용도 배열로 가져오고, 1개이상 필택 조건 유효성 확인 필요
+    // use-lang과 need-lang 선택 내용도 배열로 가져오기
+    let useLang = [];
+    $(".use-lang-box span").each(function() {
+        // span의 클래스 이름을 추가함
+        let lang = $(this).attr('class');
+        useLang.push(lang);
+    });
+    let needLang = [];
+    $(".need-lang-box span").each(function() {
+        let lang = $(this).attr('class');
+        needLang.push(lang);
+    });
 
     // id , password 조건
     // id혹은password.val().length >= 8 : 8자리 이상
     // /^[A-Za-z0-9]+$/.test(id.val()) : 영어 대소문자와 숫자로만 구성
 
-    // id 유효성 검사
+    // id,password 유효성 검사 잠깐 꺼둠!!!!
+
+    // // id 유효성 검사
     let condition = id.val().length >= 8 && /^[A-Za-z0-9]+$/.test(id.val());
-    const idValid = validateInput(id, condition);
-    if(!idValid) return;
+    // const idValid = validateInput(id, condition);
+    // if(!idValid) return;
+    //
+    // // password 유효성 검사
+    // condition = password.val().length >= 8 && /^[A-Za-z0-9]+$/.test(password.val());
+    // const passwordValid = validateInput(password,condition);
+    // if(!passwordValid) return;
+    //
+    // // passwordChk 유효성 검사 (비밀번호 확인)
+    // condition = (passwordChk.val()===password.val());
+    // const passwordChkValid = validateInput(passwordChk,condition);
+    // if(!passwordChkValid) return;
 
-    // password 유효성 검사
-    condition = password.val().length >= 8 && /^[A-Za-z0-9]+$/.test(password.val());
-    const passwordValid = validateInput(password,condition);
-    if(!passwordValid) return;
+    // 이메일 유효성 검사 추가 필요
+    // jsp에도 p.err 내용 추가해야함.. 그러면 message에도 등록해야하구...
 
-    // passwordChk 유효성 검사 (비밀번호 확인)
-    condition = (passwordChk.val()===password.val());
-    const passwordChkValid = validateInput(passwordChk,condition);
-    if(!passwordChkValid) return;
 
-    // name, email, liveCountry, liveCity 필수 입력사항
+    // 필수 입력사항들
+    // name
     const nameValid = validateInput(name, name.val()!== '');
     if(!nameValid) return;
+    // email
     const emailValid = validateInput(email, email.val() !== '');
     if(!emailValid) return;
-    const liveCountryValid = validateInput(liveCountry, liveCountry.val() !== '');
+    // liveCountry
+    condition = liveCountry.val() !== '' && liveCountry.val() !== null;
+    const liveCountryValid = validateInput(liveCountry, condition);
     if(!liveCountryValid) return;
-    const liveCityValid = validateInput(liveCity, liveCity.val() !== '');
-    if(!liveCityValid) return;
 
-    // 여기까지 왔다면 통과!
-    // 여기에 이제 ajax 만들면 됨
-    // Map<String,Object>로 만들어서 넘길거임
-    // key:"user"-value:UserRequestDto
-    // key:"needLang"-value:String[] or List<String>
-    // key:"useLang"-value:String[] or List<String>
+    // useLang
+    const useLangValid = validateInput($('#use-lang'),useLang.length!==0);
+    if(!useLangValid) return;
+
+    // needLang
+    const needLangValid = validateInput($('#need-lang'),needLang.length!==0);
+    if(!needLangValid) return;
+
+    // // 여기까지 왔다면 통과!
     console.log("성공!");
-    console.log("id : " + id.val());
-    console.log("password : " + password.val());
-    console.log("passwordChk : " + passwordChk.val());
-    console.log("name : " + name.val());
-    console.log("email : " + email.val());
-    console.log("gender : " + gender.val());
-    console.log("age : " + age.val());
-    console.log("liveCountry : " + liveCountry.val());
-    console.log("liveCity : " + liveCity.val());
-}
 
+    // 프로필 이미지를 먼저 처리 해야함
+    let uploadStatus = true; // 파일 업로드 실패 시 false
+    let profileUrl="";
+
+    let file = $('#profileImg').prop('files'); // FileList 객체
+    let formData = new FormData(); // FormData 객체 생성
+    if (file.length > 0) {
+        formData.append("img", file[0]); // 첫 번째 파일 데이터 추가
+        $.ajax({
+            type: 'POST',
+            url: `/user/join/profile`,
+            data: formData, // FormData 객체를 바로 전송
+            contentType: false, // 파일 전송 시 false
+            processData: false, // FormData 사용 시 false
+            async:false
+        }).done(function (response){
+            if(response!==""){
+                profileUrl = response;
+                console.log("이미지 업로드 성공")
+            }else{
+                uploadStatus=false;
+            }
+        }).fail(function (){
+            alert("파일 업로드 실패");
+        });
+    }
+
+    if(!uploadStatus){
+        return;
+    }
+
+
+    // userData <- UserRequestDto
+    let userData = {
+        "id" : id.val(),
+        "password" : password.val(),
+        "name" : name.val(),
+        "gender" : gender.val(),
+        "email" : email.val(),
+        "liveCountry" : liveCountry.val()
+    }
+
+    // 필수 정보 외에 정보는 입력한 정보가 있을 경우 추가
+    if(profileUrl!==""){
+        userData.profileImg = profileUrl;
+    }
+    if(age.val().length>0) userData.age = age.val();
+    if(liveCity.val().length>0) userData.liveCity=liveCity.val();
+
+    // "useLang" : useLang
+    userData.useLang=useLang;
+
+    // "needLang" : needLang
+    userData.needLang=needLang;
+
+    // 보내는 data 확인
+    console.log(userData);
+
+    $.ajax({
+        type: 'POST',
+        url: `/user/join`,
+        data:JSON.stringify(userData),
+        contentType: 'application/json',
+    }).done(function (response){
+        console.log(response);
+        alert("회원가입 성공");
+        window.location.href = "/";
+    }).fail(function (){
+        alert("회원가입 실패");
+    });
+}
 
 
 // 프로필 이미지 미리보기
@@ -108,23 +192,25 @@ $("#profileImg").change(function (){
 
 // 사용하는 언어 셀렉트 추가함수
 $("#use-lang").change(function() {
-    let selectedValue = $(this).val();
-    let selectedText = $('option:selected', this).text();
+    let selected = $(this).find('option:selected');
+    let selectedClass = selected.attr('class');
+    let selectedText = selected.text();
 
     // 이미 선택된 값이 있는지 확인
-    if (!$('.use-lang-box .'+selectedValue).length>0) {
-        $('<span>').addClass(selectedValue).text(selectedText).appendTo('.use-lang-box');
+    if (!$('.use-lang-box .'+selectedClass).length>0) {
+        $('<span>').addClass(selectedClass).text(selectedText).appendTo('.use-lang-box');
     }
 });
 
 // 배울 언어 셀렉트 추가함수
 $("#need-lang").change(function() {
-    let selectedValue = $(this).val();
-    let selectedText = $('option:selected', this).text();
+    let selected = $(this).find('option:selected');
+    let selectedClass = selected.attr('class');
+    let selectedText = selected.text();
 
     // 이미 선택된 값이 있는지 확인
-    if (!$('.need-lang-box .'+selectedValue).length>0) {
-        $('<span>').addClass(selectedValue).text(selectedText).appendTo('.need-lang-box');
+    if (!$('.need-lang-box .'+selectedClass).length>0) {
+        $('<span>').addClass(selectedClass).text(selectedText).appendTo('.need-lang-box');
     }
 });
 

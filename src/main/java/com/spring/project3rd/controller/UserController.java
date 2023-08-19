@@ -1,12 +1,11 @@
 
 package com.spring.project3rd.controller;
 
-import com.spring.project3rd.domain.boardFree.BoardFree;
-import com.spring.project3rd.domain.language.Language;
-import com.spring.project3rd.domain.language.LanguageRepository;
+import com.spring.project3rd.domain.language.*;
 import com.spring.project3rd.domain.user.*;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
+import com.spring.project3rd.service.LanguageService;
 import com.spring.project3rd.service.UploadFileService;
 import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,10 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_EXPIRE_COUNT;
 
@@ -43,6 +38,7 @@ public class UserController {
     private final UploadFileService uploadFileService;
     private final JwtTokenizer jwtTokenizer;
     private final LanguageRepository languageRepository;
+    private final LanguageService languageService;
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
@@ -97,7 +93,7 @@ public class UserController {
 
 
     /** 회원 가입 **/
-    @GetMapping("join")
+    @GetMapping("/join")
     public ModelAndView JoinForm() {
         ModelAndView view = new ModelAndView("user_join");
         List<Language> languages = languageRepository.findAll();
@@ -111,49 +107,50 @@ public class UserController {
         }
         return view;
     }
-    @PostMapping(value = "join", consumes = {"multipart/form-data"})
-    public Response join(@RequestBody Map<String,Object> userData){
-        UserRequestDto userDto = (UserRequestDto) userData.get("user");
+    @PostMapping(value = "/join")
+    public Response join(@RequestBody UserRequestDto userRequestDto){
+        List<String> needLang = userRequestDto.getNeedLang();
+        List<String> useLang = userRequestDto.getUseLang();
+
         // 아이디 중복 검사
-        String id = userDto.getId();
+        String id = userRequestDto.getId();
         User user = userRepository.findById(id).orElse(null);
         if(user!=null){
             return new Response("join-err-id","중복되는 아이디 사용 불가");
         }
         // 이메일 중복 검사
-        String email = userDto.getEmail();
+        String email = userRequestDto.getEmail();
         user = userRepository.findByEmail(email);
         if(user!=null){
             return new Response("join-err-email","중복되는 이메일 사용 불가");
         }
         // 이름(닉네임) 중복 검사
-        String name = userDto.getName();
+        String name = userRequestDto.getName();
         user = userRepository.findByName(name);
         if(user!=null){
             return new Response("join-err-name","중복되는 닉네임 사용 불가");
         }
 
-        // 프로필 이미지 등록
-        MultipartFile profileImg = userDto.getProfileImg();
-        String profileUrl = null;
-        if(profileImg!=null){
-            profileUrl = uploadFileService.uploadImgFile(profileImg);
-            System.out.println(profileUrl);
-            if(profileUrl.equals("fail")){
-                return new Response("join-err-profile","프로필 이미지 업로드 실패");
-            }
-        }
-
-        User joinUser = new User(userDto,profileUrl);
-
+        User joinUser = new User(userRequestDto);
         try{
-            // 만약 save중 에러가 날 경우 catch로...
             userRepository.save(joinUser);
+            // 정상적으로 유저가 DB에 등록되면 useLang과 needLang도 등록
+            languageService.setUseLanguage(id,useLang);
+            languageService.setNeedLang(id,needLang);
         }catch (Exception e){
             return new Response("join-err","회원가입 실패");
         }
 
         return new Response("join-success","회원가입 성공");
+    }
+
+    //
+    @PostMapping(value="/join/profile", consumes = {"multipart/form-data"})
+    public String uploadProfile(@RequestParam("img") MultipartFile file){
+        String url = "";
+        url = uploadFileService.uploadImgFile(file);
+        System.out.println("url:"+url);
+        return url;
     }
 
     /** 유저 1인 정보 불러오기(회원 수정에 쓸거)**/

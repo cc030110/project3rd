@@ -23,7 +23,7 @@ public class UploadFileService {
     private final Uploadcare uploadcare;
 
     // 파일 업로드 여러장
-    public List<String>     uploadImgFiles(List<MultipartFile> files){
+    public List<String> uploadImgFiles(List<MultipartFile> files){
         List<String> response = new ArrayList<>();
         for(MultipartFile imgs : files){
             try {
@@ -62,13 +62,16 @@ public class UploadFileService {
         String response="";
 
         try {
-            String path = img.getOriginalFilename();
-            System.out.println("file path : "+path);
+            String fileName = img.getOriginalFilename();
+            System.out.println("인코딩 전 : "+fileName);
+            // 파일명을 UTF-8로 인코딩
+            String encodedFileName = URLEncoder.encode(fileName, "UTF-8");
+            System.out.println("인코딩 후 : "+encodedFileName);
             byte[] image = img.getBytes();
-            File file = new File(path);
+            File file = new File(encodedFileName);
             OutputStream os = new FileOutputStream(file);
             os.write(image);
-            String imgUrl = uploadcare.getUploadFileUrl(path);
+            String imgUrl = uploadcare.getUploadFileUrl(encodedFileName);
             os.close();
             // 추가된 파일 삭제
             if (file.exists()) {

@@ -68,7 +68,23 @@
                 </div>
                 <div class="line">
                     <label for="liveCountry"><spring:message code="user_join.liveCountry"/></label>
-                    <input type="text" id="liveCountry" name="liveCountry">
+                    <select id="liveCountry">
+                        <option value="" disabled selected>
+                            <spring:message code="user_join.selectLang"/>
+                        </option>
+                        <option value="korea">
+                            <spring:message code="user_join.country_korea"/>
+                        </option>
+                        <option value="japan">
+                            <spring:message code="user_join.country_japan"/>
+                        </option>
+                        <option value="china">
+                            <spring:message code="user_join.country_china"/>
+                        </option>
+                        <option value="usa">
+                            <spring:message code="user_join.country_usa"/>
+                        </option>
+                    </select>
                     <p class="err"><spring:message code="user_join.err-required"/> </p> <br>
                 </div>
                 <div class="line">
@@ -89,6 +105,7 @@
                                 </option>
                             </c:forEach>
                         </select>
+                        <p class="err"><spring:message code="user_join.err-required"/> </p>
                     </div>
                 </div>
                 <div class="line">
@@ -109,6 +126,7 @@
                                 </option>
                             </c:forEach>
                         </select>
+                        <p class="err"><spring:message code="user_join.err-required"/> </p>
                     </div>
                 </div>
                 <div class="line">
@@ -122,7 +140,7 @@
             </div>
         </form>
     </div>
-    <c:import url="footer.jsp"/>
+<%--    <c:import url="footer.jsp"/>--%>
 </div>
 <script src="/script/user-join.js"></script>
 </body>

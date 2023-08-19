@@ -2,22 +2,24 @@ package com.spring.project3rd.domain.language;
 
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(name="need_language")
 @Setter
+@Entity
+@Table(name="need_language")
 @ToString
 public class NeedLanguage {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int needNo;
     private String id;
-    private String languageName;
+    private String languageCode;
+
+    public NeedLanguage(String id, String code){
+        this.id=id;
+        this.languageCode=code;
+    }
 }
