@@ -12,6 +12,7 @@ import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
@@ -175,16 +176,26 @@ public class UserController {
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
     @GetMapping("list/{page}")
-    public ModelAndView userList(@PathVariable("page") int page,
+    public ModelAndView userList(@PathVariable int page,
                                  @RequestParam(defaultValue = "") String keyword,
-                                 @PageableDefault(size = 3) Pageable pageable,
+                                 Pageable pageable,
                                  @CookieValue(value = "accessToken", required = false) String accessToken){
+
+        int pageSize = 1; // 한 페이지에 보여질 아이템 수를 1로 설정
+        pageable = PageRequest.of(page - 1, pageSize); // 페이지 정보 재설정
 
         ModelAndView view = new ModelAndView("user_list");
         Page<User> getUserList = null;
 
         getUserList = userRepository.findAll(pageable);
 
+        int totalPages = getUserList.getTotalPages();
+        int currentPageGroup = (page - 1) / 5;
+        int startPage = currentPageGroup * 5 + 1;
+        int endPage = Math.min(startPage + 4, totalPages);
+
+        view.addObject("startPage", startPage);
+        view.addObject("endPage", endPage);
         view.addObject("userList", getUserList);
 
         return view;
