@@ -22,12 +22,6 @@ public class MainController {
         return "login";
     }
 
-//    // 유저 리스트(프로필 게시판)
-//    @GetMapping("/user/list")
-//    public String userList() {
-//        return "user_list";
-//    }
-
     // 커뮤니티 게시판 메인
     @GetMapping("/board/community")
     public String boardCommunity(){
