@@ -1,0 +1,38 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item {
+    list-style: none;
+    margin: 0 5px;
+    display: inline; /* 추가된 부분 */
+}
+
+.pagination .page-link {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination .page-link:hover {
+    background-color: #ddd;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    cursor: default;
+    background-color: #f9f9f9;
+    border-color: #ddd;
+    color: #333;
+}
