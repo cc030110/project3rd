@@ -1,5 +1,6 @@
 <%-- Header --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%><!-- 다국어 처리 -->
 
 <html>
@@ -16,8 +17,10 @@
 <body>
 <div class="header">
     <div class="logo">
+<%--        <img src="https://ucarecdn.com/b846c160-2f5f-4f09-9f7e-66baf85b2a90/" alt="로고">--%>
         <h1><a href="/">GLOBALTIES</a></h1>
     </div>
+
     <div class="header-menu">
         <ul>
             <li><a href="/user/list/1"><spring:message code="header.profile"/></a></li>
@@ -25,16 +28,39 @@
             <li><a href="/board/community/main/1"><spring:message code="header.community"/></a></li>
         </ul>
     </div>
+
     <div class="login" id="login">
-        <a href="/user/login">
-            <spring:message code="header.login"/>
-        </a>
+        <c:choose>
+            <c:when test="${not empty cookie.accessToken}">
+                <a href="#" onclick="logout()">
+                    <spring:message code="header.logout"/>
+                </a>
+            </c:when>
+
+            <c:otherwise>
+                <a href="/user/login">
+                    <spring:message code="header.login"/>
+                </a>
+            </c:otherwise>
+        </c:choose>
     </div>
+
     <div class="join" id="join">
-        <a href="/user/join">
-            <spring:message code="header.join"/>
-        </a>
+            <c:choose>
+                <c:when test="${not empty cookie.accessToken}">
+                    <a href="/">
+                        <spring:message code="header.mypage"/>
+                    </a>
+                </c:when>
+
+                <c:otherwise>
+                    <a href="/user/join">
+                        <spring:message code="header.join"/>
+                    </a>
+                </c:otherwise>
+            </c:choose>
     </div>
+
     <div class="lang-select">
         <select name="locales" id="locales">
             <option value="en" selected>English</option>
@@ -54,6 +80,7 @@
             <option value="hindi">हिंदी</option>--%>
         </select>
     </div>
+
 </div>
 </body>
 

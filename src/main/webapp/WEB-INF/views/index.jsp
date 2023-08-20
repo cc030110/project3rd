@@ -6,47 +6,34 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="/css/index.css">"
     <title>GLOBALTIES</title>
 </head>
 
-<style>
-    div.intro{
-        display:flex;
-        justify-content: space-around;
-    }
-
-    div.intro_explan{
-        width:700px;
-        height:450px;
-        border:2px solid cyan;
-    }
-
-    div.intro_img{
-        width:600px;
-        height:450px;
-        border:2px solid cyan;
-    }
-
-    div.intro_img>img{
-        width:600px;
-        height:450px;
-    }
-
-
-</style>
 <body>
     <div class="wrap">
         <c:import url="header.jsp"/>
         <div class="main">
             <div class="intro">
-                <!-- 사이트 설명 -->
-                <div class="intro_explan">
-                    대충 설명 설명 설명 설명
+                <!-- 환영인사 -->
+                <div class="greetings">
+                    <p>나만의 언어 교환 파트너를 찾아보세요!</p>
                 </div>
 
-                <!-- 사이트 이미지 -->
-                <div class="intro_img">
-                    <img src="https://ucarecdn.com/2d38448e-9601-4220-a4b9-d5f218510592/">
+                <div class="intro_con">
+                    <!-- 사이트 설명 -->
+                    <div class="intro_explan">
+                        <p>GLOBALTIES에 오신 것을 환영합니다.</p>
+                        <p>저희는 공간적 제약이 없는 상호 언어 학습의 장을 제공합니다.</p>
+                        <p>전세계의 사람들과 언어를 교류하며 서로의 문화를 공유해보세요.</p>
+                        <p>메세지, 커뮤니티 등을 통해 보다 좋은 학습의 기회도 얻으실 수 있습니다.</p>
+                        <p>유익한 시간이 되시길 바랍니다:)</p>
+                    </div>
+
+                    <!-- 사이트 이미지 -->
+                    <div class="intro_img">
+                        <img src="https://ucarecdn.com/2d38448e-9601-4220-a4b9-d5f218510592/">
+                    </div>
                 </div>
             </div>
             <%-- 로그인 후, 회원 로그확인 어찌할지 고민

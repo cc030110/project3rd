@@ -1,0 +1,32 @@
+div.intro{
+    margin:100px 0;
+}
+
+div.greetings{
+    margin-left:50px;
+    font-size:2rem;
+    font-weight:900;
+}
+
+div.intro_con{
+    display:flex;
+    width:90%;
+    justify-content:space-around;
+    margin:20px 0;
+    background-color: #FFFAF0;
+}
+
+div.intro_explan{
+    width:700px;
+    height:450px;
+}
+
+div.intro_img{
+    width:600px;
+    height:450px;
+}
+
+div.intro_img>img{
+    width:600px;
+    height:450px;
+}
