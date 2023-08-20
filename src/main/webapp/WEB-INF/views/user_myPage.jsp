@@ -20,6 +20,8 @@
         <p>${user.liveCountry}</p>
         <p>${user.liveCity}</p>
         <img src="${user.profileImg}">
+        <button></button>
+        <button></button>
     </div>
     <c:import url="footer.jsp"/>
 </div>

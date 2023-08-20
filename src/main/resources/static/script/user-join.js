@@ -221,3 +221,17 @@ $(document).on("click", ".need-lang-box span", function() {
 $(document).on("click", ".use-lang-box span", function() {
     $(this).remove();
 });
+
+function sendEmail() {
+    var email = document.getElementById("email").value;
+
+    // 서버로 email 값을 보내고 인증번호를 요청하는 로직 작성
+    // 이 부분은 서버와의 통신을 위한 Ajax 요청 등으로 처리하게 됩니다.
+    // 이메일을 서버로 보내서 인증번호를 받아오는 로직을 구현하셔야 합니다.
+    // 예를 들어, jQuery를 사용하여 Ajax 요청을 보낼 수 있습니다.
+
+    // 서버에서 인증번호를 받아왔다고 가정하고, 인증번호를 사용자에게 입력받은 값과 비교합니다.
+    var enteredAuthCode = prompt("인증 번호를 입력하세요:");
+    var receivedAuthCode = "서버에서 받은 인증번호"; // 서버로부터 받은 인증번호
+
+}

@@ -45,6 +45,10 @@
                         <label for="email"><spring:message code="user_join.email"/></label>
                         <input type="email" id="email" name="email">
                         <p class="err"><spring:message code="user_join.err-required"/></p><br>
+                        <button type="button" id="sendEmailButton" onclick="sendEmail()">인증번호 요청</button>
+                        <input type="text" id="verificationCodeInput" placeholder="인증 번호 입력">
+                        <button type="button" id="verifyButton" onclick="verifyCode()">확인</button>
+                        <p id="resultMessage"></p>
                     </div>
                     <div class="line">
                         <label><spring:message code="user_join.gender"/></label>
