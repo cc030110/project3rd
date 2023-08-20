@@ -225,3 +225,41 @@ $(document).on("click", ".need-lang-box span", function() {
 $(document).on("click", ".use-lang-box span", function() {
     $(this).remove();
 });
+
+function sendEmail() {
+    var userEmail = $("#email").val();
+
+    console.log(userEmail);
+    if (!userEmail) {
+        // 이메일 입력 값이 비어있을 경우 처리
+        $("#resultMessage").text("이메일을 입력해주세요.");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/join/emailCheck", // 실제 서버의 엔드포인트 URL
+        data: JSON.stringify({ email: userEmail }), // 서버에 보낼 데이터 설정
+        contentType: "application/json", // 데이터 타입 설정
+        success: function(response) {
+            // 서버로부터 받은 인증 번호를 변수에 저장
+            var serverGeneratedCode = response.data;
+
+            // 서버에서 생성한 인증 번호를 이용해 서버와 통신하여 확인
+            verifyCode(serverGeneratedCode);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+
+function verifyCode(serverGeneratedCode) {
+    var userEnteredCode = $("#verificationCodeInput").val(); // 사용자가 입력한 인증 번호
+
+    if (userEnteredCode === serverGeneratedCode) {
+        $("#resultMessage").text("인증 성공!");
+    } else {
+        $("#resultMessage").text("인증 실패!");
+    }
+}

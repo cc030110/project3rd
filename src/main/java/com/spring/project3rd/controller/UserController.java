@@ -1,6 +1,9 @@
 
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.email.BaseResponse;
+import com.spring.project3rd.domain.email.EmailCheckReq;
+import com.spring.project3rd.domain.user.EmailService;
 import com.spring.project3rd.domain.language.*;
 import com.spring.project3rd.domain.user.*;
 import com.spring.project3rd.payload.Response;
@@ -11,10 +14,10 @@ import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +25,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_EXPIRE_COUNT;
@@ -32,6 +37,7 @@ import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("user")
+@SpringBootApplication
 public class UserController {
 
     private final UserService userService;
@@ -40,7 +46,7 @@ public class UserController {
     private final JwtTokenizer jwtTokenizer;
     private final LanguageRepository languageRepository;
     private final LanguageService languageService;
-
+    private final EmailService emailService;
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
 
@@ -172,6 +178,13 @@ public class UserController {
             return view;
         }
         return null;
+    }
+
+    @ResponseBody
+    @PostMapping("/join/emailCheck")
+    public BaseResponse<String> emailCheck(@RequestBody EmailCheckReq emailCheckReq) throws MessagingException, UnsupportedEncodingException {
+        String authCode = emailService.sendEmail(emailCheckReq.getEmail());
+        return new BaseResponse<>(authCode);
     }
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
