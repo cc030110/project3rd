@@ -28,6 +28,11 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/mypage")
+    public String myPage() {
+        return "user_my_page";
+    }
+
     // 커뮤니티 게시판 메인
     @GetMapping("/board/community")
     public String boardCommunity(){
