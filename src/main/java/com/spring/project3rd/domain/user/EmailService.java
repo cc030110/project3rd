@@ -1,4 +1,4 @@
-package com.spring.project3rd.domain.email;
+package com.spring.project3rd.domain.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;

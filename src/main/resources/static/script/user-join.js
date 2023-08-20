@@ -223,15 +223,39 @@ $(document).on("click", ".use-lang-box span", function() {
 });
 
 function sendEmail() {
-    var email = document.getElementById("email").value;
+    var userEmail = $("#email").val();
 
-    // 서버로 email 값을 보내고 인증번호를 요청하는 로직 작성
-    // 이 부분은 서버와의 통신을 위한 Ajax 요청 등으로 처리하게 됩니다.
-    // 이메일을 서버로 보내서 인증번호를 받아오는 로직을 구현하셔야 합니다.
-    // 예를 들어, jQuery를 사용하여 Ajax 요청을 보낼 수 있습니다.
+    console.log(userEmail);
+    if (!userEmail) {
+        // 이메일 입력 값이 비어있을 경우 처리
+        $("#resultMessage").text("이메일을 입력해주세요.");
+        return;
+    }
 
-    // 서버에서 인증번호를 받아왔다고 가정하고, 인증번호를 사용자에게 입력받은 값과 비교합니다.
-    var enteredAuthCode = prompt("인증 번호를 입력하세요:");
-    var receivedAuthCode = "서버에서 받은 인증번호"; // 서버로부터 받은 인증번호
+    $.ajax({
+        type: "POST",
+        url: "/join/emailCheck", // 실제 서버의 엔드포인트 URL
+        data: JSON.stringify({ email: userEmail }), // 서버에 보낼 데이터 설정
+        contentType: "application/json", // 데이터 타입 설정
+        success: function(response) {
+            // 서버로부터 받은 인증 번호를 변수에 저장
+            var serverGeneratedCode = response.data;
 
+            // 서버에서 생성한 인증 번호를 이용해 서버와 통신하여 확인
+            verifyCode(serverGeneratedCode);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+
+function verifyCode(serverGeneratedCode) {
+    var userEnteredCode = $("#verificationCodeInput").val(); // 사용자가 입력한 인증 번호
+
+    if (userEnteredCode === serverGeneratedCode) {
+        $("#resultMessage").text("인증 성공!");
+    } else {
+        $("#resultMessage").text("인증 실패!");
+    }
 }

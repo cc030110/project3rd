@@ -3,7 +3,7 @@ package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.email.BaseResponse;
 import com.spring.project3rd.domain.email.EmailCheckReq;
-import com.spring.project3rd.domain.email.EmailService;
+import com.spring.project3rd.domain.user.EmailService;
 import com.spring.project3rd.domain.language.*;
 import com.spring.project3rd.domain.user.*;
 import com.spring.project3rd.payload.Response;
@@ -14,6 +14,7 @@ import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,6 +37,7 @@ import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("user")
+@SpringBootApplication
 public class UserController {
 
     private final UserService userService;
