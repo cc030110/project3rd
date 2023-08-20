@@ -29,6 +29,7 @@
                             </div>
 
                             <div class="con_text">
+                                <p>${listItem.boardNo}</p>
                                 <p>${listItem.title}</p><!-- 제목 -->
                                 <p>${listItem.contents}</p><!-- 내용 -->
                                 <p><spring:message code="board_community_main.views"/> : ${listItem.views}</p> <!-- 조회수 -->
