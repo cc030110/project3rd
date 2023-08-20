@@ -18,7 +18,6 @@
     <c:import url="header.jsp"/>
     <div class="main">
         <div class="login-box">
-
             <div class="login-box-right">
             <p>(대충 그럴듯한 이미지)</p>
             </div>

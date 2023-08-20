@@ -49,7 +49,7 @@ function joinForm() {
     });
 
     // id , password 조건
-    // id혹은password.val().length >= 8 : 8자리 이상
+    // id혹은password.val().length >= n : n자리 이상
     // /^[A-Za-z0-9]+$/.test(id.val()) : 영어 대소문자와 숫자로만 구성
 
     // id,password 유효성 검사 잠깐 꺼둠!!!!
@@ -60,7 +60,7 @@ function joinForm() {
     // if(!idValid) return;
     //
     // // password 유효성 검사
-    // condition = password.val().length >= 8 && /^[A-Za-z0-9]+$/.test(password.val());
+    // condition = password.val().length >= 4 && /^[A-Za-z0-9]+$/.test(password.val());
     // const passwordValid = validateInput(password,condition);
     // if(!passwordValid) return;
     //
@@ -127,7 +127,6 @@ function joinForm() {
         return;
     }
 
-
     // userData <- UserRequestDto
     let userData = {
         "id" : id.val(),
@@ -161,10 +160,15 @@ function joinForm() {
         contentType: 'application/json',
     }).done(function (response){
         console.log(response);
-        alert("회원가입 성공");
-        window.location.href = "/";
+        alert(response.value);
+        if(response.key==="join"){
+            window.location.href = "/";
+        }else{
+            window.location.href = "/user/join";
+        }
     }).fail(function (){
         alert("회원가입 실패");
+        window.location.href = "/user/join";
     });
 }
 

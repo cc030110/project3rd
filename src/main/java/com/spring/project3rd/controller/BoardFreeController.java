@@ -113,6 +113,7 @@ public class BoardFreeController {
 
     }
 
+
     // 게시글 업로드
     @PostMapping("upload")
     public BoardFree upload(@RequestBody BoardFreeRequestDto boardDto,
@@ -160,6 +161,9 @@ public class BoardFreeController {
         if (board != null) {
             // 게시글의 조회수 1 증가
             boardFreeService.addViews(board);
+            // 작성자의 id로 name도 넣어주기
+            String author = userService.getUserName(board.getId());
+            view.addObject("author",author);
             // 게시글에 업로드된 이미지 확인
             List<BoardFreeImg> imgList = boardFreeImgRepository.findByBoardNo(board.getBoardNo());
             // 업로드된 이미지가 있을 경우 view에 추가

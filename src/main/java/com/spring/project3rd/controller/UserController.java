@@ -117,19 +117,19 @@ public class UserController {
         String id = userRequestDto.getId();
         User user = userRepository.findById(id).orElse(null);
         if(user!=null){
-            return new Response("join-err-id","중복되는 아이디 사용 불가");
+            return new Response("err","중복되는 아이디 사용 불가");
         }
         // 이메일 중복 검사
         String email = userRequestDto.getEmail();
         user = userRepository.findByEmail(email);
         if(user!=null){
-            return new Response("join-err-email","중복되는 이메일 사용 불가");
+            return new Response("err","중복되는 이메일 사용 불가");
         }
         // 이름(닉네임) 중복 검사
         String name = userRequestDto.getName();
         user = userRepository.findByName(name);
         if(user!=null){
-            return new Response("join-err-name","중복되는 닉네임 사용 불가");
+            return new Response("err","중복되는 닉네임 사용 불가");
         }
 
         User joinUser = new User(userRequestDto);
@@ -139,10 +139,10 @@ public class UserController {
             languageService.setUseLanguage(id,useLang);
             languageService.setNeedLang(id,needLang);
         }catch (Exception e){
-            return new Response("join-err","회원가입 실패");
+            return new Response("err","회원가입 실패");
         }
 
-        return new Response("join-success","회원가입 성공");
+        return new Response("join","회원가입 성공");
     }
 
     //

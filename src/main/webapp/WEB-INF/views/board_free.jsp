@@ -22,8 +22,14 @@
                 </c:when>
                 <c:otherwise>
                     <div>게시글 번호 : ${board.boardNo}</div>
-                    <div>작성자 : ${board.id}</div>
+                    <div>작성자 : ${author}</div>
                     <div>제목 : ${board.title}</div>
+                    <c:if test="${not empty id && id eq board.id}">
+                        <div class="btn-group">
+                            <a href="/board/free/${board.boardNo}/update" id="update-btn">수정</a>
+                            <input type="button" id="delete-btn" onclick="deleteBoard(${board.boardNo})" value="삭제">
+                        </div>
+                    </c:if>
                     <div>내용 : ${board.contents}</div>
                     <div>작성일 : ${board.createdAt}</div>
                     <div>조회수 : ${board.views}</div>
@@ -34,15 +40,11 @@
                             </c:forEach>
                         </div>
                     </c:if>
-                    <c:if test="${not empty id && id eq board.id}">
-                        <button type="button">
-
-                        </button>
-                    </c:if>
                 </c:otherwise>
             </c:choose>
         </div>
     <c:import url="footer.jsp"/>
 </div>
+<script src="/script/board-free.js"></script>
 </body>
 </html>

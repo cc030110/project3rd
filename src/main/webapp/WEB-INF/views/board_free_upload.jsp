@@ -24,6 +24,6 @@
     </div>
     <c:import url="footer.jsp"/>
 </div>
-<script src="/script/board-free-upload.js"></script>
+<script src="/script/board-free.js"></script>
 </body>
 </html>

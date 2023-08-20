@@ -72,6 +72,6 @@
     </div>
     <c:import url="footer.jsp"/>
 </div>
-<script src="/script/board-free-list.js"></script>
+<script src="/script/board-free.js"></script>
 </body>
 </html>

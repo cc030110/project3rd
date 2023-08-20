@@ -98,6 +98,7 @@ function uploadImg(boardNo){
     });
 }
 
+// 게시글 삭제
 function deleteBoard(boardNo){
     $.ajax({
         method:'DELETE',
@@ -109,4 +110,9 @@ function deleteBoard(boardNo){
     }).fail(function(){
         console.log("게시글 삭제 실패");
     })
+}
+
+// 게시글 수정
+function updateBoard(boardNo){
+
 }
