@@ -18,4 +18,5 @@ public class BoardCommunityRequestDto{
     private int participantsNum;
     private Date deadline;
     private short isModified;
+    private int views;
 }

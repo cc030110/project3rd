@@ -31,6 +31,7 @@
                             <div class="con_text">
                                 <p>${listItem.title}</p><!-- 제목 -->
                                 <p>${listItem.contents}</p><!-- 내용 -->
+                                <p><spring:message code="board_community_main.views"/> : ${listItem.views}</p> <!-- 조회수 -->
                                 <p><spring:message code="board_community_main.author"/> : ${listItem.id}</p>
                                 <p><spring:message code="board_community_main.participants"/>: ${listItem.participantsNum}</p>
                                 <p><spring:message code="board_community_main.createdAt"/> : ${listItem.createdAt}</p>

@@ -42,6 +42,9 @@ public class BoardCommunity extends Timestamp{
     @Column
     private short isModified;
 
+    @Column(nullable=false)
+    private int views;
+
 
     public BoardCommunity(BoardCommunityRequestDto bcDto) {
         super();
@@ -51,6 +54,13 @@ public class BoardCommunity extends Timestamp{
         this.contents = bcDto.getContents();
         this.participantsNum = bcDto.getParticipantsNum();
         this.deadline=bcDto.getDeadline();
+        this.isModified=bcDto.getIsModified();
+        this.views=0;
+    }
+
+    // 조회수 증가
+    public void viewPlus(){
+        this.views+=1;
     }
 
     public void update(BoardCommunityRequestDto bcDto){
