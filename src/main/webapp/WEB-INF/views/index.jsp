@@ -6,7 +6,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/css/index.css">"
+    <link rel="stylesheet" href="/css/index.css">
     <title>GLOBALTIES</title>
 </head>
 
@@ -51,8 +51,6 @@
         </div>
         <c:import url="footer.jsp"/>
     </div>
-
-
 </body>
 
 </html>

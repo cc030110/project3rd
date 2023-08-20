@@ -34,10 +34,6 @@ a,a:active,a:visited{
 .main{
     grid-area: main;
     min-height: 80vh;
-
-    /* 내가 추가한 부분 */
-    /*display:flex;
-    justify-content: center;*/
 }
 
 .footer{
