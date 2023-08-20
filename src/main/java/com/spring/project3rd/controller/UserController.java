@@ -163,9 +163,10 @@ public class UserController {
 
     // 타인 정보 열람
     @GetMapping("/{name}")
-    public ModelAndView showUserDetail(@PathVariable String name) {
+    public ModelAndView showUserDetail(@PathVariable String name, @CookieValue(value = "accessToken", required = false) String accessToken) {
         ModelAndView view = new ModelAndView("user_detail");
 
+        // 타인 정보 뷰
         Optional<User> optionalUser = Optional.ofNullable(userRepository.findByName(name));
         User user = optionalUser.orElse(null);
 
@@ -174,6 +175,21 @@ public class UserController {
             view.addObject("user", userResponseDto);
         } else {
             view.setViewName("error_page");
+            return view;
+        }
+
+        // 내 정보 뷰
+        if (accessToken != null) {
+            Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+            String myId = claims.get("id", String.class);
+            String myName = claims.get("name", String.class);
+            Optional<User> optionalMyUser = userRepository.findById(myId);
+            User myUser = optionalMyUser.orElse(null);
+
+            if (myUser != null) {
+                UserResponseDto myUserResponseDto = new UserResponseDto(myUser);
+                view.addObject("myUser", myUserResponseDto);
+            }
         }
 
         return view;
