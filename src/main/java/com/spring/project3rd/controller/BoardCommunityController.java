@@ -7,6 +7,8 @@ import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImg;
 import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImgRepository;
 import com.spring.project3rd.domain.platform.Platform;
 import com.spring.project3rd.domain.platform.PlatformRepository;
+import com.spring.project3rd.domain.user.User;
+import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BlockService;
@@ -43,6 +45,7 @@ public class BoardCommunityController{
     private final UploadFileService uploadFileService;
     private final JwtTokenizer jwtTokenizer;
     private final PlatformRepository platformRepository;
+    private final UserRepository userRepository;
 
     // 게시글 번호로 게시글 가져오기
     public BoardCommunity getBoardByBoardNo(int boardNo){
@@ -155,6 +158,25 @@ public class BoardCommunityController{
         }
         view.addObject("board",board);
 
+        // 유저 이름 가져오기
+        Map<String,String> userInfo = new HashMap<>();
+        List<User> userList=userRepository.findAll();
+        for(User user : userList){
+            userInfo.put(user.getId(), user.getName());
+        }
+
+        view.addObject("user",userInfo);
+
+
+        // 플랫폼 객체 가져오기
+        Map<String,String> platforms = new HashMap<>();
+        List<Platform> platformList = platformRepository.findAll();
+        for (Platform platform : platformList) {
+            platforms.put(platform.getPlatformName(), platform.getPlatformImg());
+        }
+
+        view.addObject("platform", platforms);  // 플랫폼을 view에 저장
+
         return view;
     }
 
@@ -259,90 +281,3 @@ public class BoardCommunityController{
         return new Response("delete","success");
     }
 }
-
-
-
-
-
-
-
-// 커뮤니티 게시판 전체 조회
-/*    @GetMapping("/main/{page}")
-    public ModelAndView showList(@PathVariable("page") int page,
-                                 @RequestParam(defaultValue = "") String keyword,
-                                 @PageableDefault(size = 5) Pageable pageable){
-        ModelAndView view = new ModelAndView("board_community_main");
-        List<BoardCommunity> list=new ArrayList<>();
-        if(!keyword.isEmpty()){
-            list = boardCommunityRepository.findByTitleContaining(keyword, pageable.withPage(page-1));
-        }else{
-            list = boardCommunityRepository.findAll(pageable.withPage(page-1)).getContent();
-        }
-
-        // 가져온 리스트를 view에 저장
-        view.addObject("list",list);
-
-        // 플랫폼 객체 가져오기
-        Map<String,String> platforms = new HashMap<>();
-        List<Platform> platformList = platformRepository.findAll();
-        for (Platform platform : platformList) {
-            platforms.put(platform.getPlatformName(), platform.getPlatformImg());
-        }
-
-        view.addObject("platform", platforms);  // 플랫폼을 view에 저장
-
-        return view;
-    }*/
-
-
-// 게시글 작성
-/*@PostMapping("/write")
-    public BoardCommunity boardWrite(@RequestBody BoardCommunityRequestDto bcDto){
-        System.out.println(bcDto);
-        BoardCommunity board = null;
-
-        if(bcDto.getId()!=null && bcDto.getTitle()!=null && bcDto.getContents()!=null){
-            board = new BoardCommunity(bcDto);
-            boardCommunityRepository.save(board);
-        }
-        return board;
-    }*/
-
-
-// 게시글 삭제
-/*@DeleteMapping(value="/delete/{boardNo}")
-    public Response boardDelete(@PathVariable int boardNo, WebRequest request){
-        String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
-
-        if(log==null){
-            return new Response("Board Delete","Fail");
-        }
-
-        BoardCommunity bc=getBoardByBoardNo(boardNo);
-        if(!bc.getId().equals(log)){
-            return new Response("delete","fail : not correct user");
-        }
-
-        boardCommunityService.deleteBoardByBoardNo(boardNo);
-
-        return new Response("delete","success");
-    }*/
-
-
-// 이전 버전
-// 게시글 작성 : api용        <--- 추후 로그인 확인부분 넣을 것
-//    @ResponseBody <--- RestController : JSON Body 탐색 / Controller : JSP 파일 탐색
-    /*@PostMapping(value="/write", consumes={"multipart/form-data"})
-    public Response boardWrite(@ModelAttribute BoardCommunityRequestDto bcDto, WebRequest request){
-        String log=(String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
-
-        if(log==null){
-            return new Response("post","fail");
-        }
-
-        bcDto.setId(log);
-        BoardCommunity bc=new BoardCommunity(bcDto);
-        boardCommunityRepository.save(bc);
-
-        return new Response("post", "success");
-    }*/

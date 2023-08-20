@@ -7,6 +7,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="/css/board_community.css">
     <title>GLOBALTIES</title>
 </head>
 
@@ -27,7 +28,9 @@
                     </li>
 
                     <li>
-                        <p id="platform"><spring:message code="board_community.platform"/> : ${board.platformName}</p>
+<%--                        <p id="platform"><spring:message code="board_community.platform"/> : ${board.platformName}</p>--%>
+                        <p id="platform"><spring:message code="board_community.platform"/></p>
+                        <img src="${platform.get(board.platformName)}" alt="이미지 업로드 실패">
                     </li>
 
                     <li>
@@ -35,7 +38,7 @@
                     </li>
 
                     <li>
-                        <p id="creator"><spring:message code="board_community.author"/> : ${board.id}</p>
+                        <p id="creator"><spring:message code="board_community.author"/> : ${user.get(board.id)}</p>
                     </li>
 
                     <li>
