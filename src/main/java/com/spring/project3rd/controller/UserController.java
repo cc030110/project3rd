@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -160,24 +161,22 @@ public class UserController {
         return url;
     }
 
-    /** 유저 1인 정보 불러오기(회원 수정에 쓸거)**/
-    @GetMapping("{id}")
-    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
-        ModelAndView view = new ModelAndView("user_myPage");
+    // 타인 정보 열람
+    @GetMapping("/{name}")
+    public ModelAndView showUserDetail(@PathVariable String name) {
+        ModelAndView view = new ModelAndView("user_detail");
 
-        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-        String id = claims.get("id", String.class);
-        String name = claims.get("name", String.class);
-        Optional<User> optionalUser = userRepository.findById(id);
+        Optional<User> optionalUser = Optional.ofNullable(userRepository.findByName(name));
         User user = optionalUser.orElse(null);
 
-        if(user!=null){
+        if (user != null) {
             UserResponseDto userResponseDto = new UserResponseDto(user);
-            view.addObject("user",userResponseDto);
-
-            return view;
+            view.addObject("user", userResponseDto);
+        } else {
+            view.setViewName("error_page");
         }
-        return null;
+
+        return view;
     }
 
     @ResponseBody
@@ -214,7 +213,25 @@ public class UserController {
         return view;
     }
 
+    /** 개인 정보 불러오기(회원 수정에 쓸거)**/
+    @GetMapping("update")
+    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
+        ModelAndView view = new ModelAndView("user_myPage");
 
+        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+        String id = claims.get("id", String.class);
+        String name = claims.get("name", String.class);
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user = optionalUser.orElse(null);
+
+        if(user!=null){
+            UserResponseDto userResponseDto = new UserResponseDto(user);
+            view.addObject("user",userResponseDto);
+
+            return view;
+        }
+        return null;
+    }
 
 
     /** 회원 정보 수정 **/
