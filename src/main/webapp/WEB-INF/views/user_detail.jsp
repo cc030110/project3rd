@@ -11,17 +11,31 @@
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/css/user_detail.css">
     <title>Title</title>
 </head>
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
-<p>ID: ${user.id}</p>
-<p>Name: ${user.name}</p>
-<p>Email: ${user.email}</p>
+        <div class="user-profile">
+            <img src="${user.profileImg}" class="profile-img">
+            <div class="user-info">
+                <p class="user-info-item"><span class="label">Name:</span> ${user.name}</p>
+                <p class="user-info-item"><span class="label">Gender:</span> ${user.gender}</p>
+                <p class="user-info-item"><span class="label">Age:</span> ${user.age}</p>
+                <p class="user-info-item"><span class="label">Country:</span> ${user.liveCountry}</p>
+                <p class="user-info-item"><span class="label">City:</span> ${user.liveCity}</p>
+            </div>
+        </div>
+        <c:if test="${not empty myUser}">
+            <div class="user-actions">
+                <button class="favorite-button">즐겨찾기</button>
+                <button class="report-button">신고하기</button>
+            </div>
+        </c:if>
     </div>
 </div>
-    <c:import url="footer.jsp"/>
+<c:import url="footer.jsp"/>
 </body>
 </html>
