@@ -226,36 +226,42 @@ $(document).on("click", ".use-lang-box span", function() {
     $(this).remove();
 });
 
+
+// 이메일 코드 전송
+let serverGeneratedCode = ""; // 이메일 전송 받기
 function sendEmail() {
-    var userEmail = $("#email").val();
+    let userEmail = $("#email").val();
+    serverGeneratedCode="";
 
     console.log(userEmail);
-    if (!userEmail) {
+    if (userEmail==="") {
         // 이메일 입력 값이 비어있을 경우 처리
         $("#resultMessage").text("이메일을 입력해주세요.");
         return;
     }
+    let sendEmail = {
+        "email":userEmail
+    }
 
     $.ajax({
         type: "POST",
-        url: "/join/emailCheck", // 실제 서버의 엔드포인트 URL
-        data: JSON.stringify({ email: userEmail }), // 서버에 보낼 데이터 설정
+        url: "/user/join/emailCheck", // 실제 서버의 엔드포인트 URL
+        data: JSON.stringify(sendEmail), // 서버에 보낼 데이터 설정
         contentType: "application/json", // 데이터 타입 설정
-        success: function(response) {
-            // 서버로부터 받은 인증 번호를 변수에 저장
-            var serverGeneratedCode = response.data;
-
-            // 서버에서 생성한 인증 번호를 이용해 서버와 통신하여 확인
-            verifyCode(serverGeneratedCode);
-        },
-        error: function(xhr, status, error) {
-            console.error("Error:", error);
-        }
+    }).done(function (response){
+        // 서버로부터 받은 인증 번호를 변수에 저장
+        serverGeneratedCode = response.data;
+        console.log("인증코드: "+serverGeneratedCode);
+    }).fail(function (request){
+        console.log("status: " + request.status);
+        console.log("responseText: " + request.responseText);
+        console.log("error: " + request.error);
     });
 }
 
-function verifyCode(serverGeneratedCode) {
-    var userEnteredCode = $("#verificationCodeInput").val(); // 사용자가 입력한 인증 번호
+// 서버에서 생성한 인증 번호를 이용해 서버와 통신하여 확인
+function verifyCode() {
+    let userEnteredCode = $("#verificationCodeInput").val(); // 사용자가 입력한 인증 번호
 
     if (userEnteredCode === serverGeneratedCode) {
         $("#resultMessage").text("인증 성공!");

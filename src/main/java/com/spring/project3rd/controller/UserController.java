@@ -179,7 +179,7 @@ public class UserController {
         return view;
     }
 
-    @ResponseBody
+//    @ResponseBody
     @PostMapping("/join/emailCheck")
     public BaseResponse<String> emailCheck(@RequestBody EmailCheckReq emailCheckReq) throws MessagingException, UnsupportedEncodingException {
         String authCode = emailService.sendEmail(emailCheckReq.getEmail());
