@@ -58,7 +58,7 @@ public class BoardCommunityController{
     public ModelAndView showList(@PathVariable("page") int page,
                                  @RequestParam(required = false) String title,
                                  @RequestParam(required = false) String author,
-                                 @PageableDefault(sort="boardNo", direction = Sort.Direction.DESC) Pageable pageable,
+                                 @PageableDefault(sort="boardNo", direction = Sort.Direction.DESC, size = 8) Pageable pageable,
                                  @CookieValue(value="accessToken", required = false) String accessToken){
 
         // 해당 정보 가져오기
@@ -266,8 +266,8 @@ public class BoardCommunityController{
 
 
 
-/*// 커뮤니티 게시판 전체 조회
-    @GetMapping("/main/{page}")
+// 커뮤니티 게시판 전체 조회
+/*    @GetMapping("/main/{page}")
     public ModelAndView showList(@PathVariable("page") int page,
                                  @RequestParam(defaultValue = "") String keyword,
                                  @PageableDefault(size = 5) Pageable pageable){
