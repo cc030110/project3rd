@@ -32,7 +32,7 @@
     <div class="login" id="login">
         <c:choose>
             <c:when test="${not empty cookie.accessToken}">
-                <a href="#" onclick="logout()">
+                <a href="/user/logout" onclick="logout()">
                     <spring:message code="header.logout"/>
                 </a>
             </c:when>
