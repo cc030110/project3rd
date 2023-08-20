@@ -25,7 +25,7 @@ a,a:active,a:visited{
 
 .header{
     grid-area: header;
-    background-color: bisque; /* 확인용 */
+    background-color: bisque;  /*확인용*/
     display: flex;
     align-items: center;
     text-align: center;
@@ -38,7 +38,7 @@ a,a:active,a:visited{
 
 .footer{
     grid-area: footer;
-    background-color:bisque; /* 확인용 */
+    background-color:bisque;  /*확인용*/
 }
 
 .logo{
@@ -79,6 +79,15 @@ a,a:active,a:visited{
 .header-menu a:hover{
     color: brown;
     border-bottom: 2px solid salmon;
+}
+
+select#locales{
+    padding:5px;
+    border:1px solid black;
+    border-radius:5px;
+    width:120px;
+    height:35px;
+    font-size:0.8rem;
 }
 
 /* 푸터 CSS   --황인규*/
