@@ -22,7 +22,7 @@ public interface BoardCommunityRepository extends JpaRepository<BoardCommunity,I
     // 게시판 목록 - 작성자 검색 + 차단유저 제외
     Page<BoardCommunity> findByIdContainingAndIdNotIn(String id, List<String> excludedIds, Pageable pageable);
 
-    /*// 게시판 목록 - 플랫폼 검색 + 차단유저 제외
+    /*// 게시판 목록 - 플랫폼 검색 + 차단유저 제외 : 이 부분 다시 연구
     Page<BoardCommunity> getBoardCommunityByPlatformNameAndIdNotIn(String platformName, List<String> excludedIds, Pageable pageable);*/
 
     // 게시판 글 1개 불러오기

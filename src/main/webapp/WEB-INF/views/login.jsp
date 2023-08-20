@@ -13,13 +13,14 @@
     <link rel="stylesheet" href="/css/login.css">
     <title>로그인</title>
 </head>
+
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
         <div class="login-box">
             <div class="login-box-right">
-            <p>(대충 그럴듯한 이미지)</p>
+<%--            <p>(대충 그럴듯한 이미지)</p>--%>
             </div>
             <div class="login-box-left">
                 <form>

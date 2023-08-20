@@ -32,6 +32,8 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    background-image: url("https://ucarecdn.com/fab34a50-2035-4a3e-b36d-e92de0cf7b32/");
+    background-size: cover;
 }
 
 .login-box-left {
