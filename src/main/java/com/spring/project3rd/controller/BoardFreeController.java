@@ -114,7 +114,19 @@ public class BoardFreeController {
     }
 
 
-    // 게시글 업로드
+    /* 게시글 업로드 */
+    // 자유게시판 업로드
+    @GetMapping("upload")
+    public ModelAndView uploadPage(@CookieValue(value = "accessToken", required = false) String accessToken){
+        ModelAndView view = new ModelAndView("board_free_upload");
+        String id="";
+        if(accessToken!=null){
+            Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+            id = claims.get("id",String.class);
+        }
+        view.addObject("id",id);
+        return view;
+    }
     @PostMapping("upload")
     public BoardFree upload(@RequestBody BoardFreeRequestDto boardDto,
                             @CookieValue(value = "accessToken", required = false) String accessToken) {
@@ -126,11 +138,9 @@ public class BoardFreeController {
             board = new BoardFree(boardDto);
             boardFreeRepository.save(board);
         }
-
         return board;
     }
-
-    // 게시글 이미지 업로드
+    // 이미지 업로드
     @PostMapping(value = "upload/file", consumes = {"multipart/form-data"})
     public List<Response> uploadImgFile(@RequestParam("no") int boardNo, @RequestParam("img") List<MultipartFile> files) {
         List<Response> responses = new ArrayList<>();
@@ -148,9 +158,9 @@ public class BoardFreeController {
         }
         return responses;
     }
+    /* ---- */
 
-
-    // 게시글 하나 확인
+    /* 게시글 조회 */
     @GetMapping("{no}")
     public ModelAndView showBoard(@PathVariable int no, @CookieValue(value = "accessToken", required = false) String accessToken) {
         ModelAndView view = new ModelAndView("board_free");
@@ -182,15 +192,18 @@ public class BoardFreeController {
 
         return view;
     }
+    /* ---- */
 
-    // 게시글 삭제
+
+    /* 게시글 삭제 */
     @DeleteMapping("{no}/delete")
     public ResponseEntity<String> deleteBoard(@PathVariable("no") int no) {
         boardFreeService.deleteBoard(no);
         return ResponseEntity.ok("게시글 삭제 성공");
     }
+    /* ---- */
 
-    // 게시글 수정 페이지 이동
+    /* 게시글 수정 */
     @GetMapping("{no}/update")
     public ModelAndView boardFreeUpdate(@PathVariable("no")int no,@CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("board_free_update");
@@ -217,8 +230,6 @@ public class BoardFreeController {
 
         return view;
     }
-
-    // 게시글 수정
     @PutMapping("{no}/update")
     public ResponseEntity<String> updateBoard(@PathVariable("no") int no, @RequestBody BoardFreeRequestDto boardDto) {
         try {
@@ -228,5 +239,6 @@ public class BoardFreeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 에러");
         }
     }
+    /* ---- */
 
 }
