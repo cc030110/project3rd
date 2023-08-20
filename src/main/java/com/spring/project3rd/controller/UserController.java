@@ -181,13 +181,13 @@ public class UserController {
                                  Pageable pageable,
                                  @CookieValue(value = "accessToken", required = false) String accessToken){
 
-        int pageSize = 1; // 한 페이지에 보여질 아이템 수를 1로 설정
+        int pageSize = 5; // 한 페이지에 보여질 아이템 수를 1로 설정
         pageable = PageRequest.of(page - 1, pageSize); // 페이지 정보 재설정
 
         ModelAndView view = new ModelAndView("user_list");
         Page<User> getUserList = null;
 
-        getUserList = userRepository.findAll(pageable);
+        getUserList = userRepository.findAllByOrderByCreatedAtDesc(pageable);
 
         int totalPages = getUserList.getTotalPages();
         int currentPageGroup = (page - 1) / 5;

@@ -20,20 +20,15 @@
     <div class="main">
         <span>총 ${userList.totalElements} 건</span>
         <span>[${userList.number + 1}/${userList.totalPages}]</span>
-
-        <c:forEach items="${userList.content}" var="user" varStatus="vs">
-            <c:if test="${vs.index % userList.size == 0}">
-                <!-- 페이지 번호가 바뀔 때마다 사용자 정보 출력 -->
-                <ul>
-                    <li>
-                        <p>ID: ${user.id}</p>
-                        <p>Name: ${user.name}</p>
-                        <p>Email: ${user.email}</p>
-                    </li>
-                </ul>
-            </c:if>
-        </c:forEach>
-
+        <div class="users">
+            <c:forEach items="${userList.content}" var="user">
+                <div class="user-box">
+                    <img src="${user.profileImg}">
+                    <p>닉네임 : ${user.name}</p>
+                    <p>국적 : ${user.liveCountry}</p>
+                </div>
+            </c:forEach>
+        </div>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <c:if test="${userList.number > 4}">

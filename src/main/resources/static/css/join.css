@@ -5,24 +5,28 @@
     height: 100vh;
     background-color: #f0f0f0;
 }
+
 #joinForm {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
 }
-.join-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-.join-box-left{
-    border-right: 1px solid black;
-}
+
 .join-box-left, .join-box-right {
-    flex: 0 0 48%;
     padding: 10px;
     box-sizing: border-box;
+    border: 1px solid black;
 }
+
+.join-button {
+    margin-top: auto;
+    justify-self: end;
+    margin-right: 10px;
+}
+
+
+
+
 /*.join-box-right select {*/
 /*    display: block;*/
 /*    margin-bottom: 10px; !* 각 요소 사이에 여백 추가 *!*/
