@@ -34,12 +34,12 @@
                     /${boardList.totalPages}]</span>
             </div>
             <div class="search-box">
-                <select>
+                <select id="search-select">
                     <option value="title" selected>제목</option>
                     <option value="author">작성자</option>
                 </select>
                 <input type="text" id="search-input" name="search-input">
-                <input type="button" onclick="search()" value="검색">
+                <input type="button" onclick="search(${boardList.number})" value="검색">
             </div>
         </div>
         <table>

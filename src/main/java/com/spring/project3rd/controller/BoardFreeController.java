@@ -3,10 +3,8 @@ package com.spring.project3rd.controller;
 import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
 import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
-import com.spring.project3rd.domain.boardFree.BoardFreeResponseDto;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
-import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BlockService;
@@ -16,11 +14,9 @@ import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +27,7 @@ import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("board/free/")
+@RequestMapping("/board/free/")
 public class BoardFreeController {
 
     private final BoardFreeRepository boardFreeRepository;
@@ -80,6 +76,7 @@ public class BoardFreeController {
                 excludeIds.addAll(blockList);
             }
         }
+        System.out.println("excludeIds : "+excludeIds);
 
         // 검색어 구분
         if (title != null && !title.isEmpty()) { // 제목 검색
@@ -98,6 +95,8 @@ public class BoardFreeController {
 
         // getBoardList가 Page 타입이므로 Page에서 해당 리스트가 들어있는 content 가져오기
         List<BoardFree> boardFreeList = getBoardList.getContent();
+        System.out.println("boardFreeList : "+boardFreeList);
+
         // 가져온 리스트가 하나라도 있을 경우
         if(!boardFreeList.isEmpty()){
             // getBoardList의 id를 이용하여 해당 id 유저의 name 정보 가져오기
@@ -110,6 +109,7 @@ public class BoardFreeController {
             }
             // 게시판 리스트 작성 유저의 name 리스트 view에 추가
             view.addObject("authorList",authorList);
+            System.out.println("authorList : "+authorList);
         }
 
         int totalPages = getBoardList.getTotalPages();
@@ -120,8 +120,9 @@ public class BoardFreeController {
         view.addObject("startPage", startPage);
         view.addObject("endPage", endPage);
 
-        return view;
+        System.out.println("Page<T> : "+getBoardList);
 
+        return view;
     }
 
 

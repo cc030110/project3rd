@@ -1,19 +1,16 @@
 $(document).ready(function() {
+    // 게시글 업로드 시 이미지 파일 처리
     $('#file').on('change', function() {
         let files = $('#file').prop('files'); // FileList 객체
         let max = 3; // 최대 선택 파일 개수
-
         if (files.length > max) {
             alert('최대 ' + max + '개까지 선택할 수 있습니다.');
             $(this).val(''); // 선택한 파일 초기화
         }
-
         // 이미지 미리보기
         let imgBox = $('.img-box');
-
         // 미리 보기 영역 초기화
         imgBox.empty();
-
         if(files.length>0){
             for(let i=0;i<files.length;i++){
                 let file = files[i];
@@ -28,9 +25,11 @@ $(document).ready(function() {
             }
         }
     });
+
+
 });
 
-
+// 게시글 업로드
 function uploadBoard(){
     const title = $('#title').val();
     const contents = $('#contents').val();
@@ -70,6 +69,7 @@ function uploadBoard(){
     }
 }
 
+// 게시글 이미지 업로드
 function uploadImg(boardNo){
     let fileInput = $('#file');
     let files = fileInput.prop('files'); // FileList 객체
@@ -115,4 +115,17 @@ function deleteBoard(boardNo){
 // 게시글 수정
 function updateBoard(boardNo){
 
+}
+
+// 게시글 검색
+function search(boardNo){
+    let selectedValue = $("#search-select").val();
+    let searchText = $("#search-input").val();
+    if (searchText===""){
+        alert("검색어가 없습니다.");
+        return;
+    }
+    let path = "/board/free/list/"+boardNo;
+    let query = "?" + selectedValue + "=" + searchText;
+    window.location.href = path + query;
 }
