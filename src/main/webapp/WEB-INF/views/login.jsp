@@ -24,7 +24,7 @@
             </div>
             <div class="login-box-left">
                 <form>
-                    <h1>로그인</h1>
+                    <h1><spring:message code="login.login"/></h1>
                     <label for="id"><spring:message code="login.id"/></label>
                     <input type="text" id="id" name="id" placeholder="<spring:message code="login.id"/>" required>
                     <p class="err" id="id-empty"><spring:message code="login.id_empty"/></p>

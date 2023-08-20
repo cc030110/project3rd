@@ -9,13 +9,17 @@ import com.spring.project3rd.domain.platform.Platform;
 import com.spring.project3rd.domain.platform.PlatformRepository;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
+import com.spring.project3rd.service.BlockService;
 import com.spring.project3rd.service.BoardCommunityService;
 import com.spring.project3rd.service.UploadFileService;
+import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +34,12 @@ import java.util.*;
 @RequiredArgsConstructor
 @RequestMapping("board/community")
 public class BoardCommunityController{
+
     private final BoardCommunityRepository boardCommunityRepository;
     private final BoardCommunityService boardCommunityService;
     private final BoardCommunityImgRepository boardCommunityImgRepository;
+    private final UserService userService;
+    private final BlockService blockService;
     private final UploadFileService uploadFileService;
     private final JwtTokenizer jwtTokenizer;
     private final PlatformRepository platformRepository;
@@ -46,21 +53,67 @@ public class BoardCommunityController{
     }
 
     // # Read
-    // 커뮤니티 게시판 전체 조회
+    // 게시판 목록 조회(제목,작성자,플랫폼)
     @GetMapping("/main/{page}")
     public ModelAndView showList(@PathVariable("page") int page,
-                                 @RequestParam(defaultValue = "") String keyword,
-                                 @PageableDefault(size = 5) Pageable pageable){
+                                 @RequestParam(required = false) String title,
+                                 @RequestParam(required = false) String author,
+                                 @PageableDefault(sort="boardNo", direction = Sort.Direction.DESC) Pageable pageable,
+                                 @CookieValue(value="accessToken", required = false) String accessToken){
+
+        // 해당 정보 가져오기
         ModelAndView view = new ModelAndView("board_community_main");
-        List<BoardCommunity> list=new ArrayList<>();
-        if(!keyword.isEmpty()){
-            list = boardCommunityRepository.findByTitleContaining(keyword, pageable.withPage(page-1));
-        }else{
-            list = boardCommunityRepository.findAll(pageable.withPage(page-1)).getContent();
+
+        // 게시글 목록
+        Page<BoardCommunity> getBoardList = null;
+
+        // 제외할 게시글 작성자 목록
+        List<String> excludeIds = new ArrayList<>();
+
+        // 탈퇴유저 제외(is_active=0)
+        excludeIds = userService.inactiveUserIds();
+
+        // 차단 유저 제외
+        if(accessToken != null){
+            Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+            String id = claims.get("id",String.class);
+
+            view.addObject("id",id);
+
+            // id로 차단목록 가져오기
+            List<String> blockList=blockService.blockList(id);
+
+            if(!blockList.isEmpty()){
+                excludeIds.addAll(blockList);
+            }
         }
 
-        // 가져온 리스트를 view에 저장
-        view.addObject("list",list);
+        // 검색 조건
+        if(title!=null && !title.isEmpty()){
+            getBoardList=boardCommunityRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page-1));
+        }else if(author != null && !author.isEmpty()){
+            getBoardList = boardCommunityRepository.findByIdContainingAndIdNotIn(author,excludeIds,pageable.withPage(page-1));
+        }else{
+            getBoardList = boardCommunityRepository.findByIdNotIn(excludeIds,pageable.withPage(page-1));
+        }
+
+        // 게시판 리스트 view에 추가(boardList는 Page<BoardCommunity> 타입, 페이지 정보도 포함)
+        view.addObject("boardList", getBoardList);
+
+        List<BoardCommunity> boardCommunityList = getBoardList.getContent();
+
+        // 가져온 리스트가 하나라도 있을 경우
+        if(!boardCommunityList.isEmpty()){
+            Map<String,String> authorList = new HashMap<>();
+            for(BoardCommunity boardCommunity : boardCommunityList){
+                String id = boardCommunity.getId();
+                String name=userService.getUserName(id);
+                authorList.put(id,name);
+            }
+
+            // 게시판 리스트 작성 유저의 name 리스트 view에 추가
+            view.addObject("authorList",authorList);
+        }
 
         // 플랫폼 객체 가져오기
         Map<String,String> platforms = new HashMap<>();
@@ -83,10 +136,9 @@ public class BoardCommunityController{
         Optional<BoardCommunity> optionalBoard = boardCommunityRepository.findById(boardNum);
         BoardCommunity board = optionalBoard.orElse(null);
 
-        view.addObject("board",board);
-
         if(board!=null){
             int boardNo = board.getBoardNo();
+            boardCommunityService.addViews(board);  // 게시글 조회수 증가
             List<BoardCommunityImg> imgList = boardCommunityImgRepository.findByBoardNo(boardNo);
 
             // 해당 게시글에 업로드된 파일이 존재할 경우
@@ -101,6 +153,8 @@ public class BoardCommunityController{
                 view.addObject("id",id);
             }
         }
+        view.addObject("board",board);
+
         return view;
     }
 
@@ -212,6 +266,33 @@ public class BoardCommunityController{
 
 
 
+/*// 커뮤니티 게시판 전체 조회
+    @GetMapping("/main/{page}")
+    public ModelAndView showList(@PathVariable("page") int page,
+                                 @RequestParam(defaultValue = "") String keyword,
+                                 @PageableDefault(size = 5) Pageable pageable){
+        ModelAndView view = new ModelAndView("board_community_main");
+        List<BoardCommunity> list=new ArrayList<>();
+        if(!keyword.isEmpty()){
+            list = boardCommunityRepository.findByTitleContaining(keyword, pageable.withPage(page-1));
+        }else{
+            list = boardCommunityRepository.findAll(pageable.withPage(page-1)).getContent();
+        }
+
+        // 가져온 리스트를 view에 저장
+        view.addObject("list",list);
+
+        // 플랫폼 객체 가져오기
+        Map<String,String> platforms = new HashMap<>();
+        List<Platform> platformList = platformRepository.findAll();
+        for (Platform platform : platformList) {
+            platforms.put(platform.getPlatformName(), platform.getPlatformImg());
+        }
+
+        view.addObject("platform", platforms);  // 플랫폼을 view에 저장
+
+        return view;
+    }*/
 
 
 // 게시글 작성
@@ -226,6 +307,7 @@ public class BoardCommunityController{
         }
         return board;
     }*/
+
 
 // 게시글 삭제
 /*@DeleteMapping(value="/delete/{boardNo}")
@@ -245,6 +327,7 @@ public class BoardCommunityController{
 
         return new Response("delete","success");
     }*/
+
 
 // 이전 버전
 // 게시글 작성 : api용        <--- 추후 로그인 확인부분 넣을 것
