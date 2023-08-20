@@ -23,31 +23,31 @@
                        value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
                 <ul>
                     <li>
-                        <p id="board_num">게시글 번호 : ${board.boardNo}</p>
+                        <p id="views"><spring:message code="board_community.views"/> : ${board.views}</p>
                     </li>
 
                     <li>
-                        <p id="platform">플랫폼 : ${board.platformName}</p>
+                        <p id="platform"><spring:message code="board_community.platform"/> : ${board.platformName}</p>
                     </li>
 
                     <li>
-                        <p id="title">제목 : ${board.title}</p>
+                        <p id="title"><spring:message code="board_community.title"/> : ${board.title}</p>
                     </li>
 
                     <li>
-                        <p id="creator">작성자 : ${board.id}</p>
+                        <p id="creator"><spring:message code="board_community.author"/> : ${board.id}</p>
                     </li>
 
                     <li>
-                        <p id="content">내용 : ${board.contents}</p>
+                        <p id="content"><spring:message code="board_community.contents"/> : ${board.contents}</p>
                     </li>
 
                     <li>
-                        <p id="participants">참가자 수 : ${board.participantsNum}</p>
+                        <p id="participants"><spring:message code="board_community.participants"/> : ${board.participantsNum}</p>
                     </li>
 
                     <li>
-                        <p id="deadline">마감일 : ${board.deadline}</p>
+                        <p id="deadline"><spring:message code="board_community.deadline"/> : ${board.deadline}</p>
                     </li>
 
                     <li>
@@ -64,10 +64,10 @@
 
                     <li>
                         <c:if test="${board.id==id}">
-                            <input type="button" id="modify_btn" value="수정하기" onclick="moveToUpdate()">
-                            <input type="button" id="delete_btn" value="삭제하기" onclick="deleteBoard()">
+                            <input type="button" id="modify_btn" value="<spring:message code="board_community.modify"/>" onclick="moveToUpdate()">
+                            <input type="button" id="delete_btn" value="<spring:message code="board_community.delete"/>" onclick="deleteBoard()">
                         </c:if>
-                        <input type="button" id="back_btn" value="뒤로가기" onclick="moveToMain()">
+                        <input type="button" id="back_btn" value="<spring:message code="board_community.back"/>" onclick="moveToMain()">
                     </li>
                 </ul>
             </c:otherwise>

@@ -20,6 +20,4 @@ public interface BoardFreeRepository extends JpaRepository<BoardFree,Integer> {
     // 게시판 목록 - 작성자 검색(특정 유저 제외)
     Page<BoardFree> findByIdContainingAndIdNotIn(String id, List<String> excludedIds, Pageable page);
 
-
-
 }

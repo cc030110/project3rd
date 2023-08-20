@@ -17,17 +17,17 @@
             <div class="intro">
                 <!-- 환영인사 -->
                 <div class="greetings">
-                    <p>나만의 언어 교환 파트너를 찾아보세요!</p>
+                    <p><spring:message code="index.greeting"/></p>
                 </div>
 
                 <div class="intro_con">
                     <!-- 사이트 설명 -->
                     <div class="intro_explan">
-                        <p>GLOBALTIES에 오신 것을 환영합니다.</p>
-                        <p>저희는 공간적 제약이 없는 상호 언어 학습의 장을 제공합니다.</p>
-                        <p>전세계의 사람들과 언어를 교류하며 서로의 문화를 공유해보세요.</p>
-                        <p>메세지, 커뮤니티 등을 통해 보다 좋은 학습의 기회도 얻으실 수 있습니다.</p>
-                        <p>유익한 시간이 되시길 바랍니다:)</p>
+                        <p><spring:message code="index.explan_1"/></p>
+                        <p><spring:message code="index.explan_2"/></p>
+                        <p><spring:message code="index.explan_3"/></p>
+                        <p><spring:message code="index.explan_4"/></p>
+                        <p><spring:message code="index.explan_5"/></p>
                     </div>
 
                     <!-- 사이트 이미지 -->
