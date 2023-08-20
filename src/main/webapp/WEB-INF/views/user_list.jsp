@@ -24,7 +24,7 @@
             <c:forEach items="${userList.content}" var="user">
                 <div class="user-box">
                     <img src="${user.profileImg}">
-                    <p>닉네임 : ${user.name}</p>
+                    <p>닉네임 : <a href="/user/${user.name}">${user.name}</a></p>
                     <p>국적 : ${user.liveCountry}</p>
                 </div>
             </c:forEach>

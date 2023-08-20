@@ -228,7 +228,8 @@ $(document).on("click", ".use-lang-box span", function() {
 
 
 // 이메일 코드 전송
-let serverGeneratedCode = ""; // 이메일 전송 받기
+let serverGeneratedCode = ""; // 이메일 코드
+let isEmailChecked = false; // 이메일 확인 체크 여부
 function sendEmail() {
     let userEmail = $("#email").val();
     serverGeneratedCode="";
@@ -251,7 +252,7 @@ function sendEmail() {
     }).done(function (response){
         // 서버로부터 받은 인증 번호를 변수에 저장
         serverGeneratedCode = response.data;
-        console.log("인증코드: "+serverGeneratedCode);
+        // console.log("인증코드: "+serverGeneratedCode);
     }).fail(function (request){
         console.log("status: " + request.status);
         console.log("responseText: " + request.responseText);
@@ -265,6 +266,7 @@ function verifyCode() {
 
     if (userEnteredCode === serverGeneratedCode) {
         $("#resultMessage").text("인증 성공!");
+        isEmailChecked = true;
     } else {
         $("#resultMessage").text("인증 실패!");
     }
