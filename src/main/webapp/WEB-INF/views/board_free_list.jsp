@@ -11,17 +11,31 @@
     <c:import url="header.jsp"/>
     <div class="main">
         <h2><a href="/board/free/list/1">자유게시판</a></h2>
-        <div>
-            <span>총 ${boardList.totalElements} 건</span>
-            <span>[${boardList.number+1}/${boardList.totalPages}]</span>
-        </div>
-        <div class="search-box">
-            <select>
-                <option value="title" selected>제목</option>
-                <option value="author">작성자</option>
-            </select>
-            <input type="text">
-            <input type="button" onclock="search()" value="검색">
+        <div class="content-row">
+            <div>
+                <span>총 ${boardList.totalElements} 건</span>
+                <span>[
+                    <c:choose>
+                        <c:when test="${boardList.totalPages ne 0}">
+                            ${boardList.number+1}
+                        </c:when>
+                        <c:otherwise>
+                            0
+                        </c:otherwise>
+                    </c:choose>
+                    /${boardList.totalPages}]</span>
+            </div>
+            <div class="search-box">
+                <select id="search-select">
+                    <option value="title" selected>제목</option>
+                    <option value="author">작성자</option>
+                </select>
+                <input type="text" id="search-input" name="search-input">
+                <input type="button" onclick="search()" value="검색">
+            </div>
+            <div class="upload-btn">
+
+            </div>
         </div>
         <table>
             <thead>
