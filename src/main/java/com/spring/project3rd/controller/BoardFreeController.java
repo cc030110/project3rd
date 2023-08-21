@@ -52,8 +52,8 @@ public class BoardFreeController {
                                     @RequestParam(required = false) String author,
                                     @PageableDefault(sort = "boardNo", direction = Sort.Direction.DESC) Pageable pageable,
                                     @CookieValue(value = "accessToken", required = false) String accessToken) {
-        // Pageable size default값은 10이므로 따로 지정 X
-        // 페이지 정렬 -> boardNo를 기준으로, DECS(내림차순)
+        // 페이지 정렬(sort) -> boardNo를 기준으로, DECS(내림차순)
+        int pageSize = 10; // pageable의 기본 size가 10 이므로 굳이 바꿔줄 필요 X
 
         // board_free_list로 해당 정보 가져감
         ModelAndView view = new ModelAndView("board_free_list");
@@ -85,7 +85,10 @@ public class BoardFreeController {
         if (title != null && !title.isEmpty()) { // 제목 검색
             getBoardList = boardFreeRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page - 1));
         } else if (author != null && !author.isEmpty()) { // 작성자 검색
-            getBoardList = boardFreeRepository.findByIdContainingAndIdNotIn(author, excludeIds, pageable.withPage(page - 1));
+            // 작성자의 경우 표기된 이름이 name이므로 id로 바꿔줘야 함
+            String id = userService.getUserIdByName(author);
+            // id가 없을 경우 처리 해줘야함
+            getBoardList = boardFreeRepository.findByIdContainingAndIdNotIn(id, excludeIds, pageable.withPage(page - 1));
         } else { // 검색 없음
             getBoardList = boardFreeRepository.findByIdNotIn(excludeIds, pageable.withPage(page - 1));
         }
@@ -108,6 +111,14 @@ public class BoardFreeController {
             // 게시판 리스트 작성 유저의 name 리스트 view에 추가
             view.addObject("authorList",authorList);
         }
+
+        int totalPages = getBoardList.getTotalPages();
+        int currentPageGroup = (page - 1) / pageSize;
+        int startPage = currentPageGroup * pageSize + 1;
+        int endPage = Math.min(startPage + pageSize - 1 , totalPages);
+
+        view.addObject("startPage", startPage);
+        view.addObject("endPage", endPage);
 
         return view;
 

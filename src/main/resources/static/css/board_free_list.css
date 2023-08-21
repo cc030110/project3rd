@@ -1,33 +1,116 @@
-.main{
-    padding: 5%;
-    background-color: #6868e5;
-}
+/* Complete Styling for elements within div.main */
 
-h2{
-    text-align: center;
+/* Added margin to create spacing between the content and the edges */
+div.main {
+    margin: 30px 10%;
 }
 
 h2>a{
-    font-size: 1.5rem;
     font-weight: bold;
+    font-size: 1.5rem;
 }
 
-table{
+/* Table */
+div.main table {
     border-top: 1px solid black;
     border-collapse: collapse;
+    margin: 20px 0;
+    width: 100%;
 }
 
-thead{
+div.main thead {
     background-color: silver;
 }
 
-th,td{
+div.main th,
+div.main td {
     padding: 10px;
     border-left: 1px solid black;
     border-bottom: 1px solid black;
+    text-align: center;
 }
 
-th:first-child, td:first-child {
+div.main th:first-child,
+div.main td:first-child {
     border-left: none;
 }
 
+/* Pagination */
+div.main .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+div.main .pagination .page-item {
+    list-style: none;
+    margin: 0 5px;
+    display: inline; /* Added */
+}
+
+div.main .pagination .page-link {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer; /* Added cursor style */
+}
+
+div.main .pagination .page-link:hover {
+    background-color: #ddd;
+}
+
+div.main .pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+div.main .pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    cursor: default;
+    background-color: #f9f9f9;
+    border-color: #ddd;
+    color: #333;
+}
+
+/* Search Box and Summary */
+div.main .content-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Added margin for spacing */
+}
+
+div.main .search-box {
+    display: flex;
+    align-items: center;
+}
+
+div.main .search-box select,
+div.main .search-box input[type="text"],
+div.main .search-box input[type="button"] {
+    padding: 5px;
+}
+
+/* Positioning for h2, span div, and search-box */
+div.main h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+div.main .search-summary {
+    display: flex;
+    align-items: center;
+}
+
+div.main .search-summary span:first-child {
+    margin-right: auto;
+}
+
+/* Added margin to the search-box to separate it from the content below */
+div.main .search-box {
+    margin-top: 20px;
+}

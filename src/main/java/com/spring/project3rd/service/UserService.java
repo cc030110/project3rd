@@ -36,7 +36,7 @@ public class UserService {
         return list;
     }
 
-    // 유저 아이디를 받아 해당 유저의 name 리턴
+    // 유저 id를 받아 해당 유저의 name 리턴
     public String getUserName(String id){
         String name = "";
         User user = userRepository.findById(id).orElse(null);
@@ -44,6 +44,16 @@ public class UserService {
             name=user.getName();
         }
         return name;
+    }
+
+    // 유저의 name을 받아 해당 유저의 id를 리턴
+    public String getUserIdByName(String name){
+        String id = "";
+        User user = userRepository.findByName(name);
+        if(user!=null){
+            id=user.getId();
+        }
+        return id;
     }
 
 }
