@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -15,12 +15,13 @@
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
-        <div class="main">
-            <c:choose>
-                <c:when test="${board eq null}">
-                    <div>존재하지 않는 게시글입니다.</div>
-                </c:when>
-                <c:otherwise>
+    <div class="main">
+        <c:choose>
+            <c:when test="${board eq null}">
+                <div id="not-exist">존재하지 않는 게시글입니다.</div>
+            </c:when>
+            <c:otherwise>
+                <div id="board-info">
                     <div>게시글 번호 : ${board.boardNo}</div>
                     <div>작성자 : ${author}</div>
                     <div>제목 : ${board.title}</div>
@@ -40,9 +41,10 @@
                             </c:forEach>
                         </div>
                     </c:if>
-                </c:otherwise>
-            </c:choose>
-        </div>
+                </div>
+            </c:otherwise>
+        </c:choose>
+    </div>
     <c:import url="footer.jsp"/>
 </div>
 <script src="/script/board-free.js"></script>

@@ -41,11 +41,6 @@ function getUserList() {
                 console.log('get comments error');
             }
         });
-
-
-
-
-
     });
 
 }
