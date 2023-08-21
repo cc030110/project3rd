@@ -80,14 +80,27 @@ public class BoardFreeController {
 
         // 검색어 구분
         if (title != null && !title.isEmpty()) { // 제목 검색
-            getBoardList = boardFreeRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page - 1));
+            if(excludeIds.isEmpty()){
+                getBoardList = boardFreeRepository.findByTitleContaining(title,pageable.withPage(page-1));
+            }else{
+                getBoardList = boardFreeRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page - 1));
+            }
         } else if (author != null && !author.isEmpty()) { // 작성자 검색
             // 작성자의 경우 표기된 이름이 name이므로 id로 바꿔줘야 함
+            // 나중에 보드 자체에 name 추가
             String id = userService.getUserIdByName(author);
-            // id가 없을 경우 처리 해줘야함
-            getBoardList = boardFreeRepository.findByIdContainingAndIdNotIn(id, excludeIds, pageable.withPage(page - 1));
+            if(excludeIds.isEmpty()){
+                getBoardList = boardFreeRepository.findByIdContaining(id,pageable.withPage(page-1));
+            }else{
+                getBoardList = boardFreeRepository.findByIdContainingAndIdNotIn(id, excludeIds, pageable.withPage(page - 1));
+            }
+
         } else { // 검색 없음
-            getBoardList = boardFreeRepository.findByIdNotIn(excludeIds, pageable.withPage(page - 1));
+            if(excludeIds.isEmpty()){
+                getBoardList = boardFreeRepository.findAll(pageable.withPage(page-1));
+            }else{
+                getBoardList = boardFreeRepository.findByIdNotIn(excludeIds, pageable.withPage(page - 1));
+            }
         }
 
         // 게시판 리스트 view에 추가 (boardList는 Page<BoardFree> 타입, 페이지 정보도 포함)
