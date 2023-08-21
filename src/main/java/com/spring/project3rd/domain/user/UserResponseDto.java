@@ -16,7 +16,7 @@ public class UserResponseDto {
     private String name;
     private String email;
     private String gender;
-    private Short age;
+    private int birth;
     private String profileImg;
     private String liveCountry;
     private String liveCity;
@@ -28,7 +28,7 @@ public class UserResponseDto {
         this.name = user.getName();
         this.email = user.getEmail();
         this.gender = user.getGender();
-        this.age = user.getAge();
+        this.birth = user.getBirth();
         this.profileImg = user.getProfileImg();
         this.liveCountry = user.getLiveCountry();
         this.liveCity = user.getLiveCity();

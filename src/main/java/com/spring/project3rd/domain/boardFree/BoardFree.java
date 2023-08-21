@@ -19,6 +19,8 @@ public class BoardFree extends Timestamp {
     private int boardNo;
     @Column(nullable = false)
     private String id;
+    @Column(nullable = false)
+    private String name;
     @Column(length = 100, nullable = false)
     private String title;
     @Column(length = 4000, nullable = false)

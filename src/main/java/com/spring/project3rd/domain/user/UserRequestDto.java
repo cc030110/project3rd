@@ -19,7 +19,7 @@ public class UserRequestDto {
     private String name;
     private String email;
     private String gender;
-    private Short age;
+    private int birth;
     private String profileImg;
     private String liveCountry;
     private String liveCity;

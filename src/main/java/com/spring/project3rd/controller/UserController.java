@@ -3,7 +3,7 @@ package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.email.BaseResponse;
 import com.spring.project3rd.domain.email.EmailCheckReq;
-import com.spring.project3rd.domain.user.EmailService;
+import com.spring.project3rd.service.EmailService;
 import com.spring.project3rd.domain.language.*;
 import com.spring.project3rd.domain.user.*;
 import com.spring.project3rd.payload.Response;
