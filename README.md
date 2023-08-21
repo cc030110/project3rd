@@ -10,7 +10,6 @@
 - Spring MVC
 - Spring Data (JPA)
 - MySQL
-- LomBok
 - JWT
 
 ### 작업기간
