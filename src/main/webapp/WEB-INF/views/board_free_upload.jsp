@@ -13,6 +13,7 @@
     <div class="main">
         <div class="board-content">
             <h2><a href="/board/free/list/1">자유게시판</a></h2>
+            <h3>게시글 업로드</h3>
             <form>
                 <input type="text" id="title" name="title" placeholder="제목" autofocus>
                 <textarea id="contents" name="contents" placeholder="내용"></textarea>
