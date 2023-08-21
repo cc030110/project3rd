@@ -86,14 +86,12 @@ public class BoardFreeController {
             }
         } else if (author != null && !author.isEmpty()) { // 작성자 검색
             // 작성자의 경우 표기된 이름이 name이므로 id로 바꿔줘야 함
-            // 나중에 보드 자체에 name 추가
             String id = userService.getUserIdByName(author);
             if(excludeIds.isEmpty()){
                 getBoardList = boardFreeRepository.findByIdContaining(id,pageable.withPage(page-1));
             }else{
                 getBoardList = boardFreeRepository.findByIdContainingAndIdNotIn(id, excludeIds, pageable.withPage(page - 1));
             }
-
         } else { // 검색 없음
             if(excludeIds.isEmpty()){
                 getBoardList = boardFreeRepository.findAll(pageable.withPage(page-1));

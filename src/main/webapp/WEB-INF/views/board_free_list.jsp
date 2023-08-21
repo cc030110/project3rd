@@ -39,7 +39,7 @@
             </div>
             <c:if test="${id ne null}">
                 <a href="/board/free/upload" id="upload-link">
-                    글쓰기
+                    <spring:message code="board_free_list.write"/>
                 </a>
             </c:if>
         </div>

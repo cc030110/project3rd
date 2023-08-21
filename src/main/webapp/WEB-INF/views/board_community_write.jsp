@@ -8,7 +8,7 @@
 
 <head>
     <!-- CSS -->
-    <link rel="stylesheet" href="/css/board_write_update.css">
+    <link rel="stylesheet" href="/css/board_community_write.css">
 
     <title>GLOBALTIES</title>
 </head>
@@ -16,8 +16,7 @@
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
-    <li>
-        <nav class="main_con">
+        <div class="main">
             <ul>
                 <li>
                     <label for="platform">
@@ -65,13 +64,6 @@
                 </li>
 
                 <li>
-                    <label for="creator">
-                        <spring:message code="board_community_write.creator"/>
-                    </label>
-                    <input type="text" id="creator" name="creator"  readonly>
-                </li>
-
-                <li>
                     <label for="contents">
                         <spring:message code="board_community_write.content"/>
                     </label>
@@ -107,6 +99,7 @@
                     <input type="button" id="back_btn" value=<spring:message code="board_community_write.back"/>>
                 </li>
             </ul>
+        </div>
     <c:import url="footer.jsp"/>
 </div>
 
