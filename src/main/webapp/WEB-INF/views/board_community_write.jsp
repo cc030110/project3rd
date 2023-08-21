@@ -101,11 +101,7 @@
 
                     </div>
                 </li>
-                <li>
-                    <select>
-                        <option value="1"></option>
-                    </select>
-                </li>
+
                 <li>
                     <input type="button" id="write_btn" value=<spring:message code="board_community_write.submit"/>>
                     <input type="button" id="back_btn" value=<spring:message code="board_community_write.back"/>>
