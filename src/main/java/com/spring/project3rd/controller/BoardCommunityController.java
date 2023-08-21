@@ -40,12 +40,16 @@ public class BoardCommunityController{
     private final BoardCommunityRepository boardCommunityRepository;
     private final BoardCommunityService boardCommunityService;
     private final BoardCommunityImgRepository boardCommunityImgRepository;
+
     private final UserService userService;
     private final BlockService blockService;
     private final UploadFileService uploadFileService;
-    private final JwtTokenizer jwtTokenizer;
+
     private final PlatformRepository platformRepository;
     private final UserRepository userRepository;
+
+
+    private final JwtTokenizer jwtTokenizer;
 
     // 게시글 번호로 게시글 가져오기
     public BoardCommunity getBoardByBoardNo(int boardNo){
@@ -61,8 +65,11 @@ public class BoardCommunityController{
     public ModelAndView showList(@PathVariable("page") int page,
                                  @RequestParam(required = false) String title,
                                  @RequestParam(required = false) String author,
-                                 @PageableDefault(sort="boardNo", direction = Sort.Direction.DESC, size = 8) Pageable pageable,
+                                 @PageableDefault(sort="boardNo", direction = Sort.Direction.DESC) Pageable pageable,
                                  @CookieValue(value="accessToken", required = false) String accessToken){
+
+        // 페이지 정렬(sort) -> boardNo를 기준으로 DESC 정렬
+        int pageSize = 8;
 
         // 해당 정보 가져오기
         ModelAndView view = new ModelAndView("board_community_main");
@@ -76,16 +83,18 @@ public class BoardCommunityController{
         // 탈퇴유저 제외(is_active=0)
         excludeIds = userService.inactiveUserIds();
 
-        // 차단 유저 제외
+        // 로그인한 회원의 차단 유저 제외
         if(accessToken != null){
             Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
             String id = claims.get("id",String.class);
 
+            // 로그인 중인 아이디 view에 저장
             view.addObject("id",id);
 
             // id로 차단목록 가져오기
             List<String> blockList=blockService.blockList(id);
 
+            // 해당 유저가 존재한다는 조건
             if(!blockList.isEmpty()){
                 excludeIds.addAll(blockList);
             }
@@ -93,17 +102,31 @@ public class BoardCommunityController{
 
         // 검색 조건
         if(title!=null && !title.isEmpty()){
-            getBoardList=boardCommunityRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page-1));
+            if(excludeIds.isEmpty()){
+                getBoardList=boardCommunityRepository.findByTitleContaining(title,pageable.withPage(page-1));
+            }else{
+                getBoardList=boardCommunityRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page-1));
+            }
         }else if(author != null && !author.isEmpty()){
-            getBoardList = boardCommunityRepository.findByIdContainingAndIdNotIn(author,excludeIds,pageable.withPage(page-1));
-        }else{
-            getBoardList = boardCommunityRepository.findByIdNotIn(excludeIds,pageable.withPage(page-1));
+            String id=userService.getUserIdByName(author);
+            if(excludeIds.isEmpty()){
+                getBoardList=boardCommunityRepository.findByIdContaining(id,pageable.withPage(page-1));
+            }else{
+                getBoardList=boardCommunityRepository.findByIdContainingAndIdNotIn(id, excludeIds, pageable.withPage(page-1));
+            }
+        }else{ // 검색을 하지 않을 경우(ex>초기화면)
+            if(excludeIds.isEmpty()){
+                getBoardList=boardCommunityRepository.findAll(pageable.withPage(page-1));
+            }else{
+                getBoardList=boardCommunityRepository.findByIdNotIn(excludeIds, pageable.withPage(page-1));
+            }
         }
 
         // 게시판 리스트 view에 추가(boardList는 Page<BoardCommunity> 타입, 페이지 정보도 포함)
         view.addObject("boardList", getBoardList);
 
         List<BoardCommunity> boardCommunityList = getBoardList.getContent();
+        System.out.println("boardCommunityList : "+boardCommunityList);
 
         // 가져온 리스트가 하나라도 있을 경우
         if(!boardCommunityList.isEmpty()){
@@ -126,6 +149,17 @@ public class BoardCommunityController{
         }
 
         view.addObject("platform", platforms);  // 플랫폼을 view에 저장
+
+        // 페이지 쪼개기
+        int totalPages = getBoardList.getTotalPages();
+        int currentPageGroup = (page-1)/pageSize;
+        int startPage = currentPageGroup * pageSize +1;
+        int endPage = Math.min(startPage + pageSize -1, totalPages);
+
+        view.addObject("startPage",startPage);
+        view.addObject("endPage",endPage);
+
+        System.out.println("Page<T> : "+getBoardList);
 
         return view;
     }
