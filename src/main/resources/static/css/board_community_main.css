@@ -4,17 +4,35 @@ body{
     margin:0;
 }
 
-div.main{
+/*div.main{
     width:100%;
-    margin:0 auto;
+    margin:100px 0;
+}*/
+
+div.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 세로 가운데 정렬 */
+    align-items: center; /* 가로 가운데 정렬 */
+    margin: 100px auto;
+    padding: 0 20px;
+}
+
+div.main_top{
+    display:flex;
+    justify-content:space-between;
+    width:1200px;
+    margin:30px 0;
 }
 
 div.con_list{
-    width:1000px;
-    height:200px;
+    width:1200px;
+    height:250px;
     border:1px solid black;
     margin:20px 0;
     padding:20px;
+    border-radius:20px;
 }
 
 div.con_list a:hover{
@@ -33,7 +51,7 @@ div.con_platform>img{
 }
 
 div.con_platform_name{
-    width:80px;
+    width:130px;
     margin-top:10px;
     padding:10px;
     border:1px solid gray;
@@ -42,4 +60,45 @@ div.con_platform_name{
 
 div.con_text{
     margin-left:200px;
+}
+
+/* Pagination */
+div.main .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+div.main .pagination .page-item {
+    list-style: none;
+    margin: 0 5px;
+    display: inline; /* Added */
+}
+
+div.main .pagination .page-link {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer; /* Added cursor style */
+}
+
+div.main .pagination .page-link:hover {
+    background-color: #ddd;
+}
+
+div.main .pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+div.main .pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    cursor: default;
+    background-color: #f9f9f9;
+    border-color: #ddd;
+    color: #333;
 }

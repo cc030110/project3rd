@@ -3,17 +3,21 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>자유 게시판</title>
+    <title><spring:message code="board_free_list.logo"/></title>
     <link rel="stylesheet" href="/css/board_free_list.css">
 </head>
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
-        <h2><a href="/board/free/list/1">자유게시판</a></h2>
+        <h2><a href="/board/free/list/1"><spring:message code="board_free_list.logo"/></a></h2>
         <div class="content-row">
             <div>
-                <span>총 ${boardList.totalElements} 건</span>
+                <span>
+                    <spring:message code="board_free_list.total"/>
+                    ${boardList.totalElements}
+                    <spring:message code="board_free_list.unit"/>
+                </span>
                 <span>[
                     <c:choose>
                         <c:when test="${boardList.totalPages ne 0}">
@@ -27,11 +31,11 @@
             </div>
             <div class="search-box">
                 <select id="search-select">
-                    <option value="title" selected>제목</option>
-                    <option value="author">작성자</option>
+                    <option value="title" selected><spring:message code="board_free_list.sel1"/></option>
+                    <option value="author"><spring:message code="board_free_list.sel2"/></option>
                 </select>
                 <input type="text" id="search-input" name="search-input">
-                <input type="button" onclick="search()" value="검색">
+                <input type="button" onclick="search()" value=<spring:message code="board_free_list.search"/>>
             </div>
             <div class="upload-btn">
 
@@ -40,11 +44,11 @@
         <table>
             <thead>
             <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>조회수</th>
+                <th><spring:message code="board_free_list.num"/></th>
+                <th><spring:message code="board_free_list.title"/></th>
+                <th><spring:message code="board_free_list.author"/></th>
+                <th><spring:message code="board_free_list.date"/></th>
+                <th><spring:message code="board_free_list.views"/></th>
             </tr>
             </thead>
             <tbody>
@@ -97,6 +101,6 @@
     </div>
     <c:import url="footer.jsp"/>
 </div>
-<script src="/script/board-free-list.js"></script>
+<script src="/script/board-free.js"></script>
 </body>
 </html>
