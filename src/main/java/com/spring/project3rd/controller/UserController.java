@@ -21,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,7 +50,6 @@ public class UserController {
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
 
-        // TODO email에 해당하는 사용자 정보를 읽어와서 암호가 맞는지 검사하는 코드가 있어야 한다.
         String id = loginDto.getId();
         String password = loginDto.getPassword();
         System.out.println(id);
@@ -232,7 +230,7 @@ public class UserController {
     /** 개인 정보 불러오기(회원 수정에 쓸거)**/
     @GetMapping("update")
     public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
-        ModelAndView view = new ModelAndView("user_myPage");
+        ModelAndView view = new ModelAndView("user_my_page");
 
         Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
         String id = claims.get("id", String.class);
@@ -273,7 +271,7 @@ public class UserController {
 
     /** 회원 탈퇴 **/
     @DeleteMapping("/delete")
-    public Map delete(@CookieValue(value = "accessToken", required = false) String accessToken, UserRequestDto userRequestDto){
+    public Map delete(@CookieValue(value = "accessToken", required = false) String accessToken, UserRequestDto userRequestDto, HttpServletResponse responselogout){
         JSONObject response = new JSONObject();
 
         Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
@@ -287,6 +285,7 @@ public class UserController {
         //&& log.equals(user.getId())
         {
             userService.deleteUser(id);
+            logout(responselogout);
             response.put("delete", "success");
         } else {
             response.put("delete", "fail");
@@ -294,5 +293,4 @@ public class UserController {
 
         return response.toMap();
     }
-
 }
