@@ -1,6 +1,6 @@
 # GlobalTies
 - 프로젝트 개요
-- [서비스 소개]("canva 보기전용 링크 추가할 것")
+- [서비스 소개](https://www.canva.com/design/DAFsJwwmMGc/ePA7fXR7-8bAJF3L4UZT7w/edit?utm_content=DAFsJwwmMGc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ### 작업기간
 - 2023.08.01 ~ 2023.08.25. (3주)
@@ -21,3 +21,10 @@
   - 기능1
   - 기능2
 
+### Mail To
+- 조수빈
+  - cc030114@naver.com
+- 황인규
+  - hik130423@gmail.com
+- 유현호
+  - yhh6251@gmail.com
