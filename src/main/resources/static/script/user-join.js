@@ -1,3 +1,7 @@
+// 이메일 관련 전역변수
+let serverGeneratedCode = ""; // 이메일 코드
+let isEmailChecked = false; // 이메일 확인 체크 여부
+
 $(document).ready(function() {
     // 입력 필드가 변경될 때 에러 클래스 및 에러 메시지 제거
     $('input, select').on('input change', function() {
@@ -93,6 +97,12 @@ function joinForm() {
     const needLangValid = validateInput($('#need-lang'),needLang.length!==0);
     if(!needLangValid) return;
 
+    // 이메일 인증 여부
+    if(!isEmailChecked){
+        console.log("이메일 인증이 필요합니다.");
+        return;
+    }
+
     // // 여기까지 왔다면 통과!
     console.log("성공!");
 
@@ -120,6 +130,7 @@ function joinForm() {
             }
         }).fail(function (){
             alert("파일 업로드 실패");
+            isEmailChecked=false;
         });
     }
 
@@ -228,11 +239,11 @@ $(document).on("click", ".use-lang-box span", function() {
 
 
 // 이메일 코드 전송
-let serverGeneratedCode = ""; // 이메일 코드
-let isEmailChecked = false; // 이메일 확인 체크 여부
+
 function sendEmail() {
     let userEmail = $("#email").val();
     serverGeneratedCode="";
+    isEmailChecked=false;
 
     console.log(userEmail);
     if (userEmail==="") {
@@ -269,5 +280,6 @@ function verifyCode() {
         isEmailChecked = true;
     } else {
         $("#resultMessage").text("인증 실패!");
+        isEmailChecked = false;
     }
 }

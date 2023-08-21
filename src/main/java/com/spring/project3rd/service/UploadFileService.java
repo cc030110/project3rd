@@ -60,7 +60,6 @@ public class UploadFileService {
     // 파일 업로드 1장
     public String uploadImgFile(MultipartFile img){
         String response="";
-
         try {
             String fileName = img.getOriginalFilename();
             System.out.println("인코딩 전 : "+fileName);

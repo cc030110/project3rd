@@ -1,0 +1,65 @@
+/* your-style-file.css */
+
+/* Center align content within the .main container */
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust this for desired centering effect */
+}
+
+/* Style for the board information container */
+#board-info {
+    max-width: 600px; /* Adjust this for desired width */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: left;
+}
+
+/* Style for buttons in the btn-group */
+.btn-group {
+    margin-top: 10px;
+}
+
+#update-btn,
+#delete-btn {
+    padding: 5px 10px;
+    margin-right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#update-btn:hover,
+#delete-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Style for images in the img-box */
+.img-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.img-box img {
+    max-width: calc(33.33% - 10px); /* For 3 images per row */
+    max-height: 150px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style for the "not-exist" message */
+#not-exist {
+    text-align: center;
+    font-size: 18px;
+    color: #f00;
+}
