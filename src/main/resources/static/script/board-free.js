@@ -118,7 +118,7 @@ function updateBoard(boardNo){
 }
 
 // 게시글 검색
-function search(boardNo){
+function searchBoard(boardNo){
     let selectedValue = $("#search-select").val();
     let searchText = $("#search-input").val();
     if (searchText===""){

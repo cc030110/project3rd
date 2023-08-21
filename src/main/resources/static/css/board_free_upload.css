@@ -1,0 +1,49 @@
+/* board_free_upload.css */
+
+/* Center align content within the .main container */
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust this for desired centering effect */
+}
+
+/* Style for form elements */
+#title,
+#contents {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Style for the image box */
+.img-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.img-box > img {
+    max-width: 150px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+}
+
+/* Style for the submit button */
+#submit-bnt {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#submit-bnt:hover {
+    background-color: #0056b3;
+}

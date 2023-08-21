@@ -31,11 +31,13 @@
                     <option value="author">작성자</option>
                 </select>
                 <input type="text" id="search-input" name="search-input">
-                <input type="button" onclick="search()" value="검색">
+                <input type="button" onclick="searchBoard(${boardList.number+1})" value="검색">
             </div>
-            <div class="upload-btn">
-
-            </div>
+            <c:if test="${id ne null}">
+                <a href="/board/free/upload" id="upload-link">
+                    글쓰기
+                </a>
+            </c:if>
         </div>
         <table>
             <thead>
@@ -97,6 +99,6 @@
     </div>
     <c:import url="footer.jsp"/>
 </div>
-<script src="/script/board-free-list.js"></script>
+<script src="/script/board-free.js"></script>
 </body>
 </html>

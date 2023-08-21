@@ -76,7 +76,6 @@ public class BoardFreeController {
                 excludeIds.addAll(blockList);
             }
         }
-        System.out.println("excludeIds : "+excludeIds);
 
         // 검색어 구분
         if (title != null && !title.isEmpty()) { // 제목 검색
@@ -108,7 +107,6 @@ public class BoardFreeController {
 
         // getBoardList가 Page 타입이므로 Page에서 해당 리스트가 들어있는 content 가져오기
         List<BoardFree> boardFreeList = getBoardList.getContent();
-        System.out.println("boardFreeList : "+boardFreeList);
 
         // 가져온 리스트가 하나라도 있을 경우
         if(!boardFreeList.isEmpty()){
@@ -122,7 +120,6 @@ public class BoardFreeController {
             }
             // 게시판 리스트 작성 유저의 name 리스트 view에 추가
             view.addObject("authorList",authorList);
-            System.out.println("authorList : "+authorList);
         }
 
         int totalPages = getBoardList.getTotalPages();
@@ -132,8 +129,6 @@ public class BoardFreeController {
 
         view.addObject("startPage", startPage);
         view.addObject("endPage", endPage);
-
-        System.out.println("Page<T> : "+getBoardList);
 
         return view;
     }

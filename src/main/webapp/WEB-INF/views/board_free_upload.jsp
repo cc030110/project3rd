@@ -5,12 +5,14 @@
 <html>
 <head>
     <title>게시글 등록</title>
+    <link rel="stylesheet" href="/css/board_free_upload.css">
 </head>
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
         <div class="board-content">
+            <h2><a href="/board/free/list/1">자유게시판</a></h2>
             <form>
                 <input type="text" id="title" name="title" placeholder="제목" autofocus>
                 <textarea id="contents" name="contents" placeholder="내용"></textarea>
