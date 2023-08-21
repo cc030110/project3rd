@@ -10,6 +10,7 @@ import lombok.*;
 public class BoardFreeRequestDto {
     private int boardNo;
     private String id;
+    private String name;
     private String title;
     private String contents;
     private short isModified;

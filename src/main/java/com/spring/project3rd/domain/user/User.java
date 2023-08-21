@@ -21,7 +21,7 @@ public class User extends Timestamp {
     private String password;
     private String name;
     private String gender;
-    private Short age;
+    private int birth;
     private String profileImg;
     private String email;
     private String liveCountry;
@@ -34,7 +34,7 @@ public class User extends Timestamp {
         this.id = userRequestDto.getId();
         this.password = userRequestDto.getPassword();
         this.name = userRequestDto.getName();
-        this.age = userRequestDto.getAge();
+        this.birth = userRequestDto.getBirth();
         this.email = userRequestDto.getEmail();
         this.liveCountry = userRequestDto.getLiveCountry();
         this.liveCity = userRequestDto.getLiveCity();
@@ -47,7 +47,7 @@ public class User extends Timestamp {
     public void update(UserRequestDto userRequestDto, String url){
         this.password = userRequestDto.getPassword();
         this.gender = userRequestDto.getGender();
-        this.age = userRequestDto.getAge();
+        this.birth = userRequestDto.getBirth();
         this.profileImg = url;
         this.liveCountry = userRequestDto.getLiveCountry();
         this.liveCity = userRequestDto.getLiveCity();

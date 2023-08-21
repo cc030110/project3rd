@@ -12,6 +12,7 @@ import java.sql.Date;
 public class BoardCommunityRequestDto{
     private int boardNo;
     private String id;
+    private String name;
     private String platformName;
     private String title;
     private String contents;
