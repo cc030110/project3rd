@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,31 +61,30 @@ public class UserController {
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
 
-//        if(user!=null&&user.getPassword().equals(loginDto.getPassword())){
-//            String name = user.getName();
-//            String accessToken = jwtTokenizer.createAccessToken(id, name);
-//            String refreshToken = jwtTokenizer.createRefreshToken(id, name);
-//
-//            MemberLoginResponseDto loginResponse = MemberLoginResponseDto.builder()
-//                    .accessToken(accessToken)
-//                    .refreshToken(refreshToken)
-//                    .build();
-//
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.set("Authorization", "Bearer " + accessToken); // 헤더에 토큰 추가
-//
-//            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
-//            accessTokenCookie.setHttpOnly(true); // JavaScript로 쿠키 접근 방지
-//            accessTokenCookie.setSecure(true); // HTTPS에서만 전송
-//            accessTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
-//            accessTokenCookie.setMaxAge(ACCESS_TOKEN_EXPIRE_COUNT.intValue() / 1000); // 유효기간 설정
-//            response.addCookie(accessTokenCookie);
-//
-//            return ResponseEntity.ok().headers(headers).body(loginResponse);
-//        }
-        return ResponseEntity.ok("성공");
+        if(user!=null&&user.getPassword().equals(loginDto.getPassword())){
+            String name = user.getName();
+            String accessToken = jwtTokenizer.createAccessToken(id, name);
+            String refreshToken = jwtTokenizer.createRefreshToken(id, name);
 
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            MemberLoginResponseDto loginResponse = MemberLoginResponseDto.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + accessToken); // 헤더에 토큰 추가
+
+            Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
+            accessTokenCookie.setHttpOnly(true); // JavaScript로 쿠키 접근 방지
+            accessTokenCookie.setSecure(true); // HTTPS에서만 전송
+            accessTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
+            accessTokenCookie.setMaxAge(ACCESS_TOKEN_EXPIRE_COUNT.intValue() / 1000); // 유효기간 설정
+            response.addCookie(accessTokenCookie);
+
+            return ResponseEntity.ok().headers(headers).body(loginResponse);
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     // 로그아웃

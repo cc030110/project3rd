@@ -23,6 +23,7 @@ public class User extends Timestamp {
     private String name;
     @Column(nullable = false)
     private String gender;
+    private int birth;
     private String profileImg;
     private String email;
     private String liveCountry;
@@ -30,8 +31,7 @@ public class User extends Timestamp {
     private Short warningCount;
     private Short isActive;
     private String intro;
-    @Column(name = "birth")
-    private int birth;
+
 
     public User(UserRequestDto userRequestDto){
         this.id = userRequestDto.getId();
