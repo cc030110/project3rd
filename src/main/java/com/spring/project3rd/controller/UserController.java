@@ -47,6 +47,8 @@ public class UserController {
     private final LanguageRepository languageRepository;
     private final LanguageService languageService;
     private final EmailService emailService;
+
+
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
 
@@ -54,6 +56,7 @@ public class UserController {
         String password = loginDto.getPassword();
         System.out.println(id);
         System.out.println(password);
+
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
@@ -80,6 +83,7 @@ public class UserController {
 
             return ResponseEntity.ok().headers(headers).body(loginResponse);
         }
+
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
@@ -234,7 +238,7 @@ public class UserController {
 
         Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
         String id = claims.get("id", String.class);
-        String name = claims.get("name", String.class);
+//        String name = claims.get("name", String.class);
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
 

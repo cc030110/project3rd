@@ -27,8 +27,6 @@ function validateInput(input, condition) {
     return true;
 }
 
-
-
 function joinForm() {
     const id = $('#id');
     const password = $('#password');
@@ -36,7 +34,7 @@ function joinForm() {
     const name = $('#name');
     const email = $('#email');
     const gender = $('input[name="gender"]:checked');
-    const age = $('#age');
+    const birth = $('#birth');
     const liveCountry = $('#liveCountry');
     const liveCity = $('#liveCity');
     // use-lang과 need-lang 선택 내용도 배열로 가져오기
@@ -99,7 +97,7 @@ function joinForm() {
 
     // 이메일 인증 여부
     if(!isEmailChecked){
-        console.log("이메일 인증이 필요합니다.");
+        alert("이메일 인증이 필요합니다."); // 나중에 alert말고 다른걸로 바꾸기?
         return;
     }
 
@@ -152,7 +150,7 @@ function joinForm() {
     if(profileUrl!==""){
         userData.profileImg = profileUrl;
     }
-    if(age.val().length>0) userData.age = age.val();
+    if(birth.val().length>0) userData.birth = birth.val();
     if(liveCity.val().length>0) userData.liveCity=liveCity.val();
 
     // "useLang" : useLang

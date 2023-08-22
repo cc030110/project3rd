@@ -25,6 +25,7 @@ public class UserRequestDto {
     private String liveCity;
     private Short warningCount;
     private Short isActive;
+    private String intro;
     // 언어 정보도 같이 받기
     private List<String> useLang;
     private List<String> needLang;

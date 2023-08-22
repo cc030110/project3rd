@@ -23,6 +23,7 @@ a,a:active,a:visited{
     text-decoration: none;
 }
 
+/* header */
 .header{
     grid-area: header;
     background-color: bisque;  /*확인용*/
@@ -31,11 +32,13 @@ a,a:active,a:visited{
     text-align: center;
 }
 
+/* main */
 .main{
     grid-area: main;
     min-height: 80vh;
 }
 
+/* footer */
 .footer{
     grid-area: footer;
     background-color:bisque;  /*확인용*/
@@ -43,6 +46,11 @@ a,a:active,a:visited{
 
 .logo{
     flex-grow: 1;
+}
+
+.logo>a>img{
+    width:250px;
+    height:250px;
 }
 
 .header-menu{
@@ -99,6 +107,7 @@ div.footer{
 }
 
 div.footer_logo{
+    font-size:1.2rem;
     font-weight:800;
 }
 
@@ -114,6 +123,6 @@ div.footer_detail>ul{
 
 div.footer_detail>ul>li{
     margin-right:10px;
-    font-size:0.8rem;
+    font-size:1rem;
     color:black;
 }

@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Title</title>
 </head>
 <body>
@@ -25,14 +24,14 @@
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" value="${user.name}" readonly><br>
 
-        <label for="gender">Gender:</label>
+        <label for="male">Gender:</label>
         <input type="radio" id="male" name="gender" value="남">
         <label for="male">Male</label>
         <input type="radio" id="female" name="gender" value="여">
         <label for="female">Female</label><br>
 
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" value="${user.age}" required><br>
+        <label for="birth">Birth:</label>
+        <input type="text" id="birth" name="birth" value="${user.birth}" required><br>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="${user.email}" readonly><br>
@@ -45,8 +44,6 @@
 
         <label for="profileImg">Profile Image:</label>
         <input type="file" id="profileImg" name="profileImg"><br>
-
-
 
         <input type="submit" value="update" onclick="checkValue(form)">
     </form>
