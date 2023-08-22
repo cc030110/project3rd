@@ -42,7 +42,6 @@ function login(){
             console.log(result);
             if(result!==""){
                 let path = window.location.pathname.split('/');
-                console.log("path : "+path);
                 alert("로그인되었습니다.");
                 if(path[2]==="login"){
                     window.location.href="/";
@@ -51,7 +50,7 @@ function login(){
                 }
             }else{
                 alert("아이디 혹은 비밀번호가 일치하지 않습니다.");
-                window.location.reload();
+                window.location.href="/user/login";
             }
         }).fail(function (){
             alert("로그인 오류");

@@ -60,8 +60,8 @@
                         <label for="female"><spring:message code="user_join.female"/></label><br>
                     </div>
                     <div class="line">
-                        <label for="age"><spring:message code="user_join.age"/></label>
-                        <input type="number" id="age" name="age"><br>
+                        <label for="birth"><spring:message code="user_join.age"/></label>
+                        <input type="text" id="birth" name="birth"><br>
                     </div>
                 </div>
                 <div class="join-box-right">

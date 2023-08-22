@@ -23,7 +23,7 @@
             <div class="user-info">
                 <p class="user-info-item"><span class="label">Name:</span> ${user.name}</p>
                 <p class="user-info-item"><span class="label">Gender:</span> ${user.gender}</p>
-                <p class="user-info-item"><span class="label">Age:</span> ${user.age}</p>
+                <p class="user-info-item"><span class="label">Birth:</span> ${user.birth}</p>
                 <p class="user-info-item"><span class="label">Country:</span> ${user.liveCountry}</p>
                 <p class="user-info-item"><span class="label">City:</span> ${user.liveCity}</p>
             </div>

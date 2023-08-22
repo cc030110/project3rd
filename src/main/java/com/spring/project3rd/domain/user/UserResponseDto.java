@@ -22,6 +22,7 @@ public class UserResponseDto {
     private String liveCity;
     private Short warningCount;
     private Short isActive;
+    private String intro;
 
     public UserResponseDto (User user){
         this.id = user.getId();
@@ -32,6 +33,7 @@ public class UserResponseDto {
         this.profileImg = user.getProfileImg();
         this.liveCountry = user.getLiveCountry();
         this.liveCity = user.getLiveCity();
+        this.intro = user.getIntro();
     }
 
 }

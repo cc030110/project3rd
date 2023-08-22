@@ -11,29 +11,33 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Table(name="user")
-@Setter
 @Entity
 @ToString
 public class User extends Timestamp {
 
     @Id
     private String id;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String gender;
-    private int birth;
     private String profileImg;
     private String email;
     private String liveCountry;
     private String liveCity;
     private Short warningCount;
     private Short isActive;
-
+    private String intro;
+    @Column(name = "birth")
+    private int birth;
 
     public User(UserRequestDto userRequestDto){
         this.id = userRequestDto.getId();
         this.password = userRequestDto.getPassword();
         this.name = userRequestDto.getName();
+        this.gender = userRequestDto.getGender();
         this.birth = userRequestDto.getBirth();
         this.email = userRequestDto.getEmail();
         this.liveCountry = userRequestDto.getLiveCountry();
@@ -41,7 +45,7 @@ public class User extends Timestamp {
         this.profileImg = userRequestDto.getProfileImg();
         this.isActive = 1;
         this.warningCount = 0;
-        this.gender = userRequestDto.getGender();
+        this.intro = userRequestDto.getIntro();
     }
 
     public void update(UserRequestDto userRequestDto, String url){
@@ -53,5 +57,6 @@ public class User extends Timestamp {
         this.liveCity = userRequestDto.getLiveCity();
         this.warningCount = userRequestDto.getWarningCount();
         this.isActive = userRequestDto.getIsActive();
+        this.intro = userRequestDto.getIntro();
     }
 }
