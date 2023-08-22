@@ -18,8 +18,7 @@ function logout() {
         url: '/user/logout',    // Trouble Shooting : url 틀렸었음
         success: function(response) {
             // 로그아웃 성공 시 페이지 새로고침
-            window.location.reload();
-            console.log(response, "로그아웃 성공")
+            window.location.href = '/';
         },
         error: function(xhr, status, error) {
             console.error('로그아웃 실패:', error);

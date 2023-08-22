@@ -32,7 +32,14 @@
                     <input class="inputs" type="password" id="password" name="password" placeholder="&nbsp;&nbsp;<spring:message code="login.password"/>" required>
                     <p class="err" id="password-empty"><spring:message code="login.password_empty"/></p>
 
-                    <input class="login-bnt" type="button" onclick="login()" value="<spring:message code="login.login"/>">
+                    <div class="svg-wrapper">
+                        <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
+                            <rect id="shape" height="40" width="150" />
+                            <div id="text">
+                                <span class="spot login-bnt" onclick="login()"><spring:message code="login.login"/></span>
+                            </div>
+                        </svg>
+                    </div>
                     <p class="ask-join"><spring:message code="login.ask_join"/></p>
 
                     <a class="join" href="join"><spring:message code="login.join"/></a>
