@@ -17,8 +17,8 @@
 <body>
 <div class="header">
     <div class="logo">
-<%--        <img src="https://ucarecdn.com/b846c160-2f5f-4f09-9f7e-66baf85b2a90/" alt="로고">--%>
-        <h1><a href="/">GLOBALTIES</a></h1>
+<%--        <h1><a href="/">GLOBALTIES</a></h1>--%>
+        <a href="/"><img src="https://ucarecdn.com/4e5ac17f-1b47-49dc-bc8f-80a81464d88b/" alt="로고 업로드 실패"></a>
     </div>
 
     <div class="header-menu">
