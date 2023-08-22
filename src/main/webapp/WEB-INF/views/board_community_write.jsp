@@ -103,6 +103,6 @@
     <c:import url="footer.jsp"/>
 </div>
 
-<script src="/script/board-community-write.js"></script>
+<script src="/script/board-community.js"></script>
 </body>
 </html>
