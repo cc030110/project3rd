@@ -72,7 +72,7 @@
                                     <p>${board.title}</p><!-- 제목 -->
                                     <p>${board.contents}</p><!-- 내용 -->
                                     <p><spring:message code="board_community_main.views"/> : ${board.views}</p> <!-- 조회수 -->
-                                    <p><spring:message code="board_community_main.author"/> : ${authorList.get(board.id)}</p>
+                                    <p><spring:message code="board_community_main.author"/> : ${board.name}</p>
                                     <p><spring:message code="board_community_main.participants"/>: ${board.participantsNum}</p>
                                     <p><spring:message code="board_community_main.createdAt"/> : ${board.createdAt}</p>
                                     <p><spring:message code="board_community_main.deadline"/>: ${board.deadline}</p>
