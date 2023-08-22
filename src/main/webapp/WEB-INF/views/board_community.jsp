@@ -75,8 +75,16 @@
                 </ul>
             </c:otherwise>
         </c:choose>
+        <c:import url="footer.jsp"/>
+    </div>
 
-        <%--<div class="card">
+    <script src="/script/board-community.js"></script>
+
+</body>
+</html>
+
+<%-- # 댓글
+<div class="card">
             <div class="card_header">댓글 목록</div>
             <ul>
                 <li id="comment_1" class="list-group-item d-flex justify-content-between">
@@ -100,11 +108,3 @@
                 <button class="btn_primary">등록</button>
             </div>
         </div>--%>
-
-        <c:import url="footer.jsp"/>
-    </div>
-
-    <script src="/script/board-community.js"></script>
-
-</body>
-</html>
