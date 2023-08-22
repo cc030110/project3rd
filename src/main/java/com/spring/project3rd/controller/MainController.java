@@ -1,20 +1,12 @@
 package com.spring.project3rd.controller;
 
-import com.spring.project3rd.domain.boardFree.BoardFree;
-import com.spring.project3rd.security.jwt.util.JwtTokenizer;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequiredArgsConstructor
 public class MainController {
-
-    private final JwtTokenizer jwtTokenizer;
 
     // 메인 페이지
     @GetMapping("/")
