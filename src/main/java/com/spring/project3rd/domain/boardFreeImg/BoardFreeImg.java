@@ -1,5 +1,6 @@
 package com.spring.project3rd.domain.boardFreeImg;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name="board_free_img")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class BoardFreeImg {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

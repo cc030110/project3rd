@@ -66,7 +66,7 @@
                             </a>
                         </td>
                         <td class="author">
-                                ${authorList.get(board.id)}
+                                ${board.name}
                         </td>
                         <td class="createdAt">
                                 ${board.createdAt}

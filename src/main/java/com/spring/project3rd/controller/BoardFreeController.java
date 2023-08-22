@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.*;
 
@@ -126,6 +127,8 @@ public class BoardFreeController {
             name = claims.get("name",String.class);
             System.out.println("id:"+id);
             System.out.println("name:"+name);
+        }else{
+            return new ModelAndView(new RedirectView("/user/login")); // 해당 path의 getmapping으로 이동
         }
         view.addObject("id",id);
         view.addObject("name",name);
@@ -190,9 +193,7 @@ public class BoardFreeController {
                 view.addObject("id", id);
             }
         }
-
         view.addObject("board", board);
-
         return view;
     }
     /* ---- */
@@ -221,11 +222,11 @@ public class BoardFreeController {
 
         // err 존재할 경우 html onload 시 해당 메세지를 출력 후 다른 페이지로 이동
         if(board==null){
-            view.addObject("err-board","게시글이 존재하지 않습니다.");
+            view.addObject("err","dose_not_exist");
         }else if(id.isEmpty()){
-            view.addObject("err-login","로그인 후 이용 가능한 서비스입니다.");
+            view.addObject("err","need_login");
         }else if(!id.equals(board.getId())){
-            view.addObject("err-author","게시글 작성자만 수정 가능합니다.");
+            view.addObject("err","not_author");
         }else{
             view.addObject("board",board);
         }
