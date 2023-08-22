@@ -17,8 +17,8 @@ public class BoardCommunityService {
 
     // 수정
     @Transactional // 이 어노테이션은 public 클래스에만 적용
-    public void updateBoardByBoardNo(int boardNo, String id, BoardCommunityRequestDto bcDto){
-        BoardCommunity bc=boardCommunityRepository.getBoardCommunityByBoardNoAndId(boardNo,id);
+    public void updateBoardByBoardNo(int boardNo, String name, BoardCommunityRequestDto bcDto){
+        BoardCommunity bc=boardCommunityRepository.getBoardCommunityByBoardNoAndName(boardNo,name);
         bc.update(bcDto);
     }
 

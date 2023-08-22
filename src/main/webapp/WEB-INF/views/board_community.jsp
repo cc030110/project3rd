@@ -38,7 +38,7 @@
                     </li>
 
                     <li>
-                        <p id="creator"><spring:message code="board_community.author"/> : ${user.get(board.id)}</p>
+                        <p id="creator"><spring:message code="board_community.author"/> : ${board.name}</p>
                     </li>
 
                     <li>
@@ -76,7 +76,7 @@
             </c:otherwise>
         </c:choose>
 
-        <div class="card">
+        <%--<div class="card">
             <div class="card_header">댓글 목록</div>
             <ul>
                 <li id="comment_1" class="list-group-item d-flex justify-content-between">
@@ -99,7 +99,7 @@
             <div class="card_footer">
                 <button class="btn_primary">등록</button>
             </div>
-        </div>
+        </div>--%>
 
         <c:import url="footer.jsp"/>
     </div>

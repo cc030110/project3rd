@@ -26,7 +26,7 @@
                     <nav class="platform" id="platform">
                         <ul>
                             <li>
-                                <input type="radio" id="platform_1" name="platform" value="Off line" checked>
+                                <input type="radio" id="platform_1" name="platform" value="Offline" checked>
                                 <label for="platform_1">Off-line</label>
 
                                 <input type="radio" id="platform_2" name="platform" value="Discord">

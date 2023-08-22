@@ -52,6 +52,7 @@ public class BoardCommunity extends Timestamp{
     public BoardCommunity(BoardCommunityRequestDto bcDto) {
         super();
         this.id = bcDto.getId();
+        this.name = bcDto.getName();
         this.platformName = bcDto.getPlatformName();
         this.title = bcDto.getTitle();
         this.contents = bcDto.getContents();

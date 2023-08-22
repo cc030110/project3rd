@@ -28,6 +28,7 @@ a,a:active,a:visited{
     grid-area: header;
     background-color: bisque;  /*확인용*/
     display: flex;
+    justify-content:flex-start;
     align-items: center;
     text-align: center;
 }
