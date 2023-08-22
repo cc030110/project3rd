@@ -4,11 +4,6 @@ body{
     margin:0;
 }
 
-/*div.main{
-    width:100%;
-    margin:100px 0;
-}*/
-
 div.main {
     width: 100%;
     display: flex;
@@ -26,28 +21,73 @@ div.main_top{
     margin:30px 0;
 }
 
-div.con_list{
-    width:1200px;
-    height:250px;
-    border:1px solid black;
-    margin:20px 0;
-    padding:20px;
-    border-radius:20px;
+div.search-box>select#search-select{
+    width:100px;
+    height:30px;
+    font-size:0.8rem;
 }
 
-div.con_list a:hover{
-    cursor:pointer;
-    border:1px solid red;
+div.search-box>input#search-input{
+    width:300px;
+    height:30px;
+}
+
+div.search-box>input#search-btn{
+    width:80px;
+    height:30px;
+}
+
+div.write_btn>a>button{
+    width:80px;
+    height:30px;
+}
+
+div.list_top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:1200px;
+    height:20px;
+    padding:20px;
+    border-bottom:5px solid white;
+    border-radius:20px 20px 0 0;
+    background-color:#F0F0EF;
+}
+
+div.list-top.info:first-child{
+    margin-right:0;
+}
+
+div.list_top.info:last-child{
+    margin-left:0;
+}
+
+div.list_top.info p{
+    margin:0;
+}
+
+div.con_list{
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    width:1200px;
+    height:250px;
+    margin:0 0 20px 0;
+    padding:20px;
+    border-radius:0 0 20px 20px;
+    background-color:#F0F0EF;
 }
 
 div.con_platform{
-    float:left;
+    /*float:left;*/
+    text-align:center;
 }
 
 div.con_platform>img{
     width:150px;
     height:150px;
     border:1px solid gray;
+    border-radius:10px;
 }
 
 div.con_platform_name{
@@ -55,11 +95,27 @@ div.con_platform_name{
     margin-top:10px;
     padding:10px;
     border:1px solid gray;
+    border-radius:20px;
     text-align:center;
+    font-size:0.7rem;
+    font-weight:900;
+    color:white;
+    background-color:#007bff;
 }
 
 div.con_text{
     margin-left:200px;
+}
+
+p#title{
+    font-size:1.2rem;
+    font-weight:900;
+    color:#4F45BF;
+}
+
+p#title:hover{
+    cursor:pointer;
+    color:#B4230E;
 }
 
 /* Pagination */

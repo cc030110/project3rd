@@ -65,11 +65,11 @@ public class BoardCommunityController{
     public ModelAndView showList(@PathVariable("page") int page,
                                  @RequestParam(required = false) String title,
                                  @RequestParam(required = false) String author,
-                                 @PageableDefault(sort="boardNo", direction = Sort.Direction.DESC) Pageable pageable,
+                                 @PageableDefault(size=5, sort="boardNo", direction = Sort.Direction.DESC) Pageable pageable,
                                  @CookieValue(value="accessToken", required = false) String accessToken){
 
         // 페이지 정렬(sort) -> boardNo를 기준으로 DESC 정렬
-        int pageSize = 10;
+        int pageSize = 5;
 
         // 해당 정보 가져오기
         ModelAndView view = new ModelAndView("board_community_main");
