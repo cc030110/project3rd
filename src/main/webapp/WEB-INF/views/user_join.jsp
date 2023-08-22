@@ -23,34 +23,34 @@
             <div id="joinForm">
                 <div class="join-box-left">
                     <div class="line">
-                        <label for="id"><spring:message code="user_join.id"/></label>
-                        <input type="text" id="id" name="id">
-                        <p class="err"><spring:message code="user_join.err-invalid"/></p>
-                        <br>
+                        <input class="id-check normal" type="text" id="id" name="id" placeholder="<spring:message code="user_join.id"/>">
+                        <p class="id-check err"><spring:message code="user_join.err-invalid"/></p>
                     </div>
                     <div class="line">
-                        <label for="password"><spring:message code="user_join.password"/></label>
-                        <input type="password" id="password" name="password">
-                        <p class="err"><spring:message code="user_join.err-invalid"/></p><br>
+                        <input class="password-check normal" type="password" id="password" name="password" placeholder="<spring:message code="user_join.password"/>">
+                        <p class="password-check err"><spring:message code="user_join.err-invalid"/></p>
                     </div>
                     <div class="line">
-                        <label for="password-chk"><spring:message code="user_join.passwordChk"/> </label>
-                        <input type="password" id="password-chk" name="password-chk">
+                        <input class=" normal" type="password" id="password-chk" name="password-chk" placeholder="<spring:message code="user_join.passwordChk"/>">
                         <p class="err"><spring:message code="user_join.err-password"/></p><br>
                     </div>
                     <div class="line">
-                        <label for="name"><spring:message code="user_join.name"/></label>
-                        <input type="text" id="name" name="name">
-                        <p class="err"><spring:message code="user_join.err-required"/></p><br>
+                        <input class="name-check normal" type="text" id="name" name="name" placeholder="<spring:message code="user_join.name"/>">
+                        <p class="name-check err"><spring:message code="user_join.err-required"/></p><br>
                     </div>
                     <div class="line">
-                        <label for="email"><spring:message code="user_join.email"/></label>
-                        <input type="email" id="email" name="email">
-                        <p class="err"><spring:message code="user_join.err-required"/></p><br>
-                        <button type="button" id="sendEmailButton" onclick="sendEmail()">인증번호 요청</button>
-                        <input type="text" id="verificationCodeInput" placeholder="인증 번호 입력">
+                        <div class="email-box">
+                            <input class="email-check" type="email" id="email" name="email" placeholder="<spring:message code="user_join.email"/>">
+                            <button type="button" id="sendEmailButton" onclick="sendEmail()">인증번호 요청</button>
+                        </div>
+                        <p class="email-check err"><spring:message code="user_join.err-required"/></p>
+                    </div>
+                    <div class="line">
+                        <div class="email-box">
+                        <input class="email-check-number" type="text" id="verificationCodeInput" placeholder="인증 번호 입력">
                         <button type="button" id="verifyButton" onclick="verifyCode()">확인</button>
-                        <p id="resultMessage"></p>
+                        </div>
+                        <p class="email-check-number" id="resultMessage"></p>
                     </div>
                     <div class="line">
                         <label><spring:message code="user_join.gender"/></label>
@@ -60,8 +60,7 @@
                         <label for="female"><spring:message code="user_join.female"/></label><br>
                     </div>
                     <div class="line">
-                        <label for="birth"><spring:message code="user_join.age"/></label>
-                        <input type="text" id="birth" name="birth"><br>
+                        <input class="normal" type="text" id="birth" name="birth" placeholder="<spring:message code="user_join.age"/>"><br>
                     </div>
                 </div>
                 <div class="join-box-right">
@@ -76,7 +75,7 @@
                     </div>
                     <div class="line">
                         <label for="liveCountry"><spring:message code="user_join.liveCountry"/></label>
-                        <select id="liveCountry">
+                        <select class="country-check" id="liveCountry">
                             <option value="" disabled selected>
                                 <spring:message code="user_join.selectLang"/>
                             </option>
@@ -93,7 +92,7 @@
                                 <spring:message code="user_join.country_usa"/>
                             </option>
                         </select>
-                        <p class="err"><spring:message code="user_join.err-required"/></p> <br>
+                        <p class="country-check err"><spring:message code="user_join.err-required"/></p> <br>
                     </div>
                     <div class="line">
                         <label for="liveCity"><spring:message code="user_join.liveCity"/></label>
@@ -103,7 +102,7 @@
                     <div class="line">
                         <div class="lang-choose">
                             <label for="use-lang"><spring:message code="user_join.useLang"/></label>
-                            <select id="use-lang">
+                            <select class="lang-check" id="use-lang">
                                 <option value="" disabled selected>
                                     <spring:message code="user_join.selectLang"/>
                                 </option>
@@ -113,7 +112,7 @@
                                     </option>
                                 </c:forEach>
                             </select>
-                            <p class="err"><spring:message code="user_join.err-required"/></p>
+                            <p class="lang-check err"><spring:message code="user_join.err-required"/></p>
                         </div>
                     </div>
                     <div class="line">
@@ -124,7 +123,7 @@
                     <div class="line">
                         <div class="lang-choose">
                             <label for="need-lang"><spring:message code="user_join.needLang"/></label>
-                            <select id="need-lang">
+                            <select class="needlang-check" id="need-lang">
                                 <option value="" disabled selected>
                                     <spring:message code="user_join.selectLang"/>
                                 </option>
@@ -134,7 +133,7 @@
                                     </option>
                                 </c:forEach>
                             </select>
-                            <p class="err"><spring:message code="user_join.err-required"/></p>
+                            <p class="needlang-check err"><spring:message code="user_join.err-required"/></p>
                         </div>
                     </div>
                     <div class="line">
@@ -142,7 +141,14 @@
 
                         </div>
                     </div>
-                    <input type="button" onclick="joinForm()" value=<spring:message code="user_join.joinBtn"/>>
+                    <div class="svg-wrapper">
+                        <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
+                            <rect id="shape" height="40" width="150" />
+                            <div id="text">
+                                <span class="spot login-bnt" onclick="joinForm()"><spring:message code="user_join.joinBtn"/></span>
+                            </div>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </form>

@@ -7,19 +7,24 @@ $(document).ready(function() {
     $('input, select').on('input change', function() {
         $(this).removeClass('error');
         $(this).next('.err').hide();
+        $(this).attr('')
     });
-
 });
+
+
 
 // 유효성 검사 함수
 // 검사할 input , 조건
 function validateInput(input, condition) {
     // 유효한 정보가 아닐 경우
     if (!condition) {
+        let inputClass = input.attr('class');
+        console.log(inputClass);
         // 해당 input에 class="error" 추가
         input.addClass("error");
         // input 뒤에 있는 p.err 보여주기
-        input.next('.err').show();
+        $('p.' + inputClass).show();
+        // input.next('.err').show();
         // 해당 input을 focus
         input.focus();
         return false;
@@ -57,19 +62,22 @@ function joinForm() {
     // id,password 유효성 검사 잠깐 꺼둠!!!!
 
     // // id 유효성 검사
-    let condition = id.val().length >= 8 && /^[A-Za-z0-9]+$/.test(id.val());
-    // const idValid = validateInput(id, condition);
-    // if(!idValid) return;
+    // let condition = id.val().length >= 8 && /^[A-Za-z0-9]+$/.test(id.val());
+    let condition = id.val()!=="";
+    const idValid = validateInput(id, condition);
+
+    if(!idValid) return;
     //
     // // password 유효성 검사
     // condition = password.val().length >= 4 && /^[A-Za-z0-9]+$/.test(password.val());
-    // const passwordValid = validateInput(password,condition);
-    // if(!passwordValid) return;
+    condition = password.val()!=="";
+    const passwordValid = validateInput(password,condition);
+    if(!passwordValid) return;
     //
     // // passwordChk 유효성 검사 (비밀번호 확인)
-    // condition = (passwordChk.val()===password.val());
-    // const passwordChkValid = validateInput(passwordChk,condition);
-    // if(!passwordChkValid) return;
+    condition = (passwordChk.val()!==password.val());
+    const passwordChkValid = validateInput(passwordChk,condition);
+    if(!passwordChkValid) return;
 
     // 이메일 유효성 검사 추가 필요
     // jsp에도 p.err 내용 추가해야함.. 그러면 message에도 등록해야하구...

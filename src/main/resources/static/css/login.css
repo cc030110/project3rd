@@ -51,16 +51,15 @@
 }
 .login-box-left h1{
     margin: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
-
-
 
 .inputs{
     border: 0px;
     border-bottom: 1px solid black;
     width: 80%;
     margin-top: 30px;
+    height: 40px;
 }
 
 .ask-join{
@@ -103,10 +102,9 @@
 
 
 .svg-wrapper {
-    margin-top: 50px;
+    margin-top: 30px;
     position: relative;
     width: 150px;
-    /*make sure to use same height/width as in the html*/
     height: 40px;
     display: inline-block;
     border-radius: 3px;
@@ -134,12 +132,11 @@
 */
 
 #text {
-    margin-top: -35px;
+    margin-top: -31px;
     text-align: center;
 }
 
 #text a {
-    color: white;
     text-decoration: none;
     font-weight: 100;
     font-size: 1.1em;
@@ -154,4 +151,7 @@ make it thinner, then set it to again wrap around the entire parent element.
     stroke-width: 3px;
     stroke-dashoffset: 0;
     stroke: #06D6A0;
+}
+.spot{
+    cursor: pointer;
 }
