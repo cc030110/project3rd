@@ -42,7 +42,15 @@
                     </div>
                     <p class="ask-join"><spring:message code="login.ask_join"/></p>
 
-                    <a class="join" href="join"><spring:message code="login.join"/></a>
+                    <div class="svg-wrapper">
+                        <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
+                            <rect id="shape" height="40" width="150" />
+                            <div id="text">
+                                <a class="spot login-bnt" href="join"><spring:message code="login.join"/></a>
+                            </div>
+                        </svg>
+                    </div>
+                    <a class="join" ></a>
                 </form>
             </div>
         </div>
