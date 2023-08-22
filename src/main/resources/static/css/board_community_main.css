@@ -54,15 +54,15 @@ div.list_top{
     background-color:#F0F0EF;
 }
 
-div.list-top.info:first-child{
+div.list-top_info:first-child{
     margin-right:0;
 }
 
-div.list_top.info:last-child{
+div.list_top_info:nth-child(2){
     margin-left:0;
 }
 
-div.list_top.info p{
+div.list_top_info p{
     margin:0;
 }
 

@@ -60,11 +60,16 @@
                         <div class="list_top">
                             <div class="list_top_info">
                                 <p><spring:message code="board_community_main.period"/> : ${board.createdAt} ~ ${board.deadline}</p>
+                                <p><spring:message code="board_community_main.author"/> : ${board.name}</p>
                             </div>
 
                             <div class="list_top_info">
                                 <p><spring:message code="board_community_main.views"/> : ${board.views}</p>
                             </div>
+
+                            <%--<div class="list_top_info">
+                                <p><spring:message code="board_community_main.author"/> : ${board.name}</p>
+                            </div>--%>
                         </div>
 
                         <div class="con_list">
@@ -77,13 +82,12 @@
                                 </div>
 
                                 <div class="con_text">
-<%--                                    <p>${board.boardNo}</p>--%>
                                     <a href="/board/community/${board.boardNo}">
                                         <p id="title">${board.title}</p><!-- 제목 -->
                                     </a>
                                     <p>${board.contents}</p><!-- 내용 -->
 
-                                    <p><spring:message code="board_community_main.author"/> : ${board.name}</p>
+
                                     <p><spring:message code="board_community_main.participants"/>: ${board.participantsNum}</p>
                                 </div>
                         </div>
