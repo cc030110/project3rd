@@ -30,6 +30,7 @@ public class BoardFree extends Timestamp {
 
     public BoardFree(BoardFreeRequestDto boardDto){
         this.id = boardDto.getId();
+        this.name = boardDto.getName();
         this.title = boardDto.getTitle();
         this.contents = boardDto.getContents();
         this.isModified = 0;

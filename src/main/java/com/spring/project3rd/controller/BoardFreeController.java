@@ -85,12 +85,10 @@ public class BoardFreeController {
                 getBoardList = boardFreeRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page - 1));
             }
         } else if (author != null && !author.isEmpty()) { // 작성자 검색
-            // 작성자의 경우 표기된 이름이 name이므로 id로 바꿔줘야 함
-            String id = userService.getUserIdByName(author);
             if(excludeIds.isEmpty()){
-                getBoardList = boardFreeRepository.findByIdContaining(id,pageable.withPage(page-1));
+                getBoardList = boardFreeRepository.findByNameContaining(author,pageable.withPage(page-1));
             }else{
-                getBoardList = boardFreeRepository.findByIdContainingAndIdNotIn(id, excludeIds, pageable.withPage(page - 1));
+                getBoardList = boardFreeRepository.findByNameContainingAndIdNotIn(author, excludeIds, pageable.withPage(page - 1));
             }
         } else { // 검색 없음
             if(excludeIds.isEmpty()){
@@ -102,23 +100,6 @@ public class BoardFreeController {
 
         // 게시판 리스트 view에 추가 (boardList는 Page<BoardFree> 타입, 페이지 정보도 포함)
         view.addObject("boardList", getBoardList);
-
-        // getBoardList가 Page 타입이므로 Page에서 해당 리스트가 들어있는 content 가져오기
-        List<BoardFree> boardFreeList = getBoardList.getContent();
-
-        // 가져온 리스트가 하나라도 있을 경우
-        if(!boardFreeList.isEmpty()){
-            // getBoardList의 id를 이용하여 해당 id 유저의 name 정보 가져오기
-            // hashmap(key-value)로 넣기
-            Map<String,String> authorList = new HashMap<>();
-            for (BoardFree boardFree : boardFreeList) {
-                String id = boardFree.getId();
-                String name = userService.getUserName(id);
-                authorList.put(id,name);
-            }
-            // 게시판 리스트 작성 유저의 name 리스트 view에 추가
-            view.addObject("authorList",authorList);
-        }
 
         int totalPages = getBoardList.getTotalPages();
         int currentPageGroup = (page - 1) / pageSize;
@@ -138,11 +119,16 @@ public class BoardFreeController {
     public ModelAndView uploadPage(@CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("board_free_upload");
         String id="";
+        String name="";
         if(accessToken!=null){
             Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
             id = claims.get("id",String.class);
+            name = claims.get("name",String.class);
+            System.out.println("id:"+id);
+            System.out.println("name:"+name);
         }
         view.addObject("id",id);
+        view.addObject("name",name);
         return view;
     }
     @PostMapping("upload")
@@ -152,7 +138,9 @@ public class BoardFreeController {
         if (accessToken != null && boardDto.getTitle() != null && boardDto.getContents() != null) {
             Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
             String id = claims.get("id", String.class);
+            String name = claims.get("name",String.class);
             boardDto.setId(id);
+            boardDto.setName(name);
             board = new BoardFree(boardDto);
             boardFreeRepository.save(board);
         }
@@ -189,9 +177,6 @@ public class BoardFreeController {
         if (board != null) {
             // 게시글의 조회수 1 증가
             boardFreeService.addViews(board);
-            // 작성자의 id로 name도 넣어주기
-            String author = userService.getUserName(board.getId());
-            view.addObject("author",author);
             // 게시글에 업로드된 이미지 확인
             List<BoardFreeImg> imgList = boardFreeImgRepository.findByBoardNo(board.getBoardNo());
             // 업로드된 이미지가 있을 경우 view에 추가
@@ -242,7 +227,6 @@ public class BoardFreeController {
         }else if(!id.equals(board.getId())){
             view.addObject("err-author","게시글 작성자만 수정 가능합니다.");
         }else{
-            view.addObject("author",id);
             view.addObject("board",board);
         }
 
