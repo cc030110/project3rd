@@ -20,19 +20,21 @@
     <div class="main">
         <div class="login-box">
             <div class="login-box-right">
-<%--            <p>(대충 그럴듯한 이미지)</p>--%>
+                <img class="rounded-image" src="https://ucarecdn.com/fab34a50-2035-4a3e-b36d-e92de0cf7b32/" style="max-width: 100%; height: auto;">
             </div>
             <div class="login-box-left">
                 <form>
                     <h1><spring:message code="login.login"/></h1>
-                    <label for="id"><spring:message code="login.id"/></label>
-                    <input type="text" id="id" name="id" placeholder="<spring:message code="login.id"/>" required>
+
+                    <input class="inputs" type="text" id="id" name="id" placeholder="&nbsp;&nbsp;<spring:message code="login.id"/>" required>
                     <p class="err" id="id-empty"><spring:message code="login.id_empty"/></p>
-                    <label for="password"><spring:message code="login.password"/></label>
-                    <input type="password" id="password" name="password" placeholder="<spring:message code="login.password"/>" required>
+
+                    <input class="inputs" type="password" id="password" name="password" placeholder="&nbsp;&nbsp;<spring:message code="login.password"/>" required>
                     <p class="err" id="password-empty"><spring:message code="login.password_empty"/></p>
-                    <input type="button" onclick="login()" value="<spring:message code="login.login"/>">
+
+                    <input class="login-bnt" type="button" onclick="login()" value="<spring:message code="login.login"/>">
                     <p class="ask-join"><spring:message code="login.ask_join"/></p>
+
                     <a class="join" href="join"><spring:message code="login.join"/></a>
                 </form>
             </div>
