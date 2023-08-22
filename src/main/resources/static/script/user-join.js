@@ -96,10 +96,10 @@ function joinForm() {
     if(!needLangValid) return;
 
     // 이메일 인증 여부
-    if(!isEmailChecked){
-        alert("이메일 인증이 필요합니다."); // 나중에 alert말고 다른걸로 바꾸기?
-        return;
-    }
+    // if(!isEmailChecked){
+    //     alert("이메일 인증이 필요합니다."); // 나중에 alert말고 다른걸로 바꾸기?
+    //     return;
+    // }
 
     // // 여기까지 왔다면 통과!
     console.log("성공!");
