@@ -5,25 +5,24 @@ let isEmailChecked = false; // 이메일 확인 체크 여부
 $(document).ready(function() {
     // 입력 필드가 변경될 때 에러 클래스 및 에러 메시지 제거
     $('input, select').on('input change', function() {
+        let inputClass = $(this).attr('class').split(" ");
+        let classcheck = inputClass[0];
+        console.log(classcheck);
         $(this).removeClass('error');
-        $(this).next('.err').hide();
-        $(this).attr('')
+        $('p.'+classcheck).hide();
     });
 });
-
-
 
 // 유효성 검사 함수
 // 검사할 input , 조건
 function validateInput(input, condition) {
     // 유효한 정보가 아닐 경우
     if (!condition) {
-        let inputClass = input.attr('class');
-        console.log(inputClass);
-        // 해당 input에 class="error" 추가
         input.addClass("error");
-        // input 뒤에 있는 p.err 보여주기
-        $('p.' + inputClass).show();
+        let inputClass = input.attr('class').split(" ");
+        let classcheck = inputClass[0];
+        // 에러 메세지 .err 보여주기
+        $('p.' + classcheck).show();
         // input.next('.err').show();
         // 해당 input을 focus
         input.focus();
