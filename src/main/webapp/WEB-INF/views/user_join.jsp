@@ -31,8 +31,8 @@
                         <p class="password-check err"><spring:message code="user_join.err-invalid"/></p>
                     </div>
                     <div class="line">
-                        <input class=" normal" type="password" id="password-chk" name="password-chk" placeholder="<spring:message code="user_join.passwordChk"/>">
-                        <p class="err"><spring:message code="user_join.err-password"/></p><br>
+                        <input class="password-chk-check normal" type="password" id="password-chk" name="password-chk" placeholder="<spring:message code="user_join.passwordChk"/>">
+                        <p class="password-chk-check err"><spring:message code="user_join.err-password"/></p><br>
                     </div>
                     <div class="line">
                         <input class="name-check normal" type="text" id="name" name="name" placeholder="<spring:message code="user_join.name"/>">

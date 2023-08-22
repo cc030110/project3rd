@@ -75,7 +75,7 @@ function joinForm() {
     if(!passwordValid) return;
     //
     // // passwordChk 유효성 검사 (비밀번호 확인)
-    condition = (passwordChk.val()!==password.val());
+    condition = (passwordChk.val()===password.val());
     const passwordChkValid = validateInput(passwordChk,condition);
     if(!passwordChkValid) return;
 
