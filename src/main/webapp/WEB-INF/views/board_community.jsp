@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="contents-line">
+                <div class="contents_line">
                     <textarea id="contents" readonly>${board.contents}</textarea>
                 </div>
 
