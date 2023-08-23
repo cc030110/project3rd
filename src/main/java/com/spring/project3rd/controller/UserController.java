@@ -26,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
@@ -222,6 +223,21 @@ public class UserController {
         String authCode = emailService.sendEmail(emailCheckReq.getEmail());
         return new BaseResponse<>(authCode);
     }
+    @PostMapping("/join/idCheck")
+    public ResponseEntity<String> idCheck(@RequestBody MemberLoginDto loginDto) {
+
+        String id = loginDto.getId();
+        Optional<User> optionalMyUser = userRepository.findById(id);
+        User myUser = optionalMyUser.orElse(null);
+
+        if (myUser != null) {
+            return ResponseEntity.badRequest().body("ID already exists"); // 예시: 이미 사용 중인 아이디
+        } else {
+            return ResponseEntity.ok("ID available"); // 예시: 사용 가능한 아이디
+        }
+    }
+
+
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
     @GetMapping("list/{page}")
