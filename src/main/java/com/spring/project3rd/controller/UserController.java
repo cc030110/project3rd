@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
@@ -297,4 +298,31 @@ public class UserController {
 
         return response.toMap();
     }
+
+    /* 마이페이지 */
+    @GetMapping("mypage")
+    public ModelAndView myPageMain(@CookieValue(value = "accessToken", required = false) String accessToken){
+        ModelAndView view = new ModelAndView("user_my_page");
+        if(accessToken==null){
+            return new ModelAndView(new RedirectView("login"));
+        }else{
+            Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+            String id=claims.get("id",String.class);
+            User user = userRepository.findById(id).orElse(null);
+            if(user!=null){
+                view.addObject(user);
+            }
+        }
+        return view;
+    }
+
+
+
+
+
+
+
+
+
+
 }

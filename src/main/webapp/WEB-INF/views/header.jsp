@@ -48,7 +48,7 @@
     <div class="join" id="join">
             <c:choose>
                 <c:when test="${not empty cookie.accessToken}">
-                    <a href="/mypage">
+                    <a href="/user/mypage">
                         <spring:message code="header.mypage"/>
                     </a>
                 </c:when>

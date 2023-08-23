@@ -32,7 +32,7 @@
                                 0
                             </c:otherwise>
                         </c:choose>
-                        /${boardList.totalPages}]
+                         / ${boardList.totalPages}]
                     </span>
                 </div>
                 <div id="select-search-box">

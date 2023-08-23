@@ -40,8 +40,6 @@
                             </div>
                         </svg>
                     </div>
-                    <p class="ask-join"><spring:message code="login.ask_join"/></p>
-
                     <div class="svg-wrapper">
                         <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
                             <rect id="shape" height="40" width="150" />
