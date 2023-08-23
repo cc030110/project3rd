@@ -3,6 +3,7 @@ package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.email.BaseResponse;
 import com.spring.project3rd.domain.email.EmailCheckReq;
+import com.spring.project3rd.security.jwt.util.RefreshTokenRepository;
 import com.spring.project3rd.service.EmailService;
 import com.spring.project3rd.domain.language.*;
 import com.spring.project3rd.domain.user.*;
@@ -49,11 +50,13 @@ public class UserController {
     private final LanguageRepository languageRepository;
     private final LanguageService languageService;
     private final EmailService emailService;
+    private final RefreshTokenRepository refreshTokenRepository;
+
     @Autowired
     public UserController(UserService userService, UserRepository userRepository,
                           UploadFileService uploadFileService, JwtTokenizer jwtTokenizer,
                           LanguageRepository languageRepository, LanguageService languageService,
-                          EmailService emailService) {
+                          EmailService emailService, RefreshTokenRepository refreshTokenRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.uploadFileService = uploadFileService;
@@ -61,6 +64,7 @@ public class UserController {
         this.languageRepository = languageRepository;
         this.languageService = languageService;
         this.emailService = emailService;
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     @PostMapping("login")
@@ -68,6 +72,9 @@ public class UserController {
 
         String id = loginDto.getId();
         String password = loginDto.getPassword();
+        System.out.println(id);
+        System.out.println(password);
+
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
@@ -113,7 +120,6 @@ public class UserController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
-
 
 
     /** 회원 가입 **/
@@ -232,6 +238,7 @@ public class UserController {
     }
 
 
+
     /**유저 10인 정보 불러오기(프로필 게시판)**/
     @GetMapping("list/{page}")
     public ModelAndView userList(@PathVariable int page,
@@ -283,9 +290,7 @@ public class UserController {
     /** 회원 정보 수정 **/
 //    @PutMapping(value = "update", consumes = {"multipart/form-data"})
 //    public Map update(@CookieValue(value = "accessToken", required = false) String accessToken, @ModelAttribute UserRequestDto userRequestDto){
-//
 //        JSONObject response = new JSONObject();
-//
 //        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
 //        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
 //        String id = claims.get("id", String.class);

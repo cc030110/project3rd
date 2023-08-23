@@ -4,17 +4,23 @@ import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.domain.user.UserRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+
+import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_EXPIRE_COUNT;
 
 @RequiredArgsConstructor
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
     public void updateUser(String id, String name, UserRequestDto userRequestDto, String url) {
@@ -56,5 +62,17 @@ public class UserService {
         return id;
     }
 
+    public boolean isValidRefreshToken(String id, String refreshToken) {
+        String savedRefreshToken = redisTemplate.opsForValue().get("refreshToken:" + id);
+        System.out.println(savedRefreshToken);
+        // 레디스에서 가져온 refresh token과 입력한 refreshToken 비교
+        return refreshToken.equals(savedRefreshToken);
+    }
+
+    public String getRefreshTokenFromRedis(String id){
+        String getRefreshToken = redisTemplate.opsForValue().get("refreshToken:" + id);
+
+        return getRefreshToken;
+    }
 }
 
