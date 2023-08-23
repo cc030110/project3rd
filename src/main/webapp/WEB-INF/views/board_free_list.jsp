@@ -29,16 +29,19 @@
                     </c:choose>
                     / ${boardList.totalPages} ]</span>
             </div>
-            <div>
+            <div id="select-search-box">
                 <div class="select-box">
                     <select id="search-select">
                         <option value="title" selected><spring:message code="board_free_list.sel1"/></option>
                         <option value="author"><spring:message code="board_free_list.sel2"/></option>
                     </select>
+                    <span class="select-arrow">
+                        <img src="https://ucarecdn.com/326e1541-5ce3-4908-836d-d735660c0300/" alt=""/>
+                    </span>
                 </div>
                 <div class="search-box">
                     <input type="text" id="search-input" name="search-input">
-                    <input type="button" onclick="searchBoard(${boardList.number+1})" value=<spring:message
+                    <input type="button" id="search-btn" onclick="searchBoard(${boardList.number+1})" value=<spring:message
                             code="board_free_list.search"/>>
                 </div>
             </div>
@@ -79,8 +82,8 @@
             </c:if>
             </tbody>
         </table>
-        <div>
-            <a href="/board/free/upload" id="upload-link">
+        <div class="write">
+            <a href="/board/free/upload" id="write-btn">
                 <spring:message code="board_free_list.write"/>
             </a>
         </div>
