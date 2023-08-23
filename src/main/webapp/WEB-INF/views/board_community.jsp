@@ -77,10 +77,8 @@
     <c:import url="footer.jsp"/>
 </div>
 
+<script src="/script/board-community.js"></script>
 
-
-
-    <script src="/script/board-community.js"></script>
 </body>
 </html>
 
