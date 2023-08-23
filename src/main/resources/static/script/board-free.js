@@ -28,9 +28,8 @@ $(document).ready(function() {
 
     // 게시판 리스트 검색 클릭 화살표
     $('.search-box').on('click',function (){
-
+        $('.select-arrow img').toggleClass('.rotated');
     });
-
 
 });
 
