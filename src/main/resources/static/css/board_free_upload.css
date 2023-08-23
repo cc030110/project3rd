@@ -1,49 +1,125 @@
-/* board_free_upload.css */
+body{
+    width:100%;
+    padding: 0;
+    margin:0;
+    background-color:#F0F0EF;
+}
 
-/* Center align content within the .main container */
 .main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Adjust this for desired centering effect */
-}
-
-/* Style for form elements */
-#title,
-#contents {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-/* Style for the image box */
-.img-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.img-box > img {
-    max-width: 150px;
-    max-height: 150px;
-    width: auto;
+    width: 1200px;
     height: auto;
+    margin: 100px auto;
+    padding: 50px 20px;
+    border-radius: 20px;
+    background-color:white;
 }
 
-/* Style for the submit button */
-#submit-bnt {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+#label_title,#label_contents {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-#submit-bnt:hover {
-    background-color: #0056b3;
+.input_title{
+    width:80%;
+    margin-bottom:30px;
+}
+
+.input_title>input#title{
+    width:100%;
+    height:40px;
+    border: 1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+.input_contents{
+    width:80%;
+    margin-bottom:30px;
+}
+
+.input_contents>textarea#contents{
+    width:100%;
+    height:350px;
+    border: 1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+    resize:none;
+}
+
+/* 버튼 */
+input[type="button"] {
+    width:100px;
+    height:40px;
+    border:none;
+    border-radius:10px;
+    font-size:0.8rem;
+    font-weight:900;
+}
+
+input[type="button"]:hover {
+    cursor : pointer;
+}
+
+.submit_btn{
+    margin-top:50px;
+}
+
+#submit_btn{
+    background-color:#2C875F;
+    color:white;
+    margin-right:20px;
+}
+
+#submit_btn:hover{
+    background-color:#1D5E42;
+}
+
+#back_btn {
+    background-color:#EEEEEC;
+    color: black;
+    border:1px solid gray;
+}
+
+#back_btn:hover{
+    background-color: #BDBEC2;
+}
+
+/* 파일 업로드 */
+.input_file{
+    width:80%;
+    display:flex;
+    justify-content:flex-start;
+}
+
+#file_btn{
+    font-weight:bold;
+    color:#2C875F;
+}
+
+#file_btn:hover{
+    cursor:pointer;
+}
+
+input[type="file"] {
+    display: none; /* Hide the default file input */
+}
+
+/* 이미지 */
+.img-box {
+    width:80%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.img-box img {
+    max-width: 200px;
+    max-height: 150px;
+    margin: 5px;
 }

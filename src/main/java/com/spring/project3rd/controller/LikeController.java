@@ -1,9 +1,9 @@
 package com.spring.project3rd.controller;
 
 
-import com.spring.project3rd.domain.Like.Like;
-import com.spring.project3rd.domain.Like.LikeId;
-import com.spring.project3rd.domain.Like.LikeRepository;
+import com.spring.project3rd.domain.like.Like;
+import com.spring.project3rd.domain.like.LikeId;
+import com.spring.project3rd.domain.like.LikeRepository;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.LikeService;
 import io.jsonwebtoken.Claims;

@@ -1,5 +1,7 @@
 /* Complete Styling for elements within div.main */
-
+body{
+    background-color:#F0F0EF
+}
 /* Added margin to create spacing between the content and the edges */
 div.main {
     margin: 50px 10%;
@@ -24,6 +26,10 @@ div.main thead {
 
 div.main th{
     color: white;
+}
+
+tbody{
+    background-color:white;
 }
 
 div.main th,

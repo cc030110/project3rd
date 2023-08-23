@@ -71,6 +71,10 @@
                     <p>참가자</p>
                 </div>
 
+                <div class="participate_btn">
+                    <input type="button" id="participate_btn" value="Join this community">
+                </div>
+
             </c:otherwise>
         </c:choose>
     </div>

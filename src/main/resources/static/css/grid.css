@@ -64,18 +64,24 @@ a,a:active,a:visited{
     flex-grow: 1;
 }
 
+.login a{
+    font-weight:bold;
+}
+
 .login a:hover{
     color:#48A56F;
-    border-bottom: 2px solid #48A56F;
 }
 
 .join{
     flex-grow: 1;
 }
 
+.join a{
+    font-weight:bold;
+}
+
 .join a:hover{
     color:#48A56F;
-    border-bottom:#48A56F;
 }
 
 .lang-select{
@@ -87,9 +93,11 @@ a,a:active,a:visited{
     margin: 0 5%;
 }
 
+.header-menu a{
+    font-weight:bold;
+}
 .header-menu a:hover{
     color:#48A56F;
-    border-bottom:#48A56F;
 }
 
 select#locales{
@@ -110,8 +118,9 @@ div.footer{
 }
 
 div.footer_logo{
-    font-size:1.2rem;
-    font-weight:800;
+    font-size:1.4rem;
+    font-weight:bold;
+    color:black;
 }
 
 div.footer_detail{
@@ -128,4 +137,5 @@ div.footer_detail>ul>li{
     margin-right:10px;
     font-size:1rem;
     color:black;
+    font-weight:bold;
 }
