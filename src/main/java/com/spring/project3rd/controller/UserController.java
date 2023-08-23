@@ -14,6 +14,7 @@ import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
@@ -34,7 +36,7 @@ import java.util.*;
 
 import static com.spring.project3rd.security.jwt.util.JwtTokenizer.ACCESS_TOKEN_EXPIRE_COUNT;
 
-@RequiredArgsConstructor
+
 @RestController
 @RequestMapping("user")
 @SpringBootApplication
@@ -47,16 +49,25 @@ public class UserController {
     private final LanguageRepository languageRepository;
     private final LanguageService languageService;
     private final EmailService emailService;
-
+    @Autowired
+    public UserController(UserService userService, UserRepository userRepository,
+                          UploadFileService uploadFileService, JwtTokenizer jwtTokenizer,
+                          LanguageRepository languageRepository, LanguageService languageService,
+                          EmailService emailService) {
+        this.userService = userService;
+        this.userRepository = userRepository;
+        this.uploadFileService = uploadFileService;
+        this.jwtTokenizer = jwtTokenizer;
+        this.languageRepository = languageRepository;
+        this.languageService = languageService;
+        this.emailService = emailService;
+    }
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
 
         String id = loginDto.getId();
         String password = loginDto.getPassword();
-        System.out.println(id);
-        System.out.println(password);
-
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
@@ -64,11 +75,13 @@ public class UserController {
         if(user!=null&&user.getPassword().equals(loginDto.getPassword())){
             String name = user.getName();
             String accessToken = jwtTokenizer.createAccessToken(id, name);
-            String refreshToken = jwtTokenizer.createRefreshToken(id, name);
+//            String refreshToken = JwtTokenizer.createRefreshToken(id);
+            // 레디스 저장
+//            refreshTokenRepository.save(new RefreshToken(String.valueOf(loginDto.getId()), refreshToken, accessToken));
 
             MemberLoginResponseDto loginResponse = MemberLoginResponseDto.builder()
                     .accessToken(accessToken)
-                    .refreshToken(refreshToken)
+//                    .refreshToken(refreshToken)
                     .build();
 
             HttpHeaders headers = new HttpHeaders();
@@ -100,6 +113,7 @@ public class UserController {
 
         return new ResponseEntity(HttpStatus.OK);
     }
+
 
 
     /** 회원 가입 **/
@@ -203,6 +217,20 @@ public class UserController {
         String authCode = emailService.sendEmail(emailCheckReq.getEmail());
         return new BaseResponse<>(authCode);
     }
+    @PostMapping("/join/idCheck")
+    public ResponseEntity<String> idCheck(@RequestBody MemberLoginDto loginDto) {
+
+        String id = loginDto.getId();
+        Optional<User> optionalMyUser = userRepository.findById(id);
+        User myUser = optionalMyUser.orElse(null);
+
+        if (myUser != null) {
+            return ResponseEntity.badRequest().body("ID already exists"); // 예시: 이미 사용 중인 아이디
+        } else {
+            return ResponseEntity.ok("ID available"); // 예시: 사용 가능한 아이디
+        }
+    }
+
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
     @GetMapping("list/{page}")
@@ -232,30 +260,32 @@ public class UserController {
     }
 
     /** 개인 정보 불러오기(회원 수정에 쓸거)**/
-    @GetMapping("update")
-    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
-        ModelAndView view = new ModelAndView("user_my_page");
-
-        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-        String id = claims.get("id", String.class);
-//        String name = claims.get("name", String.class);
-        Optional<User> optionalUser = userRepository.findById(id);
-        User user = optionalUser.orElse(null);
-
-        if(user!=null){
-            UserResponseDto userResponseDto = new UserResponseDto(user);
-            view.addObject("user",userResponseDto);
-
-            return view;
-        }
-        return null;
-    }
+//    @GetMapping("update")
+//    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
+//        ModelAndView view = new ModelAndView("user_my_page");
+//
+//        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+//        String id = claims.get("id", String.class);
+////        String name = claims.get("name", String.class);
+//        Optional<User> optionalUser = userRepository.findById(id);
+//        User user = optionalUser.orElse(null);
+//
+//        if(user!=null){
+//            UserResponseDto userResponseDto = new UserResponseDto(user);
+//            view.addObject("user",userResponseDto);
+//
+//            return view;
+//        }
+//        return null;
+//    }
 
 
     /** 회원 정보 수정 **/
 //    @PutMapping(value = "update", consumes = {"multipart/form-data"})
 //    public Map update(@CookieValue(value = "accessToken", required = false) String accessToken, @ModelAttribute UserRequestDto userRequestDto){
+//
 //        JSONObject response = new JSONObject();
+//
 //        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
 //        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
 //        String id = claims.get("id", String.class);
@@ -297,4 +327,31 @@ public class UserController {
 
         return response.toMap();
     }
+
+    /* 마이페이지 */
+    @GetMapping("mypage")
+    public ModelAndView myPageMain(@CookieValue(value = "accessToken", required = false) String accessToken){
+        ModelAndView view = new ModelAndView("user_my_page");
+        if(accessToken==null){
+            return new ModelAndView(new RedirectView("login"));
+        }else{
+            Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+            String id=claims.get("id",String.class);
+            User user = userRepository.findById(id).orElse(null);
+            if(user!=null){
+                view.addObject(user);
+            }
+        }
+        return view;
+    }
+
+
+
+
+
+
+
+
+
+
 }
