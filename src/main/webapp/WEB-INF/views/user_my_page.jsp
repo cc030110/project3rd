@@ -25,7 +25,7 @@
         </div>
         <ul id="menu">
             <li><a href="#">내 정보수정</a></li>
-            <li><a href="#">친구 관리</a></li>
+            <li><a href="user_my_friend.jsp">친구 관리</a></li>
             <li><a href="#">내가 쓴 자유글</a></li>
             <li><a href="#">내가 쓴 모집글</a></li>
             <li><a href="#">모임 정보</a></li>

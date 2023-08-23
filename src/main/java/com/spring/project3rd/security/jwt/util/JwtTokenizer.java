@@ -27,6 +27,7 @@ public class JwtTokenizer {
     public final static Long ACCESS_TOKEN_EXPIRE_COUNT = 30 * 60 * 1000L; // 30분
 //    public final static Long ACCESS_TOKEN_EXPIRE_COUNT = 1 * 10 * 1000L; // 10초
     public final static Long REFRESH_TOKEN_EXPIRE_COUNT = 7 * 24 * 60 * 60 * 1000L; // 7일
+//    public final static Long REFRESH_TOKEN_EXPIRE_COUNT = 1 * 60 * 1000L; // 20초
 
     public JwtTokenizer(@Value("${jwt.secretKey}") String accessSecret, @Value("${jwt.refreshKey}") String refreshSecret) {
         this.accessSecret = accessSecret.getBytes(StandardCharsets.UTF_8);
@@ -107,6 +108,20 @@ public class JwtTokenizer {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    // 리프레쉬토큰 생성
+    public static String createRefreshToken(String id){
+        Claims claims = Jwts
+                .claims();
+
+        return Jwts
+                .builder()
+                .setClaims(claims)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRE_COUNT))
+                .signWith(SignatureAlgorithm.HS256,id)
+                .compact();
     }
 
     /**

@@ -22,7 +22,7 @@ function validateInput(input, condition) {
         let inputClass = input.attr('class').split(" ");
         let classcheck = inputClass[0];
         // 에러 메세지 .err 보여주기
-        $('p.' + classcheck).show();
+        $('p.' + classcheck).show().css('display', 'inline-block');
         // input.next('.err').show();
         // 해당 input을 focus
         input.focus();

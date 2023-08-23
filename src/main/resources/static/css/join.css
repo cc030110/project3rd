@@ -3,19 +3,21 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
 }
 
 #joinForm {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 20px;
 }
 
 .join-box-left, .join-box-right {
-    padding: 10px;
+    padding: 20px;
     box-sizing: border-box;
-    border: 1px solid black;
+    border-radius: 20px;
+    background: linear-gradient(to bottom, rgb(230, 237, 253), rgba(229, 253, 235, 0.95));
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .join-button {
@@ -48,10 +50,30 @@
     vertical-align: top; /* 상단 정렬 */
 }
 
-.line{
+.line {
+    display: flex;
+    justify-content: left;
     margin-bottom: 30px;
-    height: 25px;
-    text-align: center;
+    align-items: center;
+}
+.err-care{
+    display: flex;
+    flex-direction: column; /* 입력 폼과 에러 메시지를 세로로 배치 */
+    justify-content: space-between;
+    margin-bottom: 35px;
+    align-items: center;
+}
+/* error은 input, err는 p */
+.error{
+    border-color: red;
+}
+
+.err {
+    color: red;
+    font-size: 14px;
+    display: none;
+    margin-top: 5px;
+    height: 0;
 }
 
 
@@ -71,19 +93,6 @@ input[type=file]#profileImg{
     width: 100px;
     height: 100px;
 }
-
-/* error은 input, err는 p */
-.error{
-    border-color: red;
-}
-
-.err{
-    display: none;
-    color: red;
-    height: 0px;
-    font-size: 14px;
-}
-
 
 
 .position {
@@ -159,25 +168,39 @@ a.spot {
 
 .email-box {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* 입력 폼과 버튼을 최대한 간격을 두고 배치 */
     align-items: center;
-    border: 1px solid black;
+    border: 0;
     padding: 5px;
     width: 90%;
 }
 
 .email-box > input,
 .email-box > button {
-    border: none;
     background: none;
     padding: 5px;
     margin: 0;
+    border: none;
+}
+
+.email-box > input{
+    background: white;
+    padding: 5px;
+    flex: 4; /* 입력 폼이 너비의 3/5를 차지하도록 설정 */
+}
+
+.email-box > button {
+    height: 40px;
+    flex: 2; /* 버튼이 너비의 2/5를 차지하도록 설정 */
 }
 .normal{
     width: 90%;
 }
-.line {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+#joinForm input,
+#joinForm button{
+    border : 0.7px solid lightgray;
+}
+#joinForm input{
+    height: 40px;
+    padding: 5px;
 }
