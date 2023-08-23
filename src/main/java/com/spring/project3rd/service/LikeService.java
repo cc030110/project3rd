@@ -1,7 +1,7 @@
 package com.spring.project3rd.service;
 
-import com.spring.project3rd.domain.Like.Like;
-import com.spring.project3rd.domain.Like.LikeRepository;
+import com.spring.project3rd.domain.like.Like;
+import com.spring.project3rd.domain.like.LikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

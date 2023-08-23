@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="contents-line">
+                <div class="contents_line">
                     <textarea id="contents" readonly>${board.contents}</textarea>
                 </div>
 
@@ -69,6 +69,10 @@
 
                 <div class="participants_line">
                     <p>참가자</p>
+                </div>
+
+                <div class="participate_btn">
+                    <input type="button" id="participate_btn" value="Join this community">
                 </div>
 
             </c:otherwise>

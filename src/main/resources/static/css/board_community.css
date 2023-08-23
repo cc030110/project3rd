@@ -2,6 +2,7 @@ body{
     width:100%;
     padding:0;
     margin:0;
+    background-color:#F0F0EF;
 }
 
 div.main {
@@ -57,7 +58,7 @@ div.btns>#modify_btn:hover,#back_btn:hover{
 }
 
 div.btns>#delete_btn:hover{
-    background-color:#EEEEEC;
+    background-color:white;
 }
 
 /* 제목,작성자,조회수*/
@@ -68,7 +69,7 @@ div.second_line{
     width:1200px;
     height:50px;
     border-radius:20px 20px 0 0;
-    border-bottom: 3px solid white;
+    border-bottom: 3px solid #F0F0EF;
     padding:0 20px;
     background-color:#2C875F;
     color:white;
@@ -88,9 +89,9 @@ div.third_line{
     justify-content:flex-start;
     width:1200px;
     height:auto;
-    border-bottom:3px solid white;
+    border-bottom:3px solid #F0F0EF;
     padding:20px;
-    background-color:#F0F0EF;
+    background-color:white;
     flex-wrap:wrap;
 }
 
@@ -119,8 +120,8 @@ div.contents_line{
     width:1200px;
     height:auto;
     padding:20px;
-    background-color:#F0F0EF;
-    border-bottom: 3px solid white;
+    background-color:white;
+    border-bottom: 3px solid #F0F0EF;
 }
 
 textarea#contents{
@@ -130,7 +131,7 @@ textarea#contents{
     border:none;
     font-size:1rem;
     font-weight:800;
-    background-color:#F0F0EF;
+    background-color:white;
 }
 
 /* 이미지 표시*/
@@ -140,8 +141,8 @@ div.img-box{
     width:1200px;
     height:auto;
     padding:20px;
-    border-bottom:3px solid white;
-    background-color:#F0F0EF;
+    border-bottom:3px solid #F0F0EF;
+    background-color:white;
 }
 div.img-box>img{
     width:300px;
@@ -156,6 +157,23 @@ div.participants_line{
     background-color:#2C875F;
     color:white;
     border-radius:0 0 20px 20px;
+}
+
+input#participate_btn{
+    width:400px;
+    height:60px;
+    margin-top:50px;
+    border:none;
+    border-radius:10px;
+    font-size:0.8rem;
+    font-weight:900;
+    background-color:#2C875F;
+    color:white;
+}
+
+input#participate_btn:hover{
+    background-color:#48A56F;
+    cursor:pointer;
 }
 
 

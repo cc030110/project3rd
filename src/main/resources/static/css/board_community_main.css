@@ -2,6 +2,7 @@ body{
     width:100%;
     padding:0;
     margin:0;
+    background-color:#F0F0EF;
 }
 
 div.main {
@@ -28,9 +29,8 @@ div.list_top{
     align-items:center;
     width: 100%;
     height: auto;
-    /*height:20px;*/
-    /*padding:20px;*/
-    border-bottom:5px solid white;
+    padding:0 20px;
+    border-bottom:5px solid #F0F0EF;
     border-radius:20px 20px 0 0;
     background-color:#2C875F;
     color:white;
@@ -55,9 +55,9 @@ div.con_list{
     width: 100%;
     height:250px;
     margin:0 0 20px 0;
-    /*padding:20px;*/
+    padding:0 20px;
     border-radius:0 0 20px 20px;
-    background-color:#F0F0EF;
+    background-color:white;
 }
 
 div.con_platform{
@@ -186,6 +186,7 @@ select::-ms-expand {
     padding-left: 10px;
     position: relative;
     z-index: 10;
+    /*background-color:white;*/
 }
 
 #search-select option {

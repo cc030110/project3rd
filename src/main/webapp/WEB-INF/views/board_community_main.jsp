@@ -40,6 +40,7 @@
                         <select id="search-select">
                             <option value="title" selected><spring:message code="board_community_main.select1"/></option>
                             <option value="author"><spring:message code="board_community_main.select2"/></option>
+                            <option value="platform"><spring:message code="board_community_main.select3"/></option>
                         </select>
                         <span class="select-arrow">
                         <img src="https://ucarecdn.com/326e1541-5ce3-4908-836d-d735660c0300/" alt=""/>
@@ -47,8 +48,7 @@
                     </div>
                     <div class="search-box">
                         <input type="text" id="search-input" name="search-input">
-                        <input type="button" id="search-btn" onclick="searchBoardCommunity(${boardList.number+1})" value=<spring:message
-                                code="board_community_main.search"/>>
+                        <input type="button" id="search-btn" onclick="searchBoardCommunity(${boardList.number+1})" value=<spring:message code="board_community_main.search"/>>
                     </div>
                 </div>
             </div>

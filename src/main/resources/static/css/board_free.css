@@ -1,10 +1,8 @@
-/* your-style-file.css */
-
-/* Center align content within the .main container */
 body{
     width:100%;
     padding:0;
     margin:0;
+    background-color:#F0F0EF;
 }
 
 .main {
@@ -15,7 +13,6 @@ body{
     align-items: center;
     margin: 100px auto;
     padding: 0 20px;
-    /*height: 100vh;  Adjust this for desired centering effect */
 }
 
 /* 버튼 라인 */
@@ -70,7 +67,7 @@ body{
     width:1200px;
     height:50px;
     border-radius:20px 20px 0 0;
-    border-bottom: 3px solid white;
+    border-bottom: 3px solid #F0F0EF;
     padding:0 20px;
     background-color:#2C875F;
     color:white;
@@ -82,9 +79,9 @@ body{
     justify-content:space-between;
     width:1200px;
     height:auto;
-    border-bottom:3px solid white;
+    border-bottom:3px solid #F0F0EF;
     padding:20px;
-    background-color:#F0F0EF;
+    background-color:white;
     flex-wrap:wrap;
 }
 
@@ -101,8 +98,8 @@ body{
     width:1200px;
     height:auto;
     padding:20px;
-    background-color:#F0F0EF;
-    border-bottom: 3px solid white;
+    background-color:white;
+    border-bottom: 3px solid #F0F0EF;
 }
 
 #contents{
@@ -112,7 +109,7 @@ body{
     border:none;
     font-size:1rem;
     font-weight:800;
-    background-color:#F0F0EF;
+    background-color:white;
 }
 
 /* 이미지 표시*/
@@ -122,8 +119,8 @@ div.img-box{
     width:1200px;
     height:auto;
     padding:20px;
-    border-bottom:3px solid white;
-    background-color:#F0F0EF;
+    border-bottom:3px solid #F0F0EF;
+    background-color:white;
 }
 div.img-box>img{
     width:300px;
@@ -137,45 +134,3 @@ div.last-line{
     border-radius: 0 0 20px 20px;
     background-color:#2C875F;
 }
-
-
-
-/*#update-btn,
-#delete-btn {
-    padding: 5px 10px;
-    margin-right: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#update-btn:hover,
-#delete-btn:hover {
-    background-color: #0056b3;
-}
-
-!* Style for images in the img-box *!
-.img-box {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-.img-box img {
-    max-width: calc(33.33% - 10px); !* For 3 images per row *!
-    max-height: 150px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-!* Style for the "not-exist" message *!
-#not-exist {
-    text-align: center;
-    font-size: 18px;
-    color: #f00;
-}*/

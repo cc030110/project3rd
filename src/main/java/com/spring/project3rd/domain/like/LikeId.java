@@ -1,4 +1,4 @@
-package com.spring.project3rd.domain.Like;
+package com.spring.project3rd.domain.like;
 
 
 import lombok.AllArgsConstructor;
