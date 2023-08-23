@@ -9,9 +9,11 @@ $(document).ready(function() {
         let classcheck = inputClass[0];
         console.log(classcheck);
         $(this).removeClass('error');
+
         $('p.'+classcheck).hide();
     });
 });
+
 
 // 유효성 검사 함수
 // 검사할 input , 조건
@@ -287,4 +289,38 @@ function verifyCode() {
         $("#resultMessage").text("인증 실패!");
         isEmailChecked = false;
     }
+}
+// 아이디 체크
+function idCheck() {
+    let idCheck = $("#id").val();
+
+    if (idCheck === "") {
+            // 이메일 입력 값이 비어있을 경우 처리
+        alert("아이디를 입력해주세요.");
+            return;
+    }
+    let check = {
+        "id":idCheck
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/user/join/idCheck",
+        data: JSON.stringify(check),
+        contentType: "application/json",
+    }).done(function (response){
+            // 서버로부터 받은 응답을 처리하는 코드
+            console.log("ID:", response);
+            if (response === "ID already exists") {
+                // 이미 사용 중인 아이디 처리
+                alert("아이디 중복!");
+            } else {
+                // 사용 가능한 아이디 처리
+                alert("아이디 사용가능!");
+            }
+    }).fail(function (request){
+        console.log("status: " + request.status);
+        console.log("responseText: " + request.responseText);
+        console.log("error: " + request.error);
+    });
 }

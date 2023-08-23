@@ -71,19 +71,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            cookieGenerator.setCookieMaxAge(60 * 60);//1시간
 //        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         String token="";
         try {
             token = getToken(request);

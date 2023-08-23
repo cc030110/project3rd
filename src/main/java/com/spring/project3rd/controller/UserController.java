@@ -77,13 +77,13 @@ public class UserController {
         if(user!=null&&user.getPassword().equals(loginDto.getPassword())){
             String name = user.getName();
             String accessToken = jwtTokenizer.createAccessToken(id, name);
-//            String refreshToken = JwtTokenizer.createRefreshToken(id);
+            String refreshToken = JwtTokenizer.createRefreshToken(id);
             // 레디스 저장
-//            refreshTokenRepository.save(new RefreshToken(String.valueOf(loginDto.getId()), refreshToken, accessToken));
+            refreshTokenRepository.save(new RefreshToken(String.valueOf(loginDto.getId()), refreshToken, accessToken));
 
             MemberLoginResponseDto loginResponse = MemberLoginResponseDto.builder()
                     .accessToken(accessToken)
-//                    .refreshToken(refreshToken)
+                    .refreshToken(refreshToken)
                     .build();
 
             HttpHeaders headers = new HttpHeaders();
@@ -219,6 +219,20 @@ public class UserController {
         String authCode = emailService.sendEmail(emailCheckReq.getEmail());
         return new BaseResponse<>(authCode);
     }
+    @PostMapping("/join/idCheck")
+    public ResponseEntity<String> idCheck(@RequestBody MemberLoginDto loginDto) {
+
+        String id = loginDto.getId();
+        Optional<User> optionalMyUser = userRepository.findById(id);
+        User myUser = optionalMyUser.orElse(null);
+
+        if (myUser != null) {
+            return ResponseEntity.badRequest().body("ID already exists"); // 예시: 이미 사용 중인 아이디
+        } else {
+            return ResponseEntity.ok("ID available"); // 예시: 사용 가능한 아이디
+        }
+    }
+
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
     @GetMapping("list/{page}")
@@ -247,31 +261,38 @@ public class UserController {
         return view;
     }
 
-    /** 개인 정보 불러오기(회원 수정에 쓸거)**/
-    @GetMapping("update")
-    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
-        ModelAndView view = new ModelAndView("user_my_page");
-
-        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-        String id = claims.get("id", String.class);
-//        String name = claims.get("name", String.class);
-        Optional<User> optionalUser = userRepository.findById(id);
-        User user = optionalUser.orElse(null);
-
-        if(user!=null){
-            UserResponseDto userResponseDto = new UserResponseDto(user);
-            view.addObject("user",userResponseDto);
-
-            return view;
-        }
-        return null;
+    @GetMapping("/mypage")
+    public String myPage() {
+        return "user_my_page";
     }
+
+    /** 개인 정보 불러오기(회원 수정에 쓸거)**/
+//    @GetMapping("update")
+//    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
+//        ModelAndView view = new ModelAndView("user_my_page");
+//
+//        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+//        String id = claims.get("id", String.class);
+////        String name = claims.get("name", String.class);
+//        Optional<User> optionalUser = userRepository.findById(id);
+//        User user = optionalUser.orElse(null);
+//
+//        if(user!=null){
+//            UserResponseDto userResponseDto = new UserResponseDto(user);
+//            view.addObject("user",userResponseDto);
+//
+//            return view;
+//        }
+//        return null;
+//    }
 
 
     /** 회원 정보 수정 **/
 //    @PutMapping(value = "update", consumes = {"multipart/form-data"})
 //    public Map update(@CookieValue(value = "accessToken", required = false) String accessToken, @ModelAttribute UserRequestDto userRequestDto){
+//
 //        JSONObject response = new JSONObject();
+//
 //        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
 //        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
 //        String id = claims.get("id", String.class);

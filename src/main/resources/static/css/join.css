@@ -75,6 +75,12 @@
     margin-top: 5px;
     height: 0;
 }
+.id-check-server{
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    height: 0;
+}
 
 
 /* 프로필 이미지 선택 input file을 보이지 않게 하고, 대신 라벨 클릭 시 버튼 기능으로 만듦 */
