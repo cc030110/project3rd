@@ -12,6 +12,15 @@ $(document).ready(function() {
 
         $('p.'+classcheck).hide();
     });
+
+    // 회원가입 아이디 닉네임 변경시 중복 재확인
+    $('input, select').on('input change', function() {
+        let inputClass = $(this).attr('class').split(" ");
+        let classcheck = inputClass[2];
+        console.log(classcheck);
+        $('p.' + classcheck).show();
+    });
+
 });
 
 
@@ -70,14 +79,26 @@ function joinForm() {
     if(!idValid) return;
     //
     // // password 유효성 검사
-    // condition = password.val().length >= 4 && /^[A-Za-z0-9]+$/.test(password.val());
+    condition = password.val().length >= 4 && /^[A-Za-z0-9]+$/.test(password.val());
     condition = password.val()!=="";
     const passwordValid = validateInput(password,condition);
     if(!passwordValid) return;
     //
+    function isValidInputPassword(input) {
+        // 정규식 패턴: 최소 6자 이상의 영어와 숫자만 허용
+        var pattern = /^[A-Za-z\d]{6,20}$/;
+        return pattern.test(input);
+    }
     // // passwordChk 유효성 검사 (비밀번호 확인)
     condition = (passwordChk.val()===password.val());
     const passwordChkValid = validateInput(passwordChk,condition);
+    if(isValidInputPassword(passwordChk)){
+            console.log(nameCheck + " is valid");
+        } else {
+            console.log(nameCheck + " is invalid");
+            alert("최소 6자 이상의 영어와 숫자만 허용")
+            return;
+        }
     if(!passwordChkValid) return;
 
     // 이메일 유효성 검사 추가 필요
@@ -252,24 +273,26 @@ function sendEmail() {
     serverGeneratedCode="";
     isEmailChecked=false;
 
-    console.log(userEmail);
+
     if (userEmail==="") {
         // 이메일 입력 값이 비어있을 경우 처리
-        $("#resultMessage").text("이메일을 입력해주세요.");
+        alert("이메일을 입력해주세요.");
         return;
     }
     let sendEmail = {
         "email":userEmail
     }
-
+    console.log(userEmail);
     $.ajax({
         type: "POST",
         url: "/user/join/emailCheck", // 실제 서버의 엔드포인트 URL
         data: JSON.stringify(sendEmail), // 서버에 보낼 데이터 설정
         contentType: "application/json", // 데이터 타입 설정
     }).done(function (response){
+
         // 서버로부터 받은 인증 번호를 변수에 저장
         serverGeneratedCode = response.data;
+        alert("발송 완료");
         // console.log("인증코드: "+serverGeneratedCode);
     }).fail(function (request){
         console.log("status: " + request.status);
@@ -290,9 +313,21 @@ function verifyCode() {
         isEmailChecked = false;
     }
 }
-// 아이디 체크
+// 아이디 중복 체크
 function idCheck() {
     let idCheck = $("#id").val();
+    let classList = $("#id").attr('class').split(" ");
+    let validCheck = classList[0];
+    let classcheck = classList[2];
+
+    // 정규식
+    if (isValidInput(idCheck)) {
+        console.log(idCheck + " is valid");
+    } else {
+        console.log(idCheck + " is invalid");
+        $('p.'+validCheck).show();
+        return;
+    }
 
     if (idCheck === "") {
             // 이메일 입력 값이 비어있을 경우 처리
@@ -310,14 +345,76 @@ function idCheck() {
         contentType: "application/json",
     }).done(function (response){
             // 서버로부터 받은 응답을 처리하는 코드
-            console.log("ID:", response);
-            if (response === "ID already exists") {
+            console.log(response);
+            if (response.key === "fail") {
                 // 이미 사용 중인 아이디 처리
                 alert("아이디 중복!");
             } else {
                 // 사용 가능한 아이디 처리
                 alert("아이디 사용가능!");
+                $('p.'+classcheck).hide();
             }
+    }).fail(function (request){
+        console.log("status: " + request.status);
+        console.log("responseText: " + request.responseText);
+        console.log("error: " + request.error);
+    });
+}
+
+function isValidInput(input) {
+    // 정규식 패턴: 최소 6자 이상의 영어와 숫자만 허용
+    var pattern = /^[A-Za-z\d]{6,20}$/;
+    return pattern.test(input);
+}
+function isValidInputName(input) {
+    // 정규식 패턴: 최소 4자 이상의 영어와 숫자만 허용
+    var pattern = /^[A-Za-z\d]{4,20}$/;
+    return pattern.test(input);
+}
+
+// 닉네임 중복 체크
+function nameCheck() {
+    let nameCheck = $("#name").val();
+    // 경고문구용 클래스 탐색
+    let classList = $("#name").attr('class').split(" ");
+    let validCheck = classList[0];
+    let classcheck = classList[2];
+
+    // 정규식
+    if (isValidInputName(nameCheck)) {
+        console.log(nameCheck + " is valid");
+    } else {
+        console.log(nameCheck + " is invalid");
+        $('p.'+validCheck).show();
+        $('p.'+validCheck).css('display', 'inline-block');
+        return;
+    }
+
+    if (nameCheck === "") {
+        // 닉네임 입력 값이 비어있을 경우 처리
+        alert("닉네임 입력해주세요.");
+        return;
+    }
+    let check = {
+        "name":nameCheck
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "/user/join/nameCheck",
+        data: JSON.stringify(check),
+        contentType: "application/json",
+    }).done(function (response){
+        // 서버로부터 받은 응답을 처리하는 코드
+        console.log(response);
+        if (response.key === "fail") {
+            // 이미 사용 중인 닉네임 처리
+            alert("닉네임 중복!");
+        } else {
+            // 사용 가능한 닉네임 처리
+            alert("닉네임 사용가능!");
+            $('p.'+classcheck).hide();
+        }
     }).fail(function (request){
         console.log("status: " + request.status);
         console.log("responseText: " + request.responseText);

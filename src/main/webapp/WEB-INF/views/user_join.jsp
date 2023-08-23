@@ -24,11 +24,12 @@
                 <div class="join-box-left">
                     <div class="line err-care">
                         <div class="email-box">
-                            <input class="id-check normal" type="text" id="id" name="id"
+                            <input class="id-check normal id-change" type="text" id="id" name="id"
                                    placeholder="<spring:message code="user_join.id"/>">
                             <button type="button" id="id-check" onclick="idCheck()">중복 확인</button>
                         </div>
-                        <p class="id-check err"><spring:message code="user_join.err-invalid"/></p>
+                        <p class="id-change">아이디 중복 체크 필요</p>
+                        <p class="id-check err"><spring:message code="user_join.id-required"/></p>
                     </div>
                     <div class="line err-care">
                         <input class="password-check normal" type="password" id="password" name="password"
@@ -42,11 +43,12 @@
                     </div>
                     <div class="line err-care">
                         <div class="email-box">
-                        <input class="name-check normal" type="text" id="name" name="name"
-                               placeholder="<spring:message code="user_join.name"/>">
+                            <input class="name-check normal name-change" type="text" id="name" name="name"
+                                   placeholder="<spring:message code="user_join.name"/>">
                             <button type="button" id="name-check" onclick="nameCheck()">중복 확인</button>
                         </div>
-                        <p class="name-check err"><spring:message code="user_join.err-required"/></p>
+                        <p class="name-change">닉네임 중복 체크 필요</p>
+                        <p class="name-check err"><spring:message code="user_join.name-required"/></p>
                     </div>
                     <div class="line err-care">
                         <div class="email-box">
@@ -54,7 +56,7 @@
                                    placeholder="<spring:message code="user_join.email"/>">
                             <button type="button" id="sendEmailButton" onclick="sendEmail()">인증번호 요청</button>
                         </div>
-                        <p class="email-check err"><spring:message code="user_join.err-required"/></p>
+                        <p class="email-check err"><spring:message code="user_join.mail-required"/></p>
                     </div>
                     <div class="line err-care">
                         <div class="email-box">
@@ -64,12 +66,13 @@
                         </div>
                         <p class="email-check-number" id="resultMessage"></p>
                     </div>
-                    <div class="line">
-                        <label><spring:message code="user_join.gender"/></label>
-                        <input type="radio" class="gender" id="male" name="gender" value="남" checked>
-                        <label for="male"><spring:message code="user_join.male"/></label>
-                        <input type="radio" class="gender" id="female" name="gender" value="여">
-                        <label for="female"><spring:message code="user_join.female"/></label>
+                    <div class="line gender-container">
+                        <div class="gender-box">
+                            <input type="radio" class="gender" id="male" name="gender" value="남" checked>
+                            <label for="male"><spring:message code="user_join.male"/></label>
+                            <input type="radio" class="gender" id="female" name="gender" value="여">
+                            <label for="female"><spring:message code="user_join.female"/></label>
+                        </div>
                     </div>
                     <div class="line err-care">
                         <input class="normal" type="text" id="birth" name="birth"
@@ -81,7 +84,8 @@
                         <div class="profile-img-box">
 
                         </div>
-                        <label><spring:message code="user_join.profileImg"/></label>
+                    </div>
+                    <div class="line">
                         <label for="profileImg" id="profileImgBtn"><spring:message
                                 code="user_join.profileImgBtn"/></label>
                         <input type="file" id="profileImg" name="profileImg" style="visibility:hidden;">
@@ -111,7 +115,6 @@
                         <label for="liveCity"></label>
                         <input type="text" id="liveCity" name="liveCity"
                                placeholder="<spring:message code="user_join.liveCity"/>">
-                        <p class="err"><spring:message code="user_join.err-required"/></p>
                     </div>
                     <div class="line">
                         <div class="lang-choose">
@@ -130,9 +133,9 @@
                         </div>
                     </div>
                     <div class="line">
-                        <div class="use-lang-box">
+                            <div class="use-lang-box">
 
-                        </div>
+                            </div>
                     </div>
                     <div class="line">
                         <div class="lang-choose">
