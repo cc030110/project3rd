@@ -27,21 +27,21 @@
                             0
                         </c:otherwise>
                     </c:choose>
-                    /${boardList.totalPages}]</span>
+                    / ${boardList.totalPages} ]</span>
             </div>
-            <div class="search-box">
-                <select id="search-select">
-                    <option value="title" selected><spring:message code="board_free_list.sel1"/></option>
-                    <option value="author"><spring:message code="board_free_list.sel2"/></option>
-                </select>
-                <input type="text" id="search-input" name="search-input">
-                <input type="button" onclick="searchBoard(${boardList.number+1})" value=<spring:message code="board_free_list.search"/>>
+            <div>
+                <div class="select-box">
+                    <select id="search-select">
+                        <option value="title" selected><spring:message code="board_free_list.sel1"/></option>
+                        <option value="author"><spring:message code="board_free_list.sel2"/></option>
+                    </select>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="search-input" name="search-input">
+                    <input type="button" onclick="searchBoard(${boardList.number+1})" value=<spring:message
+                            code="board_free_list.search"/>>
+                </div>
             </div>
-            <c:if test="${id ne null}">
-                <a href="/board/free/upload" id="upload-link">
-                    <spring:message code="board_free_list.write"/>
-                </a>
-            </c:if>
         </div>
         <table>
             <thead>
@@ -79,6 +79,11 @@
             </c:if>
             </tbody>
         </table>
+        <div>
+            <a href="/board/free/upload" id="upload-link">
+                <spring:message code="board_free_list.write"/>
+            </a>
+        </div>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <c:if test="${boardList.number > 4}">

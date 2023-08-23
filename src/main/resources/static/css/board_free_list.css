@@ -14,12 +14,16 @@ h2>a{
 div.main table {
     border-top: 1px solid black;
     border-collapse: collapse;
-    margin: 20px 0;
+    margin: 10% 0;
     width: 100%;
 }
 
 div.main thead {
-    background-color: silver;
+    background-color: #257954;
+}
+
+div.main th{
+    color: white;
 }
 
 div.main th,
@@ -76,41 +80,58 @@ div.main .pagination .page-item.disabled .page-link {
     color: #333;
 }
 
-/* Search Box and Summary */
-div.main .content-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px; /* Added margin for spacing */
+/* 검색 */
+select{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
-div.main .search-box {
-    display: flex;
-    align-items: center;
+select::-ms-expand {
+    display: none;
 }
 
-div.main .search-box select,
-div.main .search-box input[type="text"],
-div.main .search-box input[type="button"] {
+.select-box {
+    position: relative;
+    width: 100px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
+#search-select {
+    width: inherit;
+    height: inherit;
+    background: transparent;
+    border: 0 none;
+    outline: 0 none;
+    padding-left: 10px;
+    position: relative;
+    z-index: 3;
+}
+
+#search-select option {
     padding: 5px;
+    min-height: 30px;
 }
 
-/* Positioning for h2, span div, and search-box */
-div.main h2 {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-div.main .search-summary {
+.select-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 35px;
+    height: inherit;
+    border-left: 1px solid black;
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
-div.main .search-summary span:first-child {
-    margin-right: auto;
+.select-arrow img {
+    width: 25px;
 }
 
-/* Added margin to the search-box to separate it from the content below */
-div.main .search-box {
-    margin-top: 20px;
+.rotated {
+    transform: rotate(180deg);
 }
