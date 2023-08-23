@@ -224,17 +224,29 @@ public class UserController {
         return new BaseResponse<>(authCode);
     }
     @PostMapping("/join/idCheck")
-    public ResponseEntity<String> idCheck(@RequestBody MemberLoginDto loginDto) {
-
-        String id = loginDto.getId();
+    public Response idCheck(@RequestBody UserRequestDto userRequestDto) {
+        System.out.println(userRequestDto);
+        String id = userRequestDto.getId();
         Optional<User> optionalMyUser = userRepository.findById(id);
         User myUser = optionalMyUser.orElse(null);
 
         if (myUser != null) {
-            return ResponseEntity.badRequest().body("ID already exists"); // 예시: 이미 사용 중인 아이디
-        } else {
-            return ResponseEntity.ok("ID available"); // 예시: 사용 가능한 아이디
+            return new Response("fail", id); // 예시: 이미 사용 중인 아이디
         }
+        return new Response("success", id); // 예시: 사용 가능한 아이디
+    }
+
+    @PostMapping("/join/nameCheck")
+    public Response nameCheck(@RequestBody UserRequestDto userRequestDto) {
+        System.out.println(userRequestDto);
+        String name = userRequestDto.getName();
+        Optional<User> optionalMyUser = Optional.ofNullable(userRepository.findByName(name));
+        User myUser = optionalMyUser.orElse(null);
+
+        if (myUser != null) {
+            return new Response("fail", name); // 예시: 이미 사용 중인 아이디
+        }
+        return new Response("success", name); // 예시: 사용 가능한 아이디
     }
 
 
