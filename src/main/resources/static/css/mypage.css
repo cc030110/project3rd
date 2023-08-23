@@ -1,28 +1,53 @@
-.main {
+.main{
     display: flex;
 }
-#sidebar {
-    width: 300px;
+
+/* 슬라이드 메뉴*/
+#sidebar{
+    width: 20%;
+    height: 100%;
     background-color: #333;
-    color: white;
-    padding: 20px;
-}
-#content {
-    flex: 1;
-    padding: 20px;
-}
-#user-info {
+    color: wheat;
     text-align: center;
-    margin-bottom: 20px;
 }
-#menu {
-    list-style-type: none;
-    padding: 0;
+
+#menu li{
+    line-height: 35px;
+    cursor: pointer;
 }
-#menu li {
-    margin-bottom: 10px;
+
+#board-sub{
+    display: none;
 }
-#menu li a {
-    color: white;
-    text-decoration: none;
+
+.profile-img{
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
 }
+.profile-img>img{
+    width: 100%;
+    height: 100%;
+}
+
+/* 내용 */
+.content-container{
+    background-color: #48A56F;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+}
+
+h2#selected-menu{
+    display: inline-block;
+    margin: 20px 0;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+#content{
+    background-color: aliceblue;
+}
+
+

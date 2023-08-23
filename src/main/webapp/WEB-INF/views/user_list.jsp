@@ -23,7 +23,16 @@
         <div class="users">
             <c:forEach items="${userList.content}" var="user">
                 <div class="user-box">
-                    <a href="/user/${user.name}"><img src="${user.profileImg}"></a>
+                    <a href="/user/${user.name}">
+                        <c:choose>
+                            <c:when test="${user.profileImg ne null}">
+                                <img src="${user.profileImg}" alt=""/>
+                            </c:when>
+                            <c:otherwise>
+                                <img src="https://ucarecdn.com/1e359c2a-7124-4da9-9cd9-be5fe9e8c1f0/" alt=""/>
+                            </c:otherwise>
+                        </c:choose>
+                    </a>
                     <p>닉네임 : <a href="/user/${user.name}">${user.name}</a></p>
                     <p>국적 : ${user.liveCountry}</p>
                 </div>

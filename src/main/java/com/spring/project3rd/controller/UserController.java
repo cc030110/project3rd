@@ -1,19 +1,15 @@
 
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.email.BaseResponse;
 import com.spring.project3rd.domain.email.EmailCheckReq;
-import com.spring.project3rd.security.jwt.util.RefreshTokenRepository;
-import com.spring.project3rd.service.EmailService;
+import com.spring.project3rd.service.*;
 import com.spring.project3rd.domain.language.*;
 import com.spring.project3rd.domain.user.*;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
-import com.spring.project3rd.service.LanguageService;
-import com.spring.project3rd.service.UploadFileService;
-import com.spring.project3rd.service.UserService;
 import io.jsonwebtoken.Claims;
-import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,11 +47,16 @@ public class UserController {
     private final LanguageService languageService;
     private final EmailService emailService;
 
+
+    private final BoardFreeService boardFreeService;
+    private final BoardCommunityService boardCommunityService;
+
+
     @Autowired
     public UserController(UserService userService, UserRepository userRepository,
                           UploadFileService uploadFileService, JwtTokenizer jwtTokenizer,
                           LanguageRepository languageRepository, LanguageService languageService,
-                          EmailService emailService) {
+                          EmailService emailService, BoardFreeService boardFreeService, BoardCommunityService boardCommunityService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.uploadFileService = uploadFileService;
@@ -63,6 +64,8 @@ public class UserController {
         this.languageRepository = languageRepository;
         this.languageService = languageService;
         this.emailService = emailService;
+        this.boardFreeService = boardFreeService;
+        this.boardCommunityService = boardCommunityService;
     }
 
     @PostMapping("login")
@@ -172,7 +175,6 @@ public class UserController {
         return new Response("join","회원가입 성공");
     }
 
-    //
     @PostMapping(value="/join/profile", consumes = {"multipart/form-data"})
     public String uploadProfile(@RequestParam("img") MultipartFile file){
         String url = "";
@@ -348,13 +350,28 @@ public class UserController {
         return view;
     }
 
+    @GetMapping("mypage/content")
+    public ModelAndView myPageUpdate(@RequestParam String menu, @CookieValue(value = "accessToken", required = false) String accessToken){
+        ModelAndView view = new ModelAndView();
 
+        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+        String id=claims.get("id",String.class);
+        User user = userRepository.findById(id).orElse(null);
+        view.addObject("user",user);
 
+        if(menu.equals("update")){
+            view.setViewName("mypage_update");
+        }else if(menu.equals("like-block")){
+            view.setViewName("mypage_like_block");
+        }else if(menu.equals("board-free")){
+            view.setViewName("mypage_board_free");
+        }else if(menu.equals("board-community")){
+            view.setViewName("mypage_board_community");
+        }else if(menu.equals("resign")){
+            view.setViewName("mypage_resign");
+        }
 
-
-
-
-
-
+        return view;
+    }
 
 }

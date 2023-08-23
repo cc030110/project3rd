@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
@@ -19,27 +19,45 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
-    <div id="sidebar">
-        <div id="user-info">
-            <h1>MY PAGE</h1>
+        <div id="sidebar">
+            <div class="my-info">
+                <h2>MY PAGE</h2>
+                <div class="profile-img">
+                    <c:choose>
+                        <c:when test="${user.profileImg ne null}">
+                            <img src="${user.profileImg}" alt=""/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="https://ucarecdn.com/1e359c2a-7124-4da9-9cd9-be5fe9e8c1f0/" alt=""/>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+            <nav>
+                <ul id="menu">
+                    <li id="update">정보 조회/수정</li>
+                    <li id="like-block">즐겨찾기/차단 관리</li>
+                    <li id="board">내 게시글 조회
+                        <ul id="board-sub">
+                            <li id="board-free">자유 게시판</li>
+                            <li id="board-community">모임 게시판</li>
+                        </ul>
+                    </li>
+                    <li id="resign">탈퇴</li>
+                </ul>
+            </nav>
         </div>
-        <ul id="menu">
-            <li><a href="#">내 정보수정</a></li>
-            <li><a href="user_my_friend.jsp">친구 관리</a></li>
-            <li><a href="#">내가 쓴 자유글</a></li>
-            <li><a href="#">내가 쓴 모집글</a></li>
-            <li><a href="#">모임 정보</a></li>
-            <li><a href="#">탈퇴</a></li>
-        </ul>
-    </div>
-    <div id="content">
-        <h1>내 정보 수정</h1>
-        <p>내용</p>
-    </div>
-    </div>
-    <c:import url="footer.jsp"/>
-</div>
+        <div class="content-container">
+            <h2 id="selected-menu">정보 수정</h2>
 
+            <div id="content" class="update">
+
+            </div>
+        </div>
+    </div>
+</div>
+<c:import url="footer.jsp"/>
+</div>
 <script src="/script/mypage.js"></script>
 </body>
 </html>
