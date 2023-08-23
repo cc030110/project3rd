@@ -26,7 +26,6 @@ a,a:active,a:visited{
 /* header */
 .header{
     grid-area: header;
-    /* background-color: bisque;  확인용*/
     display: flex;
     justify-content:flex-start;
     align-items: center;
@@ -44,7 +43,6 @@ a,a:active,a:visited{
 /* footer */
 .footer{
     grid-area: footer;
-    /*background-color:bisque;  확인용*/
     background:url(https://ucarecdn.com/3c76a351-7e53-4b36-946f-9ae5e2b4b3a1/);
     background-size:cover;
 }
@@ -67,8 +65,8 @@ a,a:active,a:visited{
 }
 
 .login a:hover{
-    color: brown;
-    border-bottom: 2px solid salmon;
+    color:#48A56F;
+    border-bottom: 2px solid #48A56F;
 }
 
 .join{
@@ -76,8 +74,8 @@ a,a:active,a:visited{
 }
 
 .join a:hover{
-    color: brown;
-    border-bottom: 2px solid salmon;
+    color:#48A56F;
+    border-bottom:#48A56F;
 }
 
 .lang-select{
@@ -90,8 +88,8 @@ a,a:active,a:visited{
 }
 
 .header-menu a:hover{
-    color: brown;
-    border-bottom: 2px solid salmon;
+    color:#48A56F;
+    border-bottom:#48A56F;
 }
 
 select#locales{
