@@ -43,9 +43,10 @@
                     <select id="search-select">
                         <option value="title" selected><spring:message code="board_community_main.select1"/></option>
                         <option value="author"><spring:message code="board_community_main.select2"/></option>
+                        <option value="platform"><spring:message code="board_community_main.select3"/></option>
                     </select>
                     <input type="text" id="search-input" name="search-input">
-                    <input type="button" id="search-btn" onclick="searchBoardCommunity(${boardList.number+1})" value=<s pring:message code="board_community_main.search"/>>
+                    <input type="button" id="search-btn" onclick="searchBoardCommunity(${boardList.number+1})" value=<spring:message code="board_community_main.search"/>>
                 </div>
 
                 <div class="write_btn">

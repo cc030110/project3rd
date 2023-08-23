@@ -65,6 +65,7 @@ public class BoardCommunityController{
     public ModelAndView showList(@PathVariable("page") int page,
                                  @RequestParam(required = false) String title,
                                  @RequestParam(required = false) String author,
+                                 @RequestParam(required = false) String platformName,
                                  @PageableDefault(size=5, sort="boardNo", direction = Sort.Direction.DESC) Pageable pageable,
                                  @CookieValue(value="accessToken", required = false) String accessToken){
 
@@ -114,6 +115,12 @@ public class BoardCommunityController{
                 getBoardList=boardCommunityRepository.findByNameContaining(author,pageable.withPage(page-1));
             }else{
                 getBoardList=boardCommunityRepository.findByNameContainingAndIdNotIn(author, excludeIds, pageable.withPage(page-1));
+            }
+        }else if(platformName != null && !platformName.isEmpty()){
+            if(excludeIds.isEmpty()){
+                getBoardList=boardCommunityRepository.findByPlatformNameContaining(platformName, pageable.withPage(page-1));
+            }else{
+                getBoardList=boardCommunityRepository.findByPlatformNameContainingAndIdNotIn(platformName,excludeIds,pageable.withPage(page-1));
             }
         }else{ // 검색을 하지 않을 경우(ex>초기화면)
             if(excludeIds.isEmpty()){

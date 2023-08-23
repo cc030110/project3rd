@@ -1,30 +1,146 @@
 /* your-style-file.css */
 
 /* Center align content within the .main container */
+body{
+    width:100%;
+    padding:0;
+    margin:0;
+}
+
 .main {
+    width:100%;
     display: flex;
+    flex-direction:column;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Adjust this for desired centering effect */
+    margin: 100px auto;
+    padding: 0 20px;
+    /*height: 100vh;  Adjust this for desired centering effect */
 }
 
-/* Style for the board information container */
-#board-info {
-    max-width: 600px; /* Adjust this for desired width */
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    text-align: left;
+/* 버튼 라인 */
+.first-line{
+    display:flex;
+    justify-content:space-between;
+    width:1200px;
+    margin-bottom:30px;
 }
 
-/* Style for buttons in the btn-group */
-.btn-group {
-    margin-top: 10px;
+.btn-group{
+    margin-right:0;
 }
 
-#update-btn,
+#modify-btn,#back-btn,#delete-btn {
+    width:100px;
+    height:40px;
+    border:none;
+    border-radius:10px;
+    font-size:0.8rem;
+    font-weight:900;
+}
+
+.back-btn{
+    margin-left:0;
+}
+
+#modify-btn, #back-btn{
+    background-color:#2C875F;
+    color:white;
+}
+
+#delete-btn{
+    background-color: #CCCCCC;
+}
+
+#modify-btn:hover,#back-btn:hover{
+    cursor:pointer;
+    background-color:#48A56F;
+}
+
+#delete-btn:hover{
+    cursor:pointer;
+    background-color:#EEEEEC;
+}
+
+/* 제목 */
+.second-line{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width:1200px;
+    height:50px;
+    border-radius:20px 20px 0 0;
+    border-bottom: 3px solid white;
+    padding:0 20px;
+    background-color:#2C875F;
+    color:white;
+}
+
+/* 작성자, 조회수 , 내용 */
+.third-line{
+    display:flex;
+    justify-content:space-between;
+    width:1200px;
+    height:auto;
+    border-bottom:3px solid white;
+    padding:20px;
+    background-color:#F0F0EF;
+    flex-wrap:wrap;
+}
+
+.creator{
+    margin-right:0;
+}
+
+.etc{
+    margin-left:0;
+}
+
+/* 내용 */
+.contents-line{
+    width:1200px;
+    height:auto;
+    padding:20px;
+    background-color:#F0F0EF;
+    border-bottom: 3px solid white;
+}
+
+#contents{
+    width:1200px;
+    height:400px;
+    resize:none;
+    border:none;
+    font-size:1rem;
+    font-weight:800;
+    background-color:#F0F0EF;
+}
+
+/* 이미지 표시*/
+div.img-box{
+    display:flex;
+    justify-content:space-around;
+    width:1200px;
+    height:auto;
+    padding:20px;
+    border-bottom:3px solid white;
+    background-color:#F0F0EF;
+}
+div.img-box>img{
+    width:300px;
+    height:200px;
+}
+
+div.last-line{
+    width:1200px;
+    height:auto;
+    padding:20px;
+    border-radius: 0 0 20px 20px;
+    background-color:#2C875F;
+}
+
+
+
+/*#update-btn,
 #delete-btn {
     padding: 5px 10px;
     margin-right: 10px;
@@ -40,7 +156,7 @@
     background-color: #0056b3;
 }
 
-/* Style for images in the img-box */
+!* Style for images in the img-box *!
 .img-box {
     display: flex;
     justify-content: flex-start;
@@ -50,16 +166,16 @@
 }
 
 .img-box img {
-    max-width: calc(33.33% - 10px); /* For 3 images per row */
+    max-width: calc(33.33% - 10px); !* For 3 images per row *!
     max-height: 150px;
     margin: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-/* Style for the "not-exist" message */
+!* Style for the "not-exist" message *!
 #not-exist {
     text-align: center;
     font-size: 18px;
     color: #f00;
-}
+}*/

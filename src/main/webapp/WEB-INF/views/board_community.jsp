@@ -21,7 +21,6 @@
             </c:when>
             <c:otherwise>
                 <input type="hidden" id="board_num_hidden" value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
-
                     <div class="first_line">
                         <c:if test="${board.id==id}">
                         <div class="btns">
@@ -56,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="contents_line">
+                <div class="contents-line">
                     <textarea id="contents" readonly>${board.contents}</textarea>
                 </div>
 

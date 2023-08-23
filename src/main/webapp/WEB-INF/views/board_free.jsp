@@ -14,28 +14,50 @@
             <c:when test="${board eq null}">
                 <div id="not-exist">존재하지 않는 게시글입니다.</div>
             </c:when>
+
             <c:otherwise>
-                <div id="board-info">
-                    <div>게시글 번호 : ${board.boardNo}</div>
-                    <div>작성자 : ${author}</div>
-                    <div>제목 : ${board.title}</div>
+                <div class="first-line">
                     <c:if test="${not empty id && id eq board.id}">
                         <div class="btn-group">
-                            <a href="/board/free/${board.boardNo}/update" id="update-btn">수정</a>
+                            <a href="/board/free/${board.boardNo}/update" id="update-btn">
+                                <input type="button" id="modify-btn" value="수정"/>
+                            </a>
                             <input type="button" id="delete-btn" onclick="deleteBoard(${board.boardNo})" value="삭제">
                         </div>
                     </c:if>
-                    <div>내용 : ${board.contents}</div>
-                    <div>작성일 : ${board.createdAt}</div>
-                    <div>조회수 : ${board.views}</div>
-                    <c:if test="${imgList ne null}">
-                        <div class="img-box">
-                            <c:forEach items="${imgList}" var="imgs" varStatus="vs">
-                                <img src="${imgs.img}">
-                            </c:forEach>
-                        </div>
-                    </c:if>
+
+                    <div class="back_btn">
+                        <input type="button" id="back-btn" value="뒤로가기">
+                    </div>
                 </div>
+
+                <div class="second-line">
+                    <div class="title">제목 : ${board.title}</div>
+                </div>
+
+                <div class="third-line">
+                    <div class="creator">
+                        작성자 : ${board.name}
+                    </div>
+
+                    <div class="etc">
+                        <span>조회수 : ${board.views}</span> | <span>작성일 : ${board.createdAt}</span>
+                    </div>
+                </div>
+
+                <div class="contents-line">
+                    <textarea id="contents" readonly>${board.contents}</textarea>
+                </div>
+
+                <c:if test="${imgList ne null}">
+                    <div class="img-box">
+                        <c:forEach items="${imgList}" var="imgs" varStatus="vs">
+                            <img src="${imgs.img}">
+                        </c:forEach>
+                    </div>
+                </c:if>
+
+                <div class="last-line"></div>
             </c:otherwise>
         </c:choose>
     </div>
