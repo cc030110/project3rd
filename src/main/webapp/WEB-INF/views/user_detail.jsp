@@ -11,7 +11,6 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
-        <spring:message code="user_join.joinBtn"/>
         <div class="user-profile">
             <img src="${user.profileImg}" class="profile-img">
             <div class="user-info">

@@ -14,6 +14,7 @@
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/mypage.css">
+    <link rel="stylesheet" href="/css/mypage_update.css">
 </head>
 <body>
 <div class="wrap">
@@ -48,9 +49,8 @@
             </nav>
         </div>
         <div class="content-container">
-            <h2 id="selected-menu">정보 수정</h2>
-
-            <div id="content" class="update">
+            <h2 id="selected-menu" class="update">정보 수정</h2>
+            <div id="content">
 
             </div>
         </div>

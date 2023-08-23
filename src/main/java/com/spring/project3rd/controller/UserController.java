@@ -366,21 +366,36 @@ public class UserController {
     public ModelAndView myPageUpdate(@RequestParam String menu, @CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView();
 
+        if(accessToken==null){
+            return view;
+        }
+
         Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
         String id=claims.get("id",String.class);
         User user = userRepository.findById(id).orElse(null);
+
+        // 유저 정보 add
         view.addObject("user",user);
 
-        if(menu.equals("update")){
-            view.setViewName("mypage_update");
-        }else if(menu.equals("like-block")){
-            view.setViewName("mypage_like_block");
-        }else if(menu.equals("board-free")){
-            view.setViewName("mypage_board_free");
-        }else if(menu.equals("board-community")){
-            view.setViewName("mypage_board_community");
-        }else if(menu.equals("resign")){
-            view.setViewName("mypage_resign");
+        switch (menu) {
+            case "update":
+                view.setViewName("mypage_update");
+                break;
+            case "like-block":
+                // 해당 유저의 like / block 리스트 add
+                view.setViewName("mypage_like_block");
+                break;
+            case "board-free":
+                // 해당 유저의 board_free 작성글 리스트 add
+                view.setViewName("mypage_board_free");
+                break;
+            case "board-community":
+                // 해당 유저의 board_community 작성글 리스트 add
+                view.setViewName("mypage_board_community");
+                break;
+            case "resign":
+                view.setViewName("mypage_resign");
+                break;
         }
 
         return view;

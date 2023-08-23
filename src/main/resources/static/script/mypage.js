@@ -1,4 +1,6 @@
-let menu = $('#selected-menu').attr('id');
+// 현재 선택된 menu의 id, 처음 로드 시 기본 update
+let menu = $('#selected-menu').attr('class');
+changeContent(menu);
 $(document).ready(function () {
     // 메뉴의 li 클릭 시
     $('#menu li').click(function () {
@@ -15,7 +17,8 @@ $(document).ready(function () {
                 $('#board-sub').slideUp('fast');
             }
             // 메뉴의 id 업데이트
-            menu = selectedId;
+            menu=selectedId;
+            console.log(menu);
             // content 내용 변화
             changeContent(menu);
         }
@@ -25,6 +28,7 @@ $(document).ready(function () {
     $('#board').click(function (event) {
         $('#board-sub').slideToggle('fast');
     });
+    // 내 게시글의 하위 메뉴 클릭시에는 토글 업 X
     $('#board-sub').click(function (event){
         event.stopPropagation();
     });
@@ -34,19 +38,17 @@ $(document).ready(function () {
 // 선택한 내용에 따라 정보 요청 후 content에 출력
 function changeContent(menu){
     let content = $('#content');
-    console.log("menu : "+menu);
+
     // content 비우기
     content.empty();
-    content.removeClass();
-    content.addClass(menu);
 
     $.ajax({
         'method' : 'GET',
-        'url' : '/user/mypage/update',
+        'url' : `/user/mypage/content?menu=${menu}`,
     }).done(function (response){
         content.html(response);
     }).fail(function (){
-        alert("불러오기 실패");
+        content.html("load view failed");
     });
 
 }
