@@ -9,7 +9,6 @@
 <head>
     <!-- CSS -->
     <link rel="stylesheet" href="/css/board_community_main.css">
-
     <title>GLOBALTIES</title>
 </head>
 
@@ -17,12 +16,10 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
         <div class="main">
-            <h1><spring:message code="board_community_main.logo"/></h1>
-            <br><br>
-
-            <div class="main_top">
-                <div class="contents_num">
-                    <span><spring:message code="board_community_main.total"/>
+            <h2><a href="/board/community/main/1"><spring:message code="board_community_main.logo"/></a></h2>
+            <div class="content-row">
+                <div>
+                <span><spring:message code="board_community_main.total"/>
                         ${boardList.totalElements}
                         <spring:message code="board_community_main.unit"/>
                     </span>
@@ -38,23 +35,24 @@
                         /${boardList.totalPages}]
                     </span>
                 </div>
-
-                <div class="search-box">
-                    <select id="search-select">
-                        <option value="title" selected><spring:message code="board_community_main.select1"/></option>
-                        <option value="author"><spring:message code="board_community_main.select2"/></option>
-                    </select>
-                    <input type="text" id="search-input" name="search-input">
-                    <input type="button" id="search-btn" onclick="searchBoardCommunity(${boardList.number+1})" value=<s pring:message code="board_community_main.search"/>>
+                <div id="select-search-box">
+                    <div class="select-box">
+                        <select id="search-select">
+                            <option value="title" selected><spring:message code="board_community_main.select1"/></option>
+                            <option value="author"><spring:message code="board_community_main.select2"/></option>
+                        </select>
+                        <span class="select-arrow">
+                        <img src="https://ucarecdn.com/326e1541-5ce3-4908-836d-d735660c0300/" alt=""/>
+                    </span>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" id="search-input" name="search-input">
+                        <input type="button" id="search-btn" onclick="searchBoardCommunity(${boardList.number+1})" value=<spring:message
+                                code="board_community_main.search"/>>
+                    </div>
                 </div>
-
-                <div class="write_btn">
-                    <a href="/board/community/write">
-                        <button><spring:message code="board_community_main.write"/></button>
-                    </a>
-                </div>
-
             </div>
+            <div class="list">
             <c:if test="${not empty boardList.content}">
                 <c:forEach items="${boardList.content}" var="board" varStatus="vs">
                         <div class="list_top">
@@ -88,7 +86,12 @@
 
                 </c:forEach>
             </c:if>
-
+            </div>
+            <div class="write">
+                <a id="write-btn" href="/board/community/write">
+                    <spring:message code="board_community_main.write"/>
+                </a>
+            </div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <c:if test="${boardList.number > 4}">

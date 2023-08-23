@@ -82,8 +82,8 @@
             </c:if>
             </tbody>
         </table>
-        <div>
-            <a href="/board/free/upload" id="upload-link">
+        <div class="write">
+            <a href="/board/free/upload" id="write-btn">
                 <spring:message code="board_free_list.write"/>
             </a>
         </div>

@@ -163,4 +163,29 @@ select::-ms-expand {
     color: white;
     border-radius: 4px;
     width: 50px;
+    cursor: pointer;
+}
+
+.write{
+    width: 100%;
+    text-align: right;
+    white-space: nowrap;
+}
+
+#write-btn{
+    display: inline-block;
+    border: 1px solid black;
+    background-color: #257954;
+    color: white;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+#write-btn>a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
 }
