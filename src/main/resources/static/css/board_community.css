@@ -31,11 +31,6 @@ div.btns>input{
     font-weight:900;
 }
 
-div.btns>input:hover{
-    cursor:pointer;
-    border:1px solid black;
-}
-
 div.btns:first-child(2){
     margin-right:0;
 }
@@ -44,12 +39,24 @@ div.btns:nth-child(2){
     margin-left:0;
 }
 
-div.btns>#modify_btn{
-    background-color:#007bff;
+div.btns>#modify_btn,#back_btn{
+    background-color:#2C875F;
     color:white;
 }
 
 div.btns>#delete_btn{
+    background-color: #CCCCCC;
+}
+
+div.btns>input:hover{
+    cursor:pointer;
+}
+
+div.btns>#modify_btn:hover,#back_btn:hover{
+    background-color:#48A56F;
+}
+
+div.btns>#delete_btn:hover{
     background-color:#EEEEEC;
 }
 
@@ -63,7 +70,8 @@ div.second_line{
     border-radius:20px 20px 0 0;
     border-bottom: 3px solid white;
     padding:0 20px;
-    background-color:#F0F0EF;
+    background-color:#2C875F;
+    color:white;
 }
 
 div.main_info1:first-child(2){
@@ -145,7 +153,8 @@ div.participants_line{
     width:1200px;
     height:50px;    /* 추후에 auto로 바꿔야함 */
     padding:20px;
-    background-color:#F0F0EF;
+    background-color:#2C875F;
+    color:white;
     border-radius:0 0 20px 20px;
 }
 

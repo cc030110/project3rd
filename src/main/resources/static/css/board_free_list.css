@@ -19,7 +19,8 @@ div.main table {
 }
 
 div.main thead {
-    background-color: silver;
+    /*background-color: silver;*/
+    background-color: #2C875F
 }
 
 div.main th,
