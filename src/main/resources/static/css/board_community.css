@@ -1,10 +1,152 @@
-li>img{
-    width:150px;
-    height:150px;
+body{
+    width:100%;
+    padding:0;
+    margin:0;
 }
 
-/*
-.img-box>img{
-    width:
-    height:
-}*/
+div.main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 세로 가운데 정렬 */
+    align-items: center; /* 가로 가운데 정렬 */
+    margin: 100px auto;
+    padding: 0 20px;
+}
+
+/*수정,삭제,뒤로가기 버튼*/
+div.first_line{
+    display:flex;
+    justify-content: space-between;
+    width:1200px;
+    margin-bottom:30px;
+}
+
+div.btns>input{
+    width:100px;
+    height:40px;
+    border:none;
+    border-radius:10px;
+    font-size:0.8rem;
+    font-weight:900;
+}
+
+div.btns>input:hover{
+    cursor:pointer;
+    border:1px solid black;
+}
+
+div.btns:first-child(2){
+    margin-right:0;
+}
+
+div.btns:nth-child(2){
+    margin-left:0;
+}
+
+div.btns>#modify_btn{
+    background-color:#007bff;
+    color:white;
+}
+
+div.btns>#delete_btn{
+    background-color:#EEEEEC;
+}
+
+/* 제목,작성자,조회수*/
+div.second_line{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    width:1200px;
+    height:50px;
+    border-radius:20px 20px 0 0;
+    border-bottom: 3px solid white;
+    padding:0 20px;
+    background-color:#F0F0EF;
+}
+
+div.main_info1:first-child(2){
+    margin-right:0;
+}
+
+div.main_info1:nth-child(2){
+    margin-left:0;
+}
+
+/* 플랫폼, 모집기간, 참여자 수*/
+div.third_line{
+    display:flex;
+    justify-content:flex-start;
+    width:1200px;
+    height:auto;
+    border-bottom:3px solid white;
+    padding:20px;
+    background-color:#F0F0EF;
+    flex-wrap:wrap;
+}
+
+div.third_line>img{
+    width:150px;
+    height:150px;
+    margin-right:20px;
+}
+
+div.third_line_text{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+#platform,
+#period,
+#participants {
+    width:80%; /* 각각의 p 요소가 한 줄을 차지하도록 */
+    text-align:left; /* 왼쪽 정렬 */
+    margin:10px 0; /* 위아래 여백 설정 */
+}
+
+/* 내용 */
+div.contents_line{
+    width:1200px;
+    height:auto;
+    padding:20px;
+    background-color:#F0F0EF;
+    border-bottom: 3px solid white;
+}
+
+textarea#contents{
+    width:1200px;
+    height:400px;
+    resize:none;
+    border:none;
+    font-size:1rem;
+    font-weight:800;
+    background-color:#F0F0EF;
+}
+
+/* 이미지 표시*/
+div.img-box{
+    display:flex;
+    justify-content:space-around;
+    width:1200px;
+    height:auto;
+    padding:20px;
+    border-bottom:3px solid white;
+    background-color:#F0F0EF;
+}
+div.img-box>img{
+    width:300px;
+    height:200px;
+}
+
+/* 참가자 표시 */
+div.participants_line{
+    width:1200px;
+    height:50px;    /* 추후에 auto로 바꿔야함 */
+    padding:20px;
+    background-color:#F0F0EF;
+    border-radius:0 0 20px 20px;
+}
+
+

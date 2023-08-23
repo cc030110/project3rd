@@ -1,33 +1,92 @@
-/* board_community_write.css */
+body{
+    width:100%;
+    padding: 0;
+    margin:0;
+}
 
-/* Center align content within the .main container */
-.main {
+div.main {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto; /* Center the .main container */
-    width: 80%; /* Take up 80% of the screen width */
-    height: 100vh; /* Adjust this for desired centering effect */
+    flex-direction: column;
+    justify-content: center; /* 세로 가운데 정렬 */
+    align-items: center; /* 가로 가운데 정렬 */
+    width: 1200px;
+    height:auto;
+    margin: 100px auto;
+    padding: 50px 20px;
+    border-radius:20px;
+    background-color:#F0F0EF;
 }
 
 /* Style for form elements */
-li {
-    margin-bottom: 15px;
-    text-align: left;
-    width: 100%;
-}
-
-label {
+#label_platform{
+    width:80%;
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-input[type="text"],
+#label_title,#label_contents {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#label_participants, #label_deadline{
+    display:inline;
+    font-weight:bold;
+    margin-right:10px;
+}
+
+div.platform{
+    display:flex;
+    justify-content:space-between;
+    width:80%;
+    margin-bottom:30px;
+}
+
+div.input_title{
+    width:80%;
+    margin-bottom:30px;
+
+}
+
+div.input_title>input#title{
+    width:100%;
+    height:40px;
+    border: 1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+}
+
+div.input_contents{
+    width:80%;
+    margin-bottom:30px;
+}
+
+div.input_contents>textarea#contents{
+    width:100%;
+    height:350px;
+    border: 1px solid #ccc;
+    border-radius:5px;
+    box-sizing:border-box;
+    resize:none;
+}
+
+div.input_etc{
+    display:flex;
+    justify-content: space-between;
+    width:80%;
+    height:auto;
+    margin-bottom:30px;
+}
+
+div.input_participants, div.input_deadline{
+    width:300px;
+}
+
 input[type="number"],
-input[type="date"],
-textarea {
-    width: 100%;
+input[type="date"]{
+    width: 65%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -35,56 +94,69 @@ textarea {
 }
 
 /* Style for the file input */
+#file_btn{
+    font-weight:bold;
+    color:#4F45BF;
+}
+
+#file_btn:hover{
+    cursor:pointer;
+}
+
 input[type="file"] {
     display: none; /* Hide the default file input */
 }
 
 .img_box {
+    width:80%;
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
-    justify-content: center;
     margin-top: 10px;
 }
 
 .img_box img {
-    max-width: 150px;
+    max-width: 200px;
     max-height: 150px;
     margin: 5px;
 }
 
-/* Style for the platform inputs and labels */
-.platform ul {
-    display: flex;
-    flex-wrap: wrap;
-    list-style: none;
-    padding: 0;
-}
-
-.platform li {
-    flex: 0 0 50%; /* Arrange inputs and labels in two columns */
-}
-
 /* Style for the buttons */
 input[type="button"] {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
+    width:100px;
+    height:40px;
+    border:none;
+    border-radius:10px;
+    font-size:0.8rem;
+    font-weight:900;
+}
+
+div.btns{
+    margin-top:50px;
+}
+
+#write_btn{
+    background-color:#007bff;
+    color:white;
+    margin-right:20px;
 }
 
 #back_btn {
-    background-color: #ccc;
+    background-color:#EEEEEC;
     color: black;
+    border:1px solid gray;
 }
 
 /* Adjust button styles on hover */
 input[type="button"]:hover {
-    background-color: #0056b3;
+    cursor : pointer;
 }
 
-#back_btn:hover {
-    background-color: #bfbfbf;
+#write_btn:hover{
+    background-color: #4B60C5;
 }
+
+#back_btn:hover{
+    background-color: #BDBEC2;
+}
+

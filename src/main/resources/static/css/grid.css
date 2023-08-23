@@ -26,11 +26,13 @@ a,a:active,a:visited{
 /* header */
 .header{
     grid-area: header;
-    background-color: bisque;  /*확인용*/
+    /* background-color: bisque;  확인용*/
     display: flex;
     justify-content:flex-start;
     align-items: center;
     text-align: center;
+    background:url(https://ucarecdn.com/3c76a351-7e53-4b36-946f-9ae5e2b4b3a1/);
+    background-size:cover;
 }
 
 /* main */
@@ -42,7 +44,9 @@ a,a:active,a:visited{
 /* footer */
 .footer{
     grid-area: footer;
-    background-color:bisque;  /*확인용*/
+    /*background-color:bisque;  확인용*/
+    background:url(https://ucarecdn.com/3c76a351-7e53-4b36-946f-9ae5e2b4b3a1/);
+    background-size:cover;
 }
 
 .logo{
