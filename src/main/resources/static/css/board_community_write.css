@@ -96,7 +96,7 @@ input[type="date"]{
 /* Style for the file input */
 #file_btn{
     font-weight:bold;
-    color:#4F45BF;
+    color:#2C875F;
 }
 
 #file_btn:hover{
@@ -136,7 +136,7 @@ div.btns{
 }
 
 #write_btn{
-    background-color:#007bff;
+    background-color:#2C875F;
     color:white;
     margin-right:20px;
 }
