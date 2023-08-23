@@ -20,63 +20,66 @@
                 <p>존재하지 않는 게시글입니다.</p>
             </c:when>
             <c:otherwise>
-                <input type="hidden" id="board_num_hidden"
-                       value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
-                <ul>
-                    <li>
-                        <p id="views"><spring:message code="board_community.views"/> : ${board.views}</p>
-                    </li>
+                <input type="hidden" id="board_num_hidden" value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
 
-                    <li>
-<%--                        <p id="platform"><spring:message code="board_community.platform"/> : ${board.platformName}</p>--%>
-                        <p id="platform"><spring:message code="board_community.platform"/></p>
-                        <img src="${platform.get(board.platformName)}" alt="이미지 업로드 실패">
-                    </li>
-
-                    <li>
-                        <p id="title"><spring:message code="board_community.title"/> : ${board.title}</p>
-                    </li>
-
-                    <li>
-                        <p id="creator"><spring:message code="board_community.author"/> : ${board.name}</p>
-                    </li>
-
-                    <li>
-                        <p id="content"><spring:message code="board_community.contents"/> : ${board.contents}</p>
-                    </li>
-
-                    <li>
-                        <p id="participants"><spring:message code="board_community.participants"/> : ${board.participantsNum}</p>
-                    </li>
-
-                    <li>
-                        <p id="deadline"><spring:message code="board_community.deadline"/> : ${board.deadline}</p>
-                    </li>
-
-                    <li>
-                        <p id="created_at">작성일 : ${board.createdAt}</p>
-                    </li>
-
-                    <c:if test="${imgList ne null}">
-                        <div class="img-box">
-                            <c:forEach items="${imgList}" var="imgs" varStatus="vs">
-                                <img src="${imgs.img}">
-                            </c:forEach>
-                        </div>
-                    </c:if>
-
-                    <li>
+                    <div class="first_line">
                         <c:if test="${board.id==id}">
+                        <div class="btns">
                             <input type="button" id="modify_btn" value="<spring:message code="board_community.modify"/>" onclick="moveToUpdate()">
                             <input type="button" id="delete_btn" value="<spring:message code="board_community.delete"/>" onclick="deleteBoard()">
+                        </div>
                         </c:if>
-                        <input type="button" id="back_btn" value="<spring:message code="board_community.back"/>" onclick="moveToMain()">
-                    </li>
-                </ul>
+
+                        <div class="btns">
+                            <input type="button" id="back_btn" value="<spring:message code="board_community.back"/>" onclick="moveToMain()">
+                        </div>
+                    </div>
+
+
+                <div class="second_line">
+                    <div class="main_info1 title">
+                        <p id="title">${board.title}</p>
+                    </div>
+
+                    <div class="main_info1 etc">
+                        <span id="creator"><spring:message code="board_community.author"/> : ${board.name} | </span>
+                        <span id="views"><spring:message code="board_community.views"/> : ${board.views}</span>
+                    </div>
+                </div>
+
+                <div class="third_line">
+                    <img src="${platform.get(board.platformName)}" alt="이미지 업로드 실패">
+                    <div class="third_line_text">
+                        <p id="platform"><spring:message code="board_community.platform"/> : ${board.platformName}</p>
+                        <p id="period"><spring:message code="board_community_main.period"/> : ${board.createdAt} ~ ${board.deadline}</p>
+                        <p id="participants"><spring:message code="board_community.participants"/> : ${board.participantsNum}</p>
+                    </div>
+                </div>
+
+                <div class="contents_line">
+                    <textarea id="contents" readonly>${board.contents}</textarea>
+                </div>
+
+                <c:if test="${imgList ne null}">
+                    <div class="img-box">
+                        <c:forEach items="${imgList}" var="imgs" varStatus="vs">
+                            <img src="${imgs.img}">
+                        </c:forEach>
+                    </div>
+                </c:if>
+
+                <div class="participants_line">
+                    <p>참가자</p>
+                </div>
+
             </c:otherwise>
         </c:choose>
-        <c:import url="footer.jsp"/>
     </div>
+    <c:import url="footer.jsp"/>
+</div>
+
+
+
 
     <script src="/script/board-community.js"></script>
 </body>

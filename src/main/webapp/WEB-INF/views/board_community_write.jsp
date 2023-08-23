@@ -17,88 +17,82 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
         <div class="main">
-            <ul>
-                <li>
-                    <label for="platform">
-                        <spring:message code="board.community_write.platform"/>
-                    </label>
+                <label for="platform" id="label_platform">
+                    <spring:message code="board.community_write.platform"/>
+                </label>
 
-                    <nav class="platform" id="platform">
-                        <ul>
-                            <li>
-                                <input type="radio" id="platform_1" name="platform" value="Offline" checked>
-                                <label for="platform_1">Off-line</label>
+                <div class="platform" id="platform">
+                    <input type="radio" id="platform_1" name="platform" value="Offline" checked>
+                    <label for="platform_1">Off-line</label>
 
-                                <input type="radio" id="platform_2" name="platform" value="Discord">
-                                <label for="platform_2">Discord</label>
+                    <input type="radio" id="platform_2" name="platform" value="Discord">
+                    <label for="platform_2">Discord</label>
 
-                                <input type="radio" id="platform_3" name="platform" value="Google Meet">
-                                <label for="platform_3">Google Meet</label>
+                    <input type="radio" id="platform_3" name="platform" value="Google Meet">
+                    <label for="platform_3">Google Meet</label>
 
-                                <input type="radio" id="platform_4" name="platform" value="Line">
-                                <label for="platform_4">Line</label>
-                            </li>
+                    <input type="radio" id="platform_4" name="platform" value="Line">
+                    <label for="platform_4">Line</label>
 
-                            <li>
-                                <input type="radio" id="platform_5" name="platform" value="Microsoft Teams">
-                                <label for="platform_5">Microsoft Teams</label>
+                    <input type="radio" id="platform_5" name="platform" value="Microsoft Teams">
+                    <label for="platform_5">Microsoft Teams</label>
 
-                                <input type="radio" id="platform_6" name="platform" value="Telegram">
-                                <label for="platform_6">Telegram</label>
+                    <input type="radio" id="platform_6" name="platform" value="Telegram">
+                    <label for="platform_6">Telegram</label>
 
-                                <input type="radio" id="platform_7" name="platform" value="WebX">
-                                <label for="platform_7">WebX</label>
+                    <input type="radio" id="platform_7" name="platform" value="WebX">
+                    <label for="platform_7">WebX</label>
 
-                                <input type="radio" id="platform_8" name="platform" value="Zoom">
-                                <label for="platform_8">Zoom</label>
-                            </li>
-                        </ul>
-                    </nav>
-                </li>
+                    <input type="radio" id="platform_8" name="platform" value="Zoom">
+                    <label for="platform_8">Zoom</label>
+                </div>
 
-                <li>
-                    <label for="title">
+                <div class="input_title" >
+                    <label for="title" id="label_title">
                         <spring:message code="board_community_write.title"/>
                     </label>
                     <input type="text" id="title" name="title">
-                </li>
+                </div>
 
-                <li>
-                    <label for="contents">
+                <div class="input_contents">
+                    <label for="contents" id="label_contents">
                         <spring:message code="board_community_write.content"/>
                     </label>
                     <textarea id="contents" name="contents"></textarea>
-                </li>
+                </div>
 
-                <li>
-                    <label for="participants">
-                        <spring:message code="board_community_write.participants"/>
-                    </label>
-                    <input type="number" id="participants" name="participants" placeholder="숫자로 입력하세요.">
-                </li>
-
-                <li>
-                    <label for="deadline">
-                        <spring:message code="board_community_write.deadline"/>
-                    </label>
-                    <input type="date" id="deadline" name="deadline">
-                </li>
-
-                <li>
-                    <label for="file">
-                        <spring:message code="board_community_write.file"/>
-                    </label>
-                    <input type="file" id="file" name="file" accept="image/png, image/jpg, image/jpeg, image.gif" multiple>
-                    <div class="img_box">
-
+                <div class="input_etc">
+                    <div class="input_participants">
+                        <label for="participants" id="label_participants">
+                            <spring:message code="board_community_write.participants"/>
+                        </label>
+                        <input type="number" id="participants" name="participants" placeholder=<spring:message code="board_community_write.explain"/>>
                     </div>
-                </li>
 
-                <li>
+                    <div class="input_deadline">
+                        <label for="deadline" id="label_deadline">
+                            <spring:message code="board_community_write.deadline"/>
+                        </label>
+                        <input type="date" id="deadline" name="deadline">
+                    </div>
+
+                    <div class="input_img">
+                        <label for="file" id="file_btn">
+                            <spring:message code="board_community_write.file"/>
+                        </label>
+
+                        <input type="file" id="file" name="file" accept="image/png, image/jpg, image/jpeg, image.gif" multiple>
+                    </div>
+                </div>
+
+                <div class="img_box">
+
+                </div>
+
+                <div class="btns">
                     <input type="button" id="write_btn" value=<spring:message code="board_community_write.submit"/>>
                     <input type="button" id="back_btn" value=<spring:message code="board_community_write.back"/>>
-                </li>
-            </ul>
+                </div>
         </div>
     <c:import url="footer.jsp"/>
 </div>
