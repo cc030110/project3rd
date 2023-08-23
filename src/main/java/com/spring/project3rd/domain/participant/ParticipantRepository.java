@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ParticipantRepository extends JpaRepository<Platform,String> {
     // user id를 이용하여 participant id 조회
-    public List<String> findParticipantIdByUserId(String userId);
+//    List<String> findParticipantIdByUserId(String userId);
 
 
 

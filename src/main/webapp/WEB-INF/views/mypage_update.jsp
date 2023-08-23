@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/mypage_update.css">
 </head>
 <body>
+<div class="update-container">
 <div class="update-profile-img">
     <c:choose>
         <c:when test="${user.profileImg ne null}">
@@ -29,20 +30,24 @@
            accept="image/png, image/jpg, image/jpeg, image.gif">
 </div>
 <div class="update-id">
-    <label for="user-id">아이디</label>
+    <label for="user-id">아이디 : </label>
     <input type="text" id="user-id" name="user-id" value="${user.id}" readonly>
 </div>
 <div class="update-name">
-    <label for="user-name">닉네임</label>
+    <label for="user-name">닉네임 : </label>
     <input type="text" id="user-name" name="user-name" value="${user.name}" readonly>
 </div>
 <div class="update-pwd">
-    <label for="new-pwd">새 비밀번호</label>
+    <label for="new-pwd">새 비밀번호 : </label>
     <input type="password" id="new-pwd" name="new-pwd">
 </div>
 <div class="update-pwd-chk">
-    <label for="new-pwd-chk">새 비밀번호 확인</label>
+    <label for="new-pwd-chk">새 비밀번호 확인 : </label>
     <input type="password" id="new-pwd-chk" name="new-pwd-chk">
+</div>
+    <div class="update-btn">
+        <input type="button" id="update-btn" name="update-btn" onclick="update()" value="수정">
+    </div>
 </div>
 </body>
 </html>
