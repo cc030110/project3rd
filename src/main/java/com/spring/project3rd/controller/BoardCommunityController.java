@@ -87,11 +87,11 @@ public class BoardCommunityController{
         if(accessToken != null){
             Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
             String id = claims.get("id",String.class);
-            String name = claims.get("name",String.class);
+//            String name = claims.get("name",String.class);
 
             // 로그인 중인 아이디 view에 저장
             view.addObject("id",id);
-            view.addObject("name",name);
+//            view.addObject("name",name);
 
             // id로 차단목록 가져오기
             List<String> blockList=blockService.blockList(id);
@@ -110,13 +110,10 @@ public class BoardCommunityController{
                 getBoardList=boardCommunityRepository.findByTitleContainingAndIdNotIn(title, excludeIds, pageable.withPage(page-1));
             }
         }else if(author != null && !author.isEmpty()){
-//            String id=userService.getUserIdByName(author);
-            String name=userService.getUserIdByName(author);
-
             if(excludeIds.isEmpty()){
-                getBoardList=boardCommunityRepository.findByNameContaining(name,pageable.withPage(page-1));
+                getBoardList=boardCommunityRepository.findByNameContaining(author,pageable.withPage(page-1));
             }else{
-                getBoardList=boardCommunityRepository.findByNameContainingAndIdNotIn(name, excludeIds, pageable.withPage(page-1));
+                getBoardList=boardCommunityRepository.findByNameContainingAndIdNotIn(author, excludeIds, pageable.withPage(page-1));
             }
         }else{ // 검색을 하지 않을 경우(ex>초기화면)
             if(excludeIds.isEmpty()){
@@ -128,22 +125,6 @@ public class BoardCommunityController{
 
         // 게시판 리스트 view에 추가(boardList는 Page<BoardCommunity> 타입, 페이지 정보도 포함)
         view.addObject("boardList", getBoardList);
-
-       /* List<BoardCommunity> boardCommunityList = getBoardList.getContent();
-        System.out.println("boardCommunityList : "+boardCommunityList);
-
-        // 가져온 리스트가 하나라도 있을 경우
-        if(!boardCommunityList.isEmpty()){
-            Map<String,String> authorList = new HashMap<>();
-            for(BoardCommunity boardCommunity : boardCommunityList){
-                String id = boardCommunity.getId();
-                String name=userService.getUserName(id);
-                authorList.put(id,name);
-            }
-
-            // 게시판 리스트 작성 유저의 name 리스트 view에 추가
-            view.addObject("authorList",authorList);
-        }*/
 
         // 플랫폼 객체 가져오기
         Map<String,String> platforms = new HashMap<>();
@@ -323,3 +304,20 @@ public class BoardCommunityController{
         return new Response("delete","success");
     }
 }
+
+// 게시판 리스트 view에 추가
+/* List<BoardCommunity> boardCommunityList = getBoardList.getContent();
+        System.out.println("boardCommunityList : "+boardCommunityList);
+
+        // 가져온 리스트가 하나라도 있을 경우
+        if(!boardCommunityList.isEmpty()){
+            Map<String,String> authorList = new HashMap<>();
+            for(BoardCommunity boardCommunity : boardCommunityList){
+                String id = boardCommunity.getId();
+                String name=userService.getUserName(id);
+                authorList.put(id,name);
+            }
+
+            // 게시판 리스트 작성 유저의 name 리스트 view에 추가
+            view.addObject("authorList",authorList);
+        }*/

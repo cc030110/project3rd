@@ -48,14 +48,14 @@ function moveToMain(){
 }
 
 // 게시글 검색
-function searchBoard(boardNo){
+function searchBoardCommunity(boardNo){
     let selectedValue = $("#search-select").val();
     let searchText = $("#search-input").val();
     if (searchText===""){
         alert("검색어가 없습니다.");
         return;
     }
-    let path = "/board/free/list/"+boardNo;
+    let path = "/board/community/main/"+boardNo;
     let query = "?" + selectedValue + "=" + searchText;
     window.location.href = path + query;
 }
