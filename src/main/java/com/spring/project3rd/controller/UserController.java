@@ -3,6 +3,7 @@ package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.email.BaseResponse;
 import com.spring.project3rd.domain.email.EmailCheckReq;
+import com.spring.project3rd.security.jwt.util.RefreshTokenRepository;
 import com.spring.project3rd.service.EmailService;
 import com.spring.project3rd.domain.language.*;
 import com.spring.project3rd.domain.user.*;
@@ -25,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
@@ -48,6 +50,7 @@ public class UserController {
     private final LanguageRepository languageRepository;
     private final LanguageService languageService;
     private final EmailService emailService;
+
     @Autowired
     public UserController(UserService userService, UserRepository userRepository,
                           UploadFileService uploadFileService, JwtTokenizer jwtTokenizer,
@@ -67,6 +70,9 @@ public class UserController {
 
         String id = loginDto.getId();
         String password = loginDto.getPassword();
+        System.out.println(id);
+        System.out.println(password);
+
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
@@ -215,6 +221,21 @@ public class UserController {
         String authCode = emailService.sendEmail(emailCheckReq.getEmail());
         return new BaseResponse<>(authCode);
     }
+    @PostMapping("/join/idCheck")
+    public ResponseEntity<String> idCheck(@RequestBody MemberLoginDto loginDto) {
+
+        String id = loginDto.getId();
+        Optional<User> optionalMyUser = userRepository.findById(id);
+        User myUser = optionalMyUser.orElse(null);
+
+        if (myUser != null) {
+            return ResponseEntity.badRequest().body("ID already exists"); // 예시: 이미 사용 중인 아이디
+        } else {
+            return ResponseEntity.ok("ID available"); // 예시: 사용 가능한 아이디
+        }
+    }
+
+
 
     /**유저 10인 정보 불러오기(프로필 게시판)**/
     @GetMapping("list/{page}")
@@ -244,24 +265,24 @@ public class UserController {
     }
 
     /** 개인 정보 불러오기(회원 수정에 쓸거)**/
-    @GetMapping("update")
-    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
-        ModelAndView view = new ModelAndView("user_my_page");
-
-        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-        String id = claims.get("id", String.class);
-//        String name = claims.get("name", String.class);
-        Optional<User> optionalUser = userRepository.findById(id);
-        User user = optionalUser.orElse(null);
-
-        if(user!=null){
-            UserResponseDto userResponseDto = new UserResponseDto(user);
-            view.addObject("user",userResponseDto);
-
-            return view;
-        }
-        return null;
-    }
+//    @GetMapping("update")
+//    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
+//        ModelAndView view = new ModelAndView("user_my_page");
+//
+//        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+//        String id = claims.get("id", String.class);
+////        String name = claims.get("name", String.class);
+//        Optional<User> optionalUser = userRepository.findById(id);
+//        User user = optionalUser.orElse(null);
+//
+//        if(user!=null){
+//            UserResponseDto userResponseDto = new UserResponseDto(user);
+//            view.addObject("user",userResponseDto);
+//
+//            return view;
+//        }
+//        return null;
+//    }
 
 
     /** 회원 정보 수정 **/
@@ -309,4 +330,31 @@ public class UserController {
 
         return response.toMap();
     }
+
+    /* 마이페이지 */
+    @GetMapping("mypage")
+    public ModelAndView myPageMain(@CookieValue(value = "accessToken", required = false) String accessToken){
+        ModelAndView view = new ModelAndView("user_my_page");
+        if(accessToken==null){
+            return new ModelAndView(new RedirectView("login"));
+        }else{
+            Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+            String id=claims.get("id",String.class);
+            User user = userRepository.findById(id).orElse(null);
+            if(user!=null){
+                view.addObject(user);
+            }
+        }
+        return view;
+    }
+
+
+
+
+
+
+
+
+
+
 }
