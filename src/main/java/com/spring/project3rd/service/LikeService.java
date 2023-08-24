@@ -1,7 +1,7 @@
 package com.spring.project3rd.service;
 
-import com.spring.project3rd.domain.like.Like;
-import com.spring.project3rd.domain.like.LikeRepository;
+import com.spring.project3rd.domain.userLike.UserLike;
+import com.spring.project3rd.domain.userLike.UserLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LikeService {
 
-    private final LikeRepository likeRepository;
+    private final UserLikeRepository likeRepository;
 
     @Transactional
-    public void likeCancel(Like like){
+    public void likeCancel(UserLike like){
         likeRepository.delete(like);
     }
 

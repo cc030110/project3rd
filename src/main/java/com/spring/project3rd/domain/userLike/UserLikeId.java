@@ -1,36 +1,37 @@
-package com.spring.project3rd.domain.block;
+package com.spring.project3rd.domain.userLike;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Embeddable
-public class BlockId implements Serializable{
+public class UserLikeId implements Serializable {
     @Column(length = 20)
     private String userId;
-
     @Column(length = 20)
-    private String blockId;
+    private String likeId;
 
     // 복합키의 경우 equals와 hashCode를 override 필요
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        BlockId blockId1 = (BlockId) obj;
-        return Objects.equals(userId, blockId1.userId) && Objects.equals(blockId, blockId1.blockId);
+        UserLikeId userLikeId = (UserLikeId) obj;
+        return Objects.equals(userId, userLikeId.userId) && Objects.equals(likeId, userLikeId.likeId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, blockId);
+        return Objects.hash(userId, likeId);
     }
 }

@@ -1,8 +1,7 @@
 package com.spring.project3rd.service;
 
-import com.spring.project3rd.domain.block.Block;
-import com.spring.project3rd.domain.block.BlockId;
-import com.spring.project3rd.domain.block.BlockRepository;
+import com.spring.project3rd.domain.userBlock.UserBlock;
+import com.spring.project3rd.domain.userBlock.UserBlockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,16 +12,16 @@ import java.util.List;
 @Service
 public class BlockService {
 
-    private final BlockRepository blockRepository;
+    private final UserBlockRepository userBlockRepository;
 
     @Transactional
-    public void unblock(Block block){
-        blockRepository.delete(block);
+    public void unblock(UserBlock block){
+        userBlockRepository.delete(block);
     }
 
     // 차단한 유저 리스트
     public List<String> blockList(String id){
-        List<String> blockedIds = blockRepository.findBlockIdsByUserId(id);
+        List<String> blockedIds = userBlockRepository.findBlockIdsByUserId(id);
         return blockedIds;
     }
 

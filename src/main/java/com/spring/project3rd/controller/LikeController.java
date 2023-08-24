@@ -1,9 +1,8 @@
 package com.spring.project3rd.controller;
 
-
-import com.spring.project3rd.domain.like.Like;
-import com.spring.project3rd.domain.like.LikeId;
-import com.spring.project3rd.domain.like.LikeRepository;
+import com.spring.project3rd.domain.userLike.UserLike;
+import com.spring.project3rd.domain.userLike.UserLikeId;
+import com.spring.project3rd.domain.userLike.UserLikeRepository;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.LikeService;
 import io.jsonwebtoken.Claims;
@@ -19,16 +18,18 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("user/like")
 public class LikeController {
-    private final LikeRepository likeRepository;
+    private final UserLikeRepository likeRepository;
     private final LikeService likeService;
     private final JwtTokenizer jwtTokenizer;
 
     // 즐겨찾기
-    @PostMapping("/")
-    public ResponseEntity<String> likeUser(@RequestBody LikeId ids){
+    @PostMapping("")
+    public ResponseEntity<String> likeUser(@RequestBody UserLikeId ids){
         String userID = ids.getUserId();
         String likeId = ids.getLikeId();
-        Like like = new Like(userID,likeId);
+        System.out.println("userId:"+userID);
+        System.out.println("likeId:"+likeId);
+        UserLike like = new UserLike(userID,likeId);
         try{
             likeRepository.save(like);
             return ResponseEntity.status(HttpStatus.OK).body("Like saved successfully.");
@@ -39,10 +40,10 @@ public class LikeController {
 
     // 즐겨찾기 취소
     @DeleteMapping("/cancel")
-    public ResponseEntity<String> likeCancelUser(@RequestBody LikeId ids){
+    public ResponseEntity<String> likeCancelUser(@RequestBody UserLikeId ids){
         String userID = ids.getUserId();
         String likeId = ids.getLikeId();
-        Like like = new Like(userID,likeId);
+        UserLike like = new UserLike(userID,likeId);
         try{
             likeService.likeCancel(like);
             return ResponseEntity.status(HttpStatus.OK).body("Like canceled successfully.");

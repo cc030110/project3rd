@@ -1,4 +1,4 @@
-package com.spring.project3rd.domain.like;
+package com.spring.project3rd.domain.userLike;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,13 +12,12 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "like")
-public class Like {
+@Table(name = "user_like")
+public class UserLike {
     @EmbeddedId
-    private LikeId likeId;
+    private UserLikeId likeIds;
 
-    public Like(String userId, String likeId){
-        this.likeId = new LikeId(userId,likeId);
+    public UserLike(String userId, String likeId){
+        this.likeIds = new UserLikeId(userId,likeId);
     }
-
 }

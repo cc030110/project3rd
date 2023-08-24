@@ -12,7 +12,14 @@
     <c:import url="header.jsp"/>
     <div class="main">
         <div class="user-profile">
-            <img src="${user.profileImg}" class="profile-img">
+            <c:choose>
+                <c:when test="${user.profileImg ne null}">
+                    <img class="profile-img" src="${user.profileImg}" alt=""/>
+                </c:when>
+                <c:otherwise>
+                    <img class="profile-img" src="https://ucarecdn.com/1e359c2a-7124-4da9-9cd9-be5fe9e8c1f0/" alt=""/>
+                </c:otherwise>
+            </c:choose>
             <div class="user-info">
                 <p class="user-info-item"><span class="label">Name:</span> ${user.name}</p>
                 <p class="user-info-item"><span class="label">Gender:</span> ${user.gender}</p>
@@ -23,12 +30,13 @@
         </div>
         <c:if test="${not empty myUser}">
             <div class="user-actions">
-                <button class="favorite-button">즐겨찾기</button>
-                <button class="report-button">신고하기</button>
+                <button class="favorite-button" onclick="likeUser(`${user.id}`,`${myUser.id}`)">즐겨찾기</button>
+                <button class="report-button" onclick="blockUser(`${user.id}`,`${myUser.id}`)">차단하기</button>
             </div>
         </c:if>
     </div>
+    <c:import url="footer.jsp"/>
 </div>
-<c:import url="footer.jsp"/>
+<script src="/script/user-detail.js"></script>
 </body>
 </html>

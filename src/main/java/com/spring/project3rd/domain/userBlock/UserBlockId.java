@@ -1,5 +1,4 @@
-package com.spring.project3rd.domain.like;
-
+package com.spring.project3rd.domain.userBlock;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,29 +10,29 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
-public class LikeId implements Serializable {
+public class UserBlockId implements Serializable {
     @Column(length = 20)
     private String userId;
+
     @Column(length = 20)
-    private String likeId;
+    private String blockId;
 
     // 복합키의 경우 equals와 hashCode를 override 필요
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        LikeId likeId1 = (LikeId) obj;
-        return Objects.equals(userId, likeId1.userId) && Objects.equals(likeId, likeId1.likeId);
+        UserBlockId userBlockId = (UserBlockId) obj;
+        return Objects.equals(userId, userBlockId.userId) && Objects.equals(blockId, userBlockId.blockId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, likeId);
+        return Objects.hash(userId, blockId);
     }
-
 }

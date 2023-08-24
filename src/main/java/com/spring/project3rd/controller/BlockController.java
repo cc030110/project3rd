@@ -1,8 +1,8 @@
 package com.spring.project3rd.controller;
 
-import com.spring.project3rd.domain.block.Block;
-import com.spring.project3rd.domain.block.BlockId;
-import com.spring.project3rd.domain.block.BlockRepository;
+import com.spring.project3rd.domain.userBlock.UserBlock;
+import com.spring.project3rd.domain.userBlock.UserBlockId;
+import com.spring.project3rd.domain.userBlock.UserBlockRepository;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BlockService;
 import io.jsonwebtoken.Claims;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +19,17 @@ import java.util.List;
 @RequestMapping("user")
 public class BlockController {
 
-    private final BlockRepository blockRepository;
+    private final UserBlockRepository blockRepository;
     private final BlockService blockService;
 
     private final JwtTokenizer jwtTokenizer;
 
     // 차단
     @PostMapping("/block")
-    public ResponseEntity<String> blockUser(@RequestBody BlockId ids){
+    public ResponseEntity<String> blockUser(@RequestBody UserBlockId ids){
         String userId = ids.getUserId();
         String blockId = ids.getBlockId();
-        Block block = new Block(userId,blockId);
+        UserBlock block = new UserBlock(userId,blockId);
         try {
             blockRepository.save(block);
             return ResponseEntity.status(HttpStatus.OK).body("Block saved successfully.");
@@ -41,10 +40,10 @@ public class BlockController {
 
     // 차단 해제
     @DeleteMapping("/unblock")
-    public ResponseEntity<String> unblockUser(@RequestBody BlockId ids){
+    public ResponseEntity<String> unblockUser(@RequestBody UserBlockId ids){
         String userId = ids.getUserId();
         String blockId = ids.getBlockId();
-        Block block = new Block(userId,blockId);
+        UserBlock block = new UserBlock(userId,blockId);
         try {
             blockService.unblock(block);
             return ResponseEntity.status(HttpStatus.OK).body("Block saved successfully.");

@@ -208,14 +208,7 @@ public class UserController {
         if (accessToken != null) {
             Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
             String myId = claims.get("id", String.class);
-            String myName = claims.get("name", String.class);
-            Optional<User> optionalMyUser = userRepository.findById(myId);
-            User myUser = optionalMyUser.orElse(null);
-
-            if (myUser != null) {
-                UserResponseDto myUserResponseDto = new UserResponseDto(myUser);
-                view.addObject("myUser", myUserResponseDto);
-            }
+            userRepository.findById(myId).ifPresent(myUser -> view.addObject("myUser", myUser));
         }
 
         return view;
@@ -366,6 +359,7 @@ public class UserController {
         return view;
     }
 
+    // 마이페이지 메뉴 내용 출력
     @GetMapping("mypage/content")
     public ModelAndView myPageUpdate(@RequestParam String menu, @CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView();
@@ -387,6 +381,8 @@ public class UserController {
                 break;
             case "like-block":
                 // 해당 유저의 like / block 리스트 추가
+                List<String> likeList = new ArrayList<>();
+                likeList = likeService.likeList(id);
                 view.setViewName("mypage_like_block");
                 break;
             case "board-free":
