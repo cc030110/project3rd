@@ -12,8 +12,17 @@
     text-align: center;
 }
 
+.my-info{
+    margin: 20px 0;
+}
+
+.my-info>h2{
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
 #menu li{
-    line-height: 35px;
+    line-height: 55px;
     cursor: pointer;
 }
 
@@ -21,10 +30,14 @@
     display: none;
 }
 
+#board-sub>li{
+    color: #BDBEC2;
+}
+
 .profile-img{
     width: 100px;
     height: 100px;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 .profile-img>img{
     width: 100%;

@@ -5,6 +5,7 @@ import com.spring.project3rd.domain.boardCommunity.BoardCommunity;
 import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.email.BaseResponse;
 import com.spring.project3rd.domain.email.EmailCheckReq;
+import com.spring.project3rd.domain.participant.Participant;
 import com.spring.project3rd.service.*;
 import com.spring.project3rd.domain.language.*;
 import com.spring.project3rd.domain.user.*;
@@ -53,12 +54,13 @@ public class UserController {
     private final BoardCommunityService boardCommunityService;
     private final BlockService blockService;
     private final LikeService likeService;
+    private final ParticipantService participantService;
 
     @Autowired
     public UserController(UserService userService, UserRepository userRepository,
                           UploadFileService uploadFileService, JwtTokenizer jwtTokenizer,
                           LanguageRepository languageRepository, LanguageService languageService,
-                          EmailService emailService, BoardFreeService boardFreeService, BoardCommunityService boardCommunityService, BlockService blockService, LikeService likeService) {
+                          EmailService emailService, BoardFreeService boardFreeService, BoardCommunityService boardCommunityService, BlockService blockService, LikeService likeService, ParticipantService participantService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.uploadFileService = uploadFileService;
@@ -70,6 +72,7 @@ public class UserController {
         this.boardCommunityService = boardCommunityService;
         this.blockService = blockService;
         this.likeService = likeService;
+        this.participantService = participantService;
     }
 
     // 로그인
@@ -410,6 +413,26 @@ public class UserController {
                 // 해당 유저의 board_community 작성글 리스트 추가
                 List<BoardCommunity> boardCommunityList = boardCommunityService.getBoardListById(id);
                 view.addObject("boardList", boardCommunityList);
+                // 해당 글에서 신청자 추가
+                if(!boardCommunityList.isEmpty()){
+                    // boardNo, 참가자
+                    Map<Integer,List<User>> participantUsers = new HashMap<>();
+                    for(BoardCommunity board : boardCommunityList){
+                        int boardNo = board.getBoardNo();
+                        // 신청한 참가자 목록
+                        List<Participant> participants = participantService.getListByBoardNoAndAccept(boardNo,0); // 신청자 : 0
+                        // 해당 참가자 목록으로 user 객체 리스트로 바꾸기
+                        List<User> users = new ArrayList<>();
+                        for(Participant pUser : participants){
+                            User usr = userRepository.findById(pUser.getParticipantId()).orElse(null);
+                            if(user!=null){
+                                users.add(usr);
+                            }
+                        }
+                        participantUsers.put(boardNo,users);
+                    }
+                    view.addObject("participantUsers",participantUsers);
+                }
                 view.setViewName("mypage_board_community");
                 break;
             case "resign":

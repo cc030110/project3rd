@@ -29,4 +29,11 @@ public class ParticipantService {
         return participantRepository.findByBoardNoAndParticipantId(boardNo,id);
     }
 
+
+    // 업데이트
+    @Transactional
+    public void acceptParticipant(ParticipantRequestDto dto){
+        Participant participant = participantRepository.findByBoardNoAndParticipantId(dto.getBoardNo(), dto.getParticipantId());
+        participant.update(dto);
+    }
 }

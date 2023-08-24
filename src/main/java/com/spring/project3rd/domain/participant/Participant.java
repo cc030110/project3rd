@@ -24,4 +24,8 @@ public class Participant {
         this.participantId = id;
         this.isAccept = 0;
     }
+
+    public void update(ParticipantRequestDto dto){
+        this.isAccept=dto.getIsAccept();
+    }
 }

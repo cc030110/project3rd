@@ -2,6 +2,7 @@ package com.spring.project3rd.controller;
 
 import com.spring.project3rd.domain.participant.Participant;
 import com.spring.project3rd.domain.participant.ParticipantRepository;
+import com.spring.project3rd.domain.participant.ParticipantRequestDto;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import com.spring.project3rd.service.BoardCommunityService;
@@ -44,6 +45,19 @@ public class ParticipantController {
         participantRepository.save(newParticipant);
 
         return new Response("success","신청되었습니다.");
+    }
+
+    // 참가 수락 혹은 거절
+    @PutMapping("/accept")
+    public Response acceptUser(@RequestBody ParticipantRequestDto requestDto){
+        participantService.acceptParticipant(requestDto);
+        String result = "";
+        if(requestDto.getIsAccept()==1){
+            result="수락";
+        }else{
+            result="거절";
+        }
+        return new Response("accept",result);
     }
 
 }

@@ -18,15 +18,15 @@ function updateForm() {
     });
     const intro = $('.fixed-textarea').val();
 
-    console.log("아나");
-    console.log(id);
-    console.log(password);
-    console.log(passwordChk);
-    console.log(liveCountry);
-    console.log(liveCity);
-    console.log(useLang);
-    console.log(needLang);
-    console.log(intro);
+    // console.log("아나");
+    // console.log(id);
+    // console.log(password);
+    // console.log(passwordChk);
+    // console.log(liveCountry);
+    // console.log(liveCity);
+    // console.log(useLang);
+    // console.log(needLang);
+    // console.log(intro);
 
     //
 // password 유효성 검사
@@ -80,9 +80,6 @@ function updateForm() {
     // needLang
     // const needLangValid = validateInput($('#need-lang'),needLang.length!==0);
     // if(!needLangValid) return;
-
-    // // 여기까지 왔다면 통과!
-    console.log("성공!");
 
     // 프로필 이미지를 먼저 처리 해야함
     let uploadStatus = true; // 파일 업로드 실패 시 false
@@ -138,9 +135,9 @@ function updateForm() {
     userData.intro=intro;
 
     // 보내는 data 확인
-    console.log(userData);
-    console.log(useLang);
-    console.log(needLang);
+    // console.log(userData);
+    // console.log(useLang);
+    // console.log(needLang);
 
     $.ajax({
         type: 'PUT',
@@ -152,13 +149,13 @@ function updateForm() {
         alert(response.value);
         if(response.key==="update"){
             alert("회원수정 성공");
-            window.location.href = "";
+            window.location.reload();
         }else{
-            window.location.href = "";
+            window.location.reload();
         }
     }).fail(function (){
         alert("회원수정 실패");
-        window.location.href = "";
+        window.location.reload();
     });
 }
 

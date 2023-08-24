@@ -32,3 +32,11 @@
     padding : 10px 0;
     margin-bottom: 15px;
 }
+
+#like-list-box a:hover{
+    color:#4caf50;
+}
+
+#block-list-box a:hover{
+    color: #f44336;
+}

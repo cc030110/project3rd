@@ -1,0 +1,19 @@
+/* 자유게시판 게시글 */
+.my-board-free a{
+    display: inline-block;
+    margin: 5px 0;
+}
+.my-board-free a:hover{
+    color: #2C875F;
+}
+
+/* 커뮤니티 게시판 */
+
+.board-community-line{
+    margin: 20px 10%;
+    padding: 5px;
+    border: 1px solid black;
+}
+.accept-user{
+    margin: 5px 0;
+}

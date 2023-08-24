@@ -102,9 +102,8 @@
                         [ ${names.size() >= 1 ? names.size() : 0} / ${board.participantsNum} ]
                     </div>
                 </div>
-
-                <<div class="participate_btn">
-                    <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value=<spring:message code="board_community.join"/>>
+                <div class="participate_btn">
+                    <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value='<spring:message code="board_community.join"/>'>
                 </div>
             </c:otherwise>
         </c:choose>

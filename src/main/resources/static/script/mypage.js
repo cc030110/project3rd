@@ -50,5 +50,32 @@ function changeContent(menu){
     }).fail(function (){
         content.html("load view failed");
     });
+}
 
+// 모집 게시판 - 참가 수락/거절
+function userAccept(boardNo,id,isAccept){
+    let accept=0
+    if(isAccept){
+        accept=1; // 수락
+    }else{
+        accept=2; // 거절
+    }
+
+    let data = {
+        "boardNo":boardNo,
+        "participantId":id,
+        "isAccept":accept
+    }
+
+    $.ajax({
+        type: 'PUT',
+        url: `/board/community/participant/accept`,
+        data: JSON.stringify(data), // 데이터를 JSON 형식으로 변환하여 보냄
+        contentType: 'application/json'
+    }).done(function (response){
+        console.log(response);
+        window.location.reload();
+    }).fail(function (){
+        console.log("Error");
+    });
 }

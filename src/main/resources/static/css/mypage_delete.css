@@ -32,6 +32,7 @@
     border-radius: 4px;
     padding: 10px 20px;
     cursor: pointer;
+    margin-top: 10px;
 }
 .submit-btn:hover {
     background-color: #bfffc8;

@@ -19,8 +19,8 @@ function login(){
     const idVal = $('#id').val();
     const pwdVal = $('#password').val();
 
-    console.log("ID:", idVal);
-    console.log("Password:", pwdVal);
+    // console.log("ID:", idVal);
+    // console.log("Password:", pwdVal);
 
     if(idVal===""){
         $('#id-empty').show();
@@ -39,7 +39,7 @@ function login(){
             data: JSON.stringify(data), // 데이터를 JSON 형식으로 변환하여 보냄
             contentType: 'application/json', // 데이터의 타입을 JSON으로 지정
         }).done(function (result){
-            console.log(result);
+            // console.log(result);
             if(result!==""){
                 let path = window.location.pathname.split('/');
                 alert("로그인되었습니다.");

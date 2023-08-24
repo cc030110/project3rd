@@ -14,6 +14,7 @@
     <!-- favicon -->
     <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
     <title></title>
+    <link href="/css/mypage_board.css" rel="stylesheet">
 </head>
 <body>
 <div class="my-board-community">
@@ -27,10 +28,25 @@
                     <a href="/board/community/${board.boardNo}">
                         ${board.title}
                     </a>
+                    <div class="accept-box">
+                        <!-- Map<Integer,List<User>> participantUsers -->
+                        <c:set var="userList" value="${participantUsers.get(board.boardNo)}"/>
+                        <c:if test="${userList ne null}">
+                            <!-- List<User> == acceptUser -->
+                            <c:forEach items="${userList}" var="acceptUser">
+                                <div class="accept-user">
+                                    <a href="/user/${acceptUser.name}">${acceptUser.name}</a>
+                                    <input type="button" class="accept-btn" onclick="userAccept(`${board.boardNo}`,`${acceptUser.id}`,true)" value="수락">
+                                    <input type="button" class="refuse-btn" onclick="userAccept(`${board.boardNo}`,`${acceptUser.id}`,false)" value="거절">
+                                </div>
+                            </c:forEach>
+                        </c:if>
+                    </div>
                 </div>
             </c:forEach>
         </c:otherwise>
     </c:choose>
 </div>
+<script src="/script/mypage.js"></script>
 </body>
 </html>
