@@ -2,7 +2,7 @@ $(document).ready(function(){
     $('#update_btn').click(e => {
         update();
     })
-    
+
     // Radio check : DB에서 가져온 값
     let dbValue=$("#platform_name_hidden").val();
 
@@ -78,10 +78,11 @@ function update(){
             "deadline":deadline
         }
         console.log(update);
+        console.log(boardNo);
 
         $.ajax({
             method:'PUT',
-            url:'/board/community/update/'+boardNo,
+            url:`/board/community/update/${boardNo}`,
             data:JSON.stringify(update),
             contentType:'application/json',
             async:false
@@ -90,11 +91,12 @@ function update(){
                 alert("게시글 등록에 실패했습니다.")
             }else{
                 if($('#file').val()){
-                    uploadImg(response.boardNo);
+                    uploadImg(boardNo);
                 }else{
                     alert("게시글 수정이 완료되었습니다.");
                 }
-                window.location.href="/board/community/"+response.boardNo;
+
+                window.location.href='/board/community/'+boardNo;
             }
         }).fail(function(){
             alert("수정 실패")
@@ -130,6 +132,7 @@ function uploadImg(boardNo){
     });
 }
 
+
 function deleteBoardTmp(boardNo){
     $.ajax({
         method:'DELETE',
@@ -146,7 +149,6 @@ function deleteBoardTmp(boardNo){
 
 function back(){
     let boardNo = $('#board_num_hidden').val();
-
     window.location.href='/board/community/'+boardNo;
 }
 

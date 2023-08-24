@@ -1,5 +1,6 @@
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.boardCommunity.BoardCommunityRequestDto;
 import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
 import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
@@ -207,7 +208,31 @@ public class BoardFreeController {
     }
     /* ---- */
 
-    /* 게시글 수정 */
+
+    /*// 게시글 수정
+    @PutMapping(value="/{no}/update")
+    public Response boardUpdate(@RequestBody BoardFreeRequestDto bcDto,
+                                @PathVariable int boardNo,
+                                @CookieValue(value="accessToken",required = false) String accessToken){
+        Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+        String id=claims.get("id",String.class);
+        String name=claims.get("name",String.class);
+
+        short modifyCheck=1;
+
+        if(id==null){
+            return new Response("update","fail:have to log in");
+        }
+
+        bcDto.setId(id);
+        bcDto.setIsModified(modifyCheck);
+
+        boardCommunityService.updateBoardByBoardNo(boardNo,name,bcDto);
+
+        return new Response("Board Update","success");
+    }*/
+
+    /* 게시글 수정 *//*
     @GetMapping("{no}/update")
     public ModelAndView boardFreeUpdate(@PathVariable("no")int no,@CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("board_free_update");
@@ -233,6 +258,7 @@ public class BoardFreeController {
 
         return view;
     }
+
     @PutMapping("{no}/update")
     public ResponseEntity<String> updateBoard(@PathVariable("no") int no, @RequestBody BoardFreeRequestDto boardDto) {
         try {
@@ -241,7 +267,7 @@ public class BoardFreeController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 에러");
         }
-    }
+    }*/
     /* ---- */
 
 }
