@@ -31,7 +31,9 @@
         <c:if test="${not empty myUser}">
             <div class="user-actions">
                 <button class="favorite-button" onclick="likeUser(`${user.id}`,`${myUser.id}`)">즐겨찾기</button>
+                <button class="favorite-button" onclick="cancelLikeUser(`${user.id}`,`${myUser.id}`)">즐겨찾기</button>
                 <button class="report-button" onclick="blockUser(`${user.id}`,`${myUser.id}`)">차단하기</button>
+                <button class="report-button" onclick="unblockUser(`${user.id}`,`${myUser.id}`)">차단하기</button>
             </div>
         </c:if>
     </div>

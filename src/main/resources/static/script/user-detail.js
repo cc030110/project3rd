@@ -34,5 +34,14 @@ function blockUser(userId,myId){
     }).fail(function (response){
         console.log(response);
     });
+}
+
+// 즐겨찾기 해제
+function cancelLikeUser(userId,myId){
+
+}
+
+// 차단 해제
+function unblockUser(userId,myId){
 
 }

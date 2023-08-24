@@ -192,7 +192,7 @@ public class UserController {
     public ModelAndView showUserDetail(@PathVariable String name, @CookieValue(value = "accessToken", required = false) String accessToken) {
         ModelAndView view = new ModelAndView("user_detail");
 
-        // 타인 정보 뷰
+        // 타인 정보
         Optional<User> optionalUser = Optional.ofNullable(userRepository.findByName(name));
         User user = optionalUser.orElse(null);
 
@@ -200,15 +200,21 @@ public class UserController {
             UserResponseDto userResponseDto = new UserResponseDto(user);
             view.addObject("user", userResponseDto);
         } else {
-            view.setViewName("error_page");
-            return view;
+            return new ModelAndView(new RedirectView("/"));
         }
 
-        // 내 정보 뷰
+        // 내 정보
         if (accessToken != null) {
             Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
             String myId = claims.get("id", String.class);
             userRepository.findById(myId).ifPresent(myUser -> view.addObject("myUser", myUser));
+            // 해당 유저에 대한 즐겨찾기 or 차단 여부 추가
+            String userId = user.getId();
+            if(likeService.isUserLikeExists(myId,userId)){
+                view.addObject("isLiked",true);
+            }else if(blockService.isUserBlockExists(myId,userId)){
+                view.addObject("isBlocked",true);
+            }
         }
 
         return view;
@@ -247,7 +253,6 @@ public class UserController {
     }
 
 
-
     /**유저 10인 정보 불러오기(프로필 게시판)**/
     @GetMapping("list/{page}")
     public ModelAndView userList(@PathVariable int page,
@@ -274,48 +279,6 @@ public class UserController {
 
         return view;
     }
-
-    /** 개인 정보 불러오기(회원 수정에 쓸거)**/
-//    @GetMapping("update")
-//    public ModelAndView showUser(@CookieValue(value = "accessToken", required = false) String accessToken){
-//        ModelAndView view = new ModelAndView("user_my_page");
-//
-//        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-//        String id = claims.get("id", String.class);
-////        String name = claims.get("name", String.class);
-//        Optional<User> optionalUser = userRepository.findById(id);
-//        User user = optionalUser.orElse(null);
-//
-//        if(user!=null){
-//            UserResponseDto userResponseDto = new UserResponseDto(user);
-//            view.addObject("user",userResponseDto);
-//
-//            return view;
-//        }
-//        return null;
-//    }
-
-
-    /** 회원 정보 수정 **/
-//    @PutMapping(value = "update", consumes = {"multipart/form-data"})
-//    public Map update(@CookieValue(value = "accessToken", required = false) String accessToken, @ModelAttribute UserRequestDto userRequestDto){
-//        JSONObject response = new JSONObject();
-//        String url = uploadFileService.uploadImgFile(userRequestDto.getProfileImg());
-//        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-//        String id = claims.get("id", String.class);
-//        String name = claims.get("name", String.class);
-//
-//        if(id != null){
-//            Optional<User> optionalUser = userRepository.findById(id);
-//            User user = optionalUser.orElse(null);
-//            userRequestDto.setId(id);
-//            userService.updateUser(id, name, userRequestDto, url);
-//            response.put("user", "update");
-//            return response.toMap();
-//        }
-//        return null;
-//    }
-
 
     /** 회원 탈퇴 **/
     @DeleteMapping("/delete")

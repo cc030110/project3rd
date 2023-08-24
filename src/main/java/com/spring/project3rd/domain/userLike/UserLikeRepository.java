@@ -9,4 +9,5 @@ public interface UserLikeRepository extends JpaRepository<UserLike,UserLikeId> {
     // userId를 이용하여 likeId만 조회
     @Query(value = "SELECT like_id FROM `like` WHERE user_id = ?1", nativeQuery = true)
     List<String> findLikeIdsByUserId(String userId);
+
 }
