@@ -1,6 +1,8 @@
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.boardCommunity.BoardCommunity;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunityRequestDto;
+import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImg;
 import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
 import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
@@ -206,12 +208,32 @@ public class BoardFreeController {
         boardFreeService.deleteBoard(no);
         return ResponseEntity.ok("게시글 삭제 성공");
     }
+
     /* ---- */
+    // 게시글 수정
+    // 업데이트용 게시판 조회
+    @GetMapping("/{boardNum}/update")
+    public ModelAndView showBoardForUpdate(@PathVariable int boardNum){
+        ModelAndView view = new ModelAndView("board_free_update");
 
+        Optional<BoardFree> optionalBoardUpdate = boardFreeRepository.findById(boardNum);
+        BoardFree board = optionalBoardUpdate.orElse(null);
 
-    /*// 게시글 수정
-    @PutMapping(value="/{no}/update")
-    public Response boardUpdate(@RequestBody BoardFreeRequestDto bcDto,
+        view.addObject("board",board);
+
+        if(board!=null){
+            int boardNo = board.getBoardNo();
+            List<BoardFreeImg> imgList = boardFreeImgRepository.findByBoardNo(boardNo);
+            // 해당 게시글에 업로드된 파일이 존재할 경우
+            if(!imgList.isEmpty()){
+                view.addObject("imgList",imgList);
+            }
+        }
+        return view;
+    }
+
+    @PutMapping(value="/{boardNo}/update")
+    public Response boardUpdate(@RequestBody BoardFreeRequestDto bfDto,
                                 @PathVariable int boardNo,
                                 @CookieValue(value="accessToken",required = false) String accessToken){
         Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
@@ -224,16 +246,16 @@ public class BoardFreeController {
             return new Response("update","fail:have to log in");
         }
 
-        bcDto.setId(id);
-        bcDto.setIsModified(modifyCheck);
+        bfDto.setId(id);
+        bfDto.setIsModified(modifyCheck);
 
-        boardCommunityService.updateBoardByBoardNo(boardNo,name,bcDto);
+        boardFreeService.updateBoardByBoardNo(boardNo,name,bfDto);
 
         return new Response("Board Update","success");
-    }*/
+    }
 
-    /* 게시글 수정 *//*
-    @GetMapping("{no}/update")
+
+    /*@GetMapping("{no}/update")
     public ModelAndView boardFreeUpdate(@PathVariable("no")int no,@CookieValue(value = "accessToken", required = false) String accessToken){
         ModelAndView view = new ModelAndView("board_free_update");
 
@@ -268,6 +290,6 @@ public class BoardFreeController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 에러");
         }
     }*/
-    /* ---- */
+
 
 }

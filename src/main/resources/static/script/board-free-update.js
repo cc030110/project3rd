@@ -1,16 +1,24 @@
-$(document).ready(function() {
-    // 게시글 업로드 시 이미지 파일 처리
+$(document).ready(function(){
+    /*$('#submit_btn').click(e => {
+        update();
+    })
+*/
+    // 파일 업로드처리
     $('#file').on('change', function() {
         let files = $('#file').prop('files'); // FileList 객체
         let max = 3; // 최대 선택 파일 개수
+
         if (files.length > max) {
             alert('최대 ' + max + '개까지 선택할 수 있습니다.');
             $(this).val(''); // 선택한 파일 초기화
         }
+
         // 이미지 미리보기
-        let imgBox = $('.img-box');
+        let imgBox = $('.img_box');
+
         // 미리 보기 영역 초기화
         imgBox.empty();
+
         if(files.length>0){
             for(let i=0;i<files.length;i++){
                 let file = files[i];
@@ -20,60 +28,58 @@ $(document).ready(function() {
                 if (file_type.startsWith('image/')) {
                     let preview_url = URL.createObjectURL(file);
                     let img = $('<img>').attr('src', preview_url).addClass('preview-image');
-                    $('.img-box').append(img);
+                    $('.img_box').append(img);
                 }
             }
         }
     });
-
-    // 게시판 리스트 검색 클릭 화살표
-    $('.search-box').on('click',function (){
-        $('.select-arrow img').toggleClass('.rotated');
-    });
-
 });
 
-// 게시글 업로드
-function uploadBoard(){
+// 수정하기
+function update(){
+    const boardNo = $('#board_num_hidden').val();
     const title = $('#title').val();
+    const creator = $('#creator').val();
     const contents = $('#contents').val();
 
     if(title===""){
-        alert("제목 입력");
+        alert("제목을 입력해주세요.");
     }else if(contents===""){
-        alert("내용 입력");
+        alert("내용을 입력해주세요.");
     }else{
-        let write = {
+        let update={
             "title":title,
-            "contents":contents
+            "id":creator,
+            "contents":contents,
         }
-        console.log(write);
+
+        console.log(update);
+        console.log(boardNo);
 
         $.ajax({
-            method:'POST',
-            url:'/board/free/upload',
-            data:JSON.stringify(write),
-            contentType: 'application/json',
+            method:'PUT',
+            url:`/board/free/${boardNo}/update`,
+            data:JSON.stringify(update),
+            contentType:'application/json',
             async:false
         }).done(function (response){
             if(response===null){
-                alert("게시글 등록 실패");
+                alert("게시글 등록에 실패했습니다.")
             }else{
                 if($('#file').val()){
-                    uploadImg(response.boardNo);
+                    uploadImg(boardNo);
                 }else{
-                    alert("게시글이 등록되었습니다.");
+                    alert("게시글 수정이 완료되었습니다.");
                 }
-                window.location.href = "/board/free/"+response.boardNo;
-            }
 
-        }).fail(function (){
-            alert("등록 오류")
+                window.location.href='/board/free/'+boardNo;
+            }
+        }).fail(function(){
+            alert("수정 실패")
         });
     }
 }
 
-// 게시글 이미지 업로드
 function uploadImg(boardNo){
     let fileInput = $('#file');
     let files = fileInput.prop('files'); // FileList 객체
@@ -88,7 +94,7 @@ function uploadImg(boardNo){
 
     $.ajax({
         type: 'POST',
-        url: `/board/free/upload/file?no=${boardNo}`,
+        url: `/board/free/upload/file?boardNo=${boardNo}`, // file?no=${boardNo}
         data: formData, // FormData 객체를 바로 전송
         contentType: false, // 파일 전송 시 false
         processData: false, // FormData 사용 시 false
@@ -98,15 +104,15 @@ function uploadImg(boardNo){
     }).fail(function (){
         alert("파일 업로드 실패");
         // 해당 boardNo의 게시판 삭제
-        deleteBoard(boardNo);
+        deleteBoardTmp(boardNo);
     });
 }
 
-// 게시글 삭제
-function deleteBoard(boardNo){
+
+function deleteBoardTmp(boardNo){
     $.ajax({
         method:'DELETE',
-        url:`/board/free/delete/${boardNo}`,
+        url:`/board/community/delete/${boardNo}`,
         contentType: 'application/json',
         async:false
     }).done(function (response){
@@ -116,21 +122,9 @@ function deleteBoard(boardNo){
     })
 }
 
-// 게시글 검색
-function searchBoard(boardNo){
-    let selectedValue = $("#search-select").val();
-    let searchText = $("#search-input").val();
-    if (searchText===""){
-        alert("검색어가 없습니다.");
-        return;
-    }
-    let path = "/board/free/list/"+boardNo;
-    let query = "?" + selectedValue + "=" + searchText;
-    window.location.href = path + query;
-}
 
-// 뒤로 이동
 function back(){
     let boardNo = $('#board_num_hidden').val();
-    window.location.href='/board/free/list'+boardNo;
+    window.location.href='/board/free/'+boardNo;
 }
+

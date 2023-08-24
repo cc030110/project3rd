@@ -29,7 +29,7 @@
                     </c:if>
 
                     <div class="back_btn">
-                        <input type="button" id="back-btn" value=<spring:message code="board_free.back"/>>
+                        <input type="button" id="back-btn" onclick="back()" value=<spring:message code="board_free.back"/>>
                     </div>
                 </div>
 
