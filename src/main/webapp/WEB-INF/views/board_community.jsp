@@ -22,7 +22,7 @@
     <div class="main">
         <c:choose>
             <c:when test="${board eq null}">
-                <p>존재하지 않는 게시글입니다.</p>
+                <p><spring:message code="board_community.exist"/></p>
             </c:when>
             <c:otherwise>
                 <input type="hidden" id="board_num_hidden"
@@ -102,9 +102,9 @@
                         [ ${names.size() >= 1 ? names.size() : 0} / ${board.participantsNum} ]
                     </div>
                 </div>
-                <div class="participate_btn">
-                <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)"
-                       value="Join this community">
+
+                <<div class="participate_btn">
+                    <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value=<spring:message code="board_community.join"/>>
                 </div>
             </c:otherwise>
         </c:choose>

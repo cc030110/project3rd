@@ -7,22 +7,24 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <html>
 <head>
     <!-- favicon -->
     <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
     <link rel="stylesheet" href="/css/mypage_like_block.css">
-    <title></title>
+    <title><spring:message code="mypage.title"/></title>
 </head>
 <body>
 <div id="divide">
     <div id="like-list-box">
         <div class="like-title">
-        <h3>즐겨찾기 목록</h3>
+        <h3><spring:message code="mypage_like_block.like_list"/></h3>
         </div>
         <c:choose>
             <c:when test="${empty likeList}">
-                즐겨찾기한 유저가 존재하지 않습니다.
+                <spring:message code="mypage_like_block.like_warn"/>
             </c:when>
             <c:otherwise>
                 <c:forEach items="${likeList}" var="likes">
@@ -35,11 +37,11 @@
     </div>
     <div id="block-list-box">
         <div class="block-title">
-            <h3>차단 목록</h3>
+            <h3><spring:message code="mypage_like_block.block_list"/></h3>
         </div>
         <c:choose>
             <c:when test="${empty blockList}">
-                차단한 유저가 존재하지 않습니다.
+                <spring:message code="mypage_like_block.block_warn"/>
             </c:when>
             <c:otherwise>
                 <c:forEach items="${blockList}" var="blocks">
