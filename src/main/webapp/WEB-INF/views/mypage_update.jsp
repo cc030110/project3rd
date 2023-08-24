@@ -145,8 +145,7 @@
                 <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
                     <rect id="shape" height="40" width="150"/>
                     <div id="text">
-                                <span class="spot login-bnt" onclick="updateForm()"><spring:message
-                                        code="user_join.joinBtn"/></span>
+                                <span class="spot login-bnt" onclick="updateForm()">수정</span>
                     </div>
                 </svg>
             </div>

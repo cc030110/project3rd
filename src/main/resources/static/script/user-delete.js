@@ -15,9 +15,9 @@ function deleteUser(id,password){
             if(response.value==="success"){
                 alert("회원 탈퇴 완료");
                 logout();
-                window.location.href = "/";
+                window.location.href = "";
             }else{
-                window.location.href = "/";
+                window.location.href = "";
             }
         }).fail(function (){
             alert("회원 탈퇴 실패");
