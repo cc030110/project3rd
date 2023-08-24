@@ -196,10 +196,15 @@ public class UserController {
         // 타인 정보
         Optional<User> optionalUser = Optional.ofNullable(userRepository.findByName(name));
         User user = optionalUser.orElse(null);
+        String id = user.getId();
 
         if (user != null) {
             UserResponseDto userResponseDto = new UserResponseDto(user);
             view.addObject("user", userResponseDto);
+            List<String> needLang = languageService.getNeedLanguage(id);
+            List<String> useLang = languageService.getUseLanguage(id);
+            view.addObject("needLang", needLang);
+            view.addObject("useLang", useLang);
         } else {
             return new ModelAndView(new RedirectView("/"));
         }
@@ -210,10 +215,7 @@ public class UserController {
             String myId = claims.get("id", String.class);
 
             userRepository.findById(myId).ifPresent(myUser -> view.addObject("myUser", myUser));
-            List<String> needLang = languageService.getNeedLanguage(myId);
-            List<String> useLang = languageService.getUseLanguage(myId);
-            view.addObject("needLang", needLang);
-            view.addObject("useLang", useLang);
+
 
             // 해당 유저에 대한 즐겨찾기 or 차단 여부 추가
             String userId = user.getId();
