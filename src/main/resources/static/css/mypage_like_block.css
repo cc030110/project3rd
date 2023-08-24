@@ -1,0 +1,34 @@
+#divide {
+    display: flex;
+}
+
+#like-list-box, #block-list-box {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+#like-list-box {
+    margin-left: 50px;
+
+}
+.user-box{
+    margin-bottom: 10px;
+}
+
+
+#block-list-box {
+    margin-right: 50px;
+}
+.like-title{
+    background : #4caf50;
+    color: white;
+    padding : 10px 0;
+    margin-bottom: 15px;
+}
+.block-title{
+    background-color: #f44336;
+    color: white;
+    padding : 10px 0;
+    margin-bottom: 15px;
+}

@@ -86,7 +86,7 @@ function joinForm() {
     //
     function isValidInputPassword(input) {
         // 정규식 패턴: 최소 6자 이상의 영어와 숫자만 허용
-        var pattern = /^[A-Za-z\d]{6,20}$/;
+        var pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
         return pattern.test(input);
     }
     // // passwordChk 유효성 검사 (비밀번호 확인)
@@ -273,7 +273,6 @@ function sendEmail() {
     serverGeneratedCode="";
     isEmailChecked=false;
 
-
     if (userEmail==="") {
         // 이메일 입력 값이 비어있을 경우 처리
         alert("이메일을 입력해주세요.");
@@ -293,7 +292,7 @@ function sendEmail() {
         // 서버로부터 받은 인증 번호를 변수에 저장
         serverGeneratedCode = response.data;
         alert("발송 완료");
-        // console.log("인증코드: "+serverGeneratedCode);
+        console.log("인증코드: "+serverGeneratedCode);
     }).fail(function (request){
         console.log("status: " + request.status);
         console.log("responseText: " + request.responseText);
