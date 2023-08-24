@@ -170,7 +170,6 @@ public class BoardFreeController {
         }
         return responses;
     }
-    /* ---- */
 
     /* 게시글 조회 */
     @GetMapping("{no}")

@@ -94,7 +94,7 @@ function uploadImg(boardNo){
 
     $.ajax({
         type: 'POST',
-        url: `/board/free/upload/file?boardNo=${boardNo}`, // file?no=${boardNo}
+        url: `/board/free/upload/file?no=${boardNo}`, // file?no=${boardNo}
         data: formData, // FormData 객체를 바로 전송
         contentType: false, // 파일 전송 시 false
         processData: false, // FormData 사용 시 false
@@ -112,7 +112,7 @@ function uploadImg(boardNo){
 function deleteBoardTmp(boardNo){
     $.ajax({
         method:'DELETE',
-        url:`/board/community/delete/${boardNo}`,
+        url:`/board/community/${boardNo}/delete`,
         contentType: 'application/json',
         async:false
     }).done(function (response){

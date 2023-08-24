@@ -132,5 +132,5 @@ function searchBoard(boardNo){
 // 뒤로 이동
 function back(){
     let boardNo = $('#board_num_hidden').val();
-    window.location.href='/board/free/list'+boardNo;
+    window.location.href='/board/free/list/1';
 }
