@@ -7,6 +7,9 @@
 
 <head>
     <link rel="stylesheet" href="/css/index.css">
+    <meta property="og:title" content="GLOBALTIES">
+    <meta property="og:description" content="언어&문화교류 사이트">
+    <meta property="og:image" content="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/">
 
     <!-- favicon -->
     <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
