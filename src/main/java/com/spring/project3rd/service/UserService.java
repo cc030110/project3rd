@@ -23,7 +23,7 @@ public class UserService {
     private final RedisTemplate<String, String> redisTemplate;
 
     @Transactional
-    public void updateUser(String id, String name, UserRequestDto userRequestDto, String url) {
+    public void updateUser(String id, UserRequestDto userRequestDto, String url) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 사용자")
         );
