@@ -243,7 +243,6 @@ public class BoardCommunityController{
             bc = new BoardCommunity(bcDto);
             boardCommunityRepository.save(bc);
         }
-
         return bc;
     }
 
@@ -269,11 +268,16 @@ public class BoardCommunityController{
 
     // # Update
     // 게시글 수정
-    @PutMapping(value="/update/{boardNo}", consumes={"multipart/form-data"})
-    public Response boardUpdate(@PathVariable int boardNo, @ModelAttribute BoardCommunityRequestDto bcDto,
+//    @PutMapping(value="/update/{boardNo}", consumes={"multipart/form-data"})
+    /*public Response boardUpdate(@PathVariable int boardNo, @ModelAttribute BoardCommunityRequestDto bcDto,
+                                @CookieValue(value="accessToken",required = false) String accessToken){*/
+    @PutMapping(value="/update/{boardNo}")
+    public Response boardUpdate(@RequestBody BoardCommunityRequestDto bcDto,
+                                @PathVariable int boardNo,
                                 @CookieValue(value="accessToken",required = false) String accessToken){
         Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
         String id=claims.get("id",String.class);
+        String name=claims.get("name",String.class);
 
         short modifyCheck=1;
 
@@ -283,7 +287,7 @@ public class BoardCommunityController{
 
         bcDto.setId(id);
         bcDto.setIsModified(modifyCheck);
-        boardCommunityService.updateBoardByBoardNo(boardNo,id,bcDto);
+        boardCommunityService.updateBoardByBoardNo(boardNo,name,bcDto);
 
         return new Response("Board Update","success");
     }

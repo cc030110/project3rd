@@ -99,8 +99,8 @@
         </div>
 
         <div class="btns">
-            <input type="button" id="write_btn" value=<spring:message code="board_community_write.submit"/>>
-            <input type="button" id="back_btn" value=<spring:message code="board_community_write.back"/>>
+            <input type="button" id="update_btn" value=<spring:message code="board_community_write.submit"/>>
+            <input type="button" id="back_btn" onclick="back()" value=<spring:message code="board_community_write.back"/>>
         </div>
     </div>
     <c:import url="footer.jsp"/>
