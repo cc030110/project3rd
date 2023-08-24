@@ -1,0 +1,39 @@
+.resign-container {
+    background-color: #e0f0ff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    margin : 0 auto;
+    margin-top: 80px;
+}
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+#input-field {
+    margin-bottom: 15px;
+}
+.input-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+.input-field input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.submit-btn {
+    background-color: #2C875F;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.submit-btn:hover {
+    background-color: #bfffc8;
+    color : black;
+}

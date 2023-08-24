@@ -281,18 +281,21 @@ public class UserController {
     }
 
     /** 회원 탈퇴 **/
-    @DeleteMapping("/delete")
-    public Map delete(@CookieValue(value = "accessToken", required = false) String accessToken, UserRequestDto userRequestDto, HttpServletResponse responselogout){
+    @DeleteMapping("resign")
+    public Map delete(@CookieValue(value = "accessToken", required = false) String accessToken, @RequestBody UserRequestDto userRequestDto, HttpServletResponse responselogout){
         JSONObject response = new JSONObject();
 
         Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
         String id = claims.get("id", String.class);
         String name = claims.get("name", String.class);
+        String password = userRequestDto.getPassword();
+
+        System.out.println(password);
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
 
-        if(id.equals(user.getId()))
+        if(password.equals(user.getPassword()))
         //&& log.equals(user.getId())
         {
             userService.deleteUser(id);

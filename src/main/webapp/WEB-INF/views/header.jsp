@@ -63,8 +63,8 @@
 
     <div class="lang-select">
         <select name="locales" id="locales">
-            <option value="en" selected>English</option>
-            <option value="ko">한국어</option>
+            <option value="ko" selected>한국어</option>
+            <option value="en">English</option>
             <option value="ja">日本語</option>
             <%--<option value="spanish">Español</option>
             <option value="traditional_chinese">中文</option>

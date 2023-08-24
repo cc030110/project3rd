@@ -14,7 +14,6 @@
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/mypage.css">
-    <link rel="stylesheet" href="/css/mypage_update.css">
     <!-- favicon -->
     <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
 </head>
