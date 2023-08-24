@@ -51,7 +51,7 @@
             </nav>
         </div>
         <div class="content-container">
-            <h2 id="selected-menu" class="update">정보 수정</h2>
+            <h2 id="selected-menu" class="update">정보 조회/수정</h2>
             <div id="content">
 
             </div>
