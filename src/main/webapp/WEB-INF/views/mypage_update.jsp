@@ -10,6 +10,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- favicon -->
     <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
     <title></title>
@@ -21,17 +22,17 @@
             <div class="update-profile-img">
                 <c:choose>
                     <c:when test="${user.profileImg ne null}">
-                        <img src="${user.profileImg}" alt=""/>
+                        <img id="saved-profile" src="${user.profileImg}" alt=""/>
                     </c:when>
                     <c:otherwise>
-                        <img src="https://ucarecdn.com/1e359c2a-7124-4da9-9cd9-be5fe9e8c1f0/" alt=""/>
+                        <img id="saved-profile" src="https://ucarecdn.com/1e359c2a-7124-4da9-9cd9-be5fe9e8c1f0/" alt=""/>
                     </c:otherwise>
                 </c:choose>
             </div>
             <div class="update-profile">
-                <label for="profileImg" id="profileImgBtn">사진 업로드</label>
+                <label for="profileImg" id="profileImgBtn">사진 변경</label>
                 <input type="file" id="profileImg" name="profileImg" style="visibility:hidden;"
-                       accept="image/png, image/jpg, image/jpeg, image.gif">
+                       accept="image/png, image/jpg, image/jpeg, image.gif" onclick="deleteSavedProfile()()">
             </div>
             <div class="update-id show-box line">
                 <label for="user-id">아이디 : </label>
@@ -51,7 +52,7 @@
             </div>
             <div class="show-box line">
                 <label for="user-email">이메일 : </label>
-                <input type="text" id="user-email" name="user-email" value="${user.birth}" readonly>
+                <input type="text" id="user-email" name="user-email" value="${user.email}" readonly>
             </div>
 
 
@@ -104,7 +105,9 @@
             </div>
             <div class="line">
                 <div class="use-lang-box">
-
+                    <c:forEach var="lang" items="${useLang}" varStatus="vs">
+                        <span class="${lang}"><spring:message code="user_join.select${lang}"/></span>
+                    </c:forEach>
                 </div>
             </div>
             <div class="line">
@@ -124,15 +127,15 @@
             </div>
             <div class="line">
                 <div class="need-lang-box">
-
+                    <c:forEach var="lang" items="${needLang}" varStatus="vs">
+                        <span class="${lang}"><spring:message code="user_join.select${lang}"/></span>
+                    </c:forEach>
                 </div>
             </div>
             <div class="line ">
                 <div class="intro">
                     <h3>소개글</h3><br>
-                    <textarea class="fixed-textarea">
-                        ${user.intro}
-                    </textarea>
+                    <textarea class="fixed-textarea">${user.intro}</textarea>
                 </div>
 
             </div>
@@ -150,8 +153,7 @@
 
 
     </div>
-
-
 </form>
+<script src="/script/user-update.js"></script>
 </body>
 </html>

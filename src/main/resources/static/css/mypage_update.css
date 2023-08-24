@@ -171,6 +171,7 @@ a.spot {
 .fixed-textarea {
     resize: none;
     width: 100%;
+    padding : 5px;
 }
 .lang-choose{
     margin-left: 10px;
@@ -182,4 +183,7 @@ a.spot {
 }
 .intro{
     margin-left: 10px;
+}
+#profiledelete{
+    display: block;
 }

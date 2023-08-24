@@ -346,6 +346,7 @@ public class UserController {
         User user = userRepository.findById(id).orElse(null);
 
 
+
         // 유저 정보 add
         view.addObject("user",user);
 
@@ -382,6 +383,41 @@ public class UserController {
         }
 
         return view;
+    }
+
+    @PutMapping("update")
+    public Response update(@RequestBody UserRequestDto userRequestDto){
+
+
+        String id = userRequestDto.getId();
+        String password = userRequestDto.getPassword();
+        String liveCountry = userRequestDto.getLiveCountry();
+        String liveCity = userRequestDto.getLiveCity();
+        List<String> needLang = userRequestDto.getNeedLang();
+        List<String> useLang = userRequestDto.getUseLang();
+        String intro = userRequestDto.getIntro();
+        String profileImg = userRequestDto.getProfileImg();
+
+        System.out.println(id);
+        System.out.println(password);
+        System.out.println(liveCountry);
+        System.out.println(liveCity);
+        System.out.println(needLang);
+        System.out.println(useLang);
+        System.out.println(intro);
+        System.out.println(profileImg);
+
+        User user = userRepository.findById(id).orElse(null);
+        try{
+            userService.updateUser(id, userRequestDto, profileImg);
+            // 정상적으로 유저가 DB에 등록되면 useLang과 needLang도 등록
+            languageService.setUseLanguage(id,useLang);
+            languageService.setNeedLang(id,needLang);
+        }catch (Exception e){
+            return new Response("err","회원수정 실패");
+        }
+
+        return new Response("update","회원수정 성공");
     }
 
 }

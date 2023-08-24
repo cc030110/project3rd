@@ -4,6 +4,7 @@ import com.spring.project3rd.util.Timestamp;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 
@@ -50,13 +51,9 @@ public class User extends Timestamp {
 
     public void update(UserRequestDto userRequestDto, String url){
         this.password = userRequestDto.getPassword();
-        this.gender = userRequestDto.getGender();
-        this.birth = userRequestDto.getBirth();
         this.profileImg = url;
         this.liveCountry = userRequestDto.getLiveCountry();
         this.liveCity = userRequestDto.getLiveCity();
-        this.warningCount = userRequestDto.getWarningCount();
-        this.isActive = userRequestDto.getIsActive();
         this.intro = userRequestDto.getIntro();
     }
 }
