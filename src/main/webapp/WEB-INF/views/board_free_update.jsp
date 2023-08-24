@@ -12,14 +12,15 @@
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
+        <input type="hidden" id="board_num_hidden" value="${board.boardNo}">
         <div class="input_title">
             <label for="title" id="label_title">Title</label>
-            <input type="text" id="title" name="title" autofocus>
+            <input type="text" id="title" name="title" value="${board.title}" autofocus>
         </div>
 
         <div class="input_contents">
             <label for="contents" id="label_contents">Contents</label>
-            <textarea id="contents" name="contents"></textarea>
+            <textarea id="contents" name="contents">${board.contents}</textarea>
         </div>
 
         <div class="input_file">
@@ -30,17 +31,21 @@
         </div>
 
         <div class="img-box">
-
+            <c:if test="${imgList ne null}">
+                <c:forEach items="${imgList}" var="imgs" varStatus="vs">
+                    <img src="${imgs.img}">
+                </c:forEach>
+            </c:if>
         </div>
 
         <div class="submit_btn">
-            <input type="button" value="작성" id="submit_btn" onclick="uploadBoard()">
-            <input type="button" value="뒤로가기" id="back_btn">
+            <input type="button" value="작성" id="submit_btn" onclick="update()">
+            <input type="button" value="뒤로가기" id="back_btn" onclick="back()">
         </div>
     </div>
     <c:import url="footer.jsp"/>
 </div>
 
-<script src="/script/board-free.js"></script>
+<script src="/script/board-free-update.js"></script>
 </body>
 </html>
