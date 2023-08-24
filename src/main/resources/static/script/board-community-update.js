@@ -1,4 +1,8 @@
 $(document).ready(function(){
+    $('#update_btn').click(e => {
+        update();
+    })
+    
     // Radio check : DB에서 가져온 값
     let dbValue=$("#platform_name_hidden").val();
 
@@ -50,6 +54,7 @@ function update(){
     const platformNumber = selectedPlatformId.split("_")[1];
     const selectedPlatform = $('#'+selectedPlatformId).val();
 
+    const boardNo = $('#board_num_hidden').val();
     const title = $('#title').val();
     const creator = $('#creator').val();
     const contents = $('#contents').val();
@@ -63,7 +68,7 @@ function update(){
     }else if(participants===""){
         alert("인원 수를 입력해주세요.");
     }else{
-        let write={
+        let update={
             "platformNum":platformNumber,
             "platformName":selectedPlatform,
             "title":title,
@@ -72,13 +77,13 @@ function update(){
             "participantsNum":participants, // key값 설정해줄 때, vo에 정의된 변수명과 동일하게 넣어주자
             "deadline":deadline
         }
-        console.log(write);
+        console.log(update);
 
         $.ajax({
             method:'PUT',
-            url:'/board/community/update/{boardNo}',
-            data:JSON.stringify(write),
-            contentType:'application/json', // 전송방식 에러 : multipart/form-data
+            url:'/board/community/update/'+boardNo,
+            data:JSON.stringify(update),
+            contentType:'application/json',
             async:false
         }).done(function (response){
             if(response===null){
@@ -87,12 +92,12 @@ function update(){
                 if($('#file').val()){
                     uploadImg(response.boardNo);
                 }else{
-                    alert("게시글이 등록되었습니다.");
+                    alert("게시글 수정이 완료되었습니다.");
                 }
                 window.location.href="/board/community/"+response.boardNo;
             }
         }).fail(function(){
-            alert("등록 오류")
+            alert("수정 실패")
         });
     }
 }

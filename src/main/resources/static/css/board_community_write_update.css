@@ -108,7 +108,7 @@ input[type="file"] {
 }
 
 /* 이미지 처리 */
-.img-box {
+.img_box {
     width:80%;
     display: flex;
     justify-content: space-between;
@@ -116,7 +116,7 @@ input[type="file"] {
     margin-top: 10px;
 }
 
-.img-box img {
+.img_box img {
     max-width: 200px;
     max-height: 150px;
     margin: 5px;
@@ -142,6 +142,12 @@ div.btns{
     margin-right:20px;
 }
 
+#update_btn{
+    background-color:#2C875F;
+    color:white;
+    margin-right:20px;
+}
+
 #back_btn {
     background-color:#EEEEEC;
     color: black;
@@ -154,6 +160,10 @@ input[type="button"]:hover {
 }
 
 #write_btn:hover{
+    background-color: #1D5E42;
+}
+
+#update_btn:hover{
     background-color: #1D5E42;
 }
 

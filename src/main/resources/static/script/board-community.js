@@ -89,6 +89,7 @@ function write(){
             "participantsNum":participants, // key값 설정해줄 때, vo에 정의된 변수명과 동일하게 넣어주자
             "deadline":deadline
         }
+
         console.log(write);
 
         $.ajax({
