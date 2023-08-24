@@ -8,8 +8,7 @@
 
 <head>
     <!-- CSS -->
-    <link rel="stylesheet" href="/css/board_community_write.css">
-
+    <link rel="stylesheet" href="/css/board_community_write_update.css">
     <title>GLOBALTIES</title>
 </head>
 
