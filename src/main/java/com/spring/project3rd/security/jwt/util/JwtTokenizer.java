@@ -51,8 +51,8 @@ public class JwtTokenizer {
 
     private String createToken(String id, String name,
                                Long expire, byte[] secretKey) {
-        Claims claims = Jwts.claims().setSubject(id);
 
+        Claims claims = Jwts.claims().setSubject(id);
         claims.put("id", id);
         claims.put("name", name);
 

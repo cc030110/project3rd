@@ -441,4 +441,18 @@ public class UserController {
         return new Response("update", "회원수정 성공");
     }
 
+//
+//    @PutMapping("ExampleCode")
+//    public ModelAndView ExampleCode
+//            (@CookieValue(value = "accessToken", required = false) String accessToken) {
+//        ModelAndView view = new ModelAndView();
+//
+//        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
+//        String id = claims.get("id", String.class);
+//        User user = userRepository.findById(id).orElse(null);
+//        if (user != null) {
+//            view.addObject(user);
+//        }
+//        return view;
+//    }
 }
