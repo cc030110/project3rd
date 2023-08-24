@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -80,6 +81,28 @@ public class LanguageService {
                 needLanguageRepository.delete(dbData);
             }
         }
+    }
+
+    public List<String> getUseLanguage(String id) {
+        List<UseLanguage> languageList = useLanguageRepository.findById(id);
+        List<String> useLang = new ArrayList<>();
+
+        for (UseLanguage language : languageList) {
+            useLang.add(language.getLanguageCode());
+        }
+
+        return useLang;
+    }
+
+    public List<String> getNeedLanguage(String id) {
+        List<NeedLanguage> languageList = needLanguageRepository.findById(id);
+        List<String> useLang = new ArrayList<>();
+
+        for (NeedLanguage language : languageList) {
+            useLang.add(language.getLanguageCode());
+        }
+
+        return useLang;
     }
 
 
