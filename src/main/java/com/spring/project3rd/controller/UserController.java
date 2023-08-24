@@ -210,7 +210,13 @@ public class UserController {
         if (accessToken != null) {
             Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
             String myId = claims.get("id", String.class);
+
             userRepository.findById(myId).ifPresent(myUser -> view.addObject("myUser", myUser));
+            List<String> needLang = languageService.getNeedLanguage(myId);
+            List<String> useLang = languageService.getUseLanguage(myId);
+            view.addObject("needLang", needLang);
+            view.addObject("useLang", useLang);
+
             // 해당 유저에 대한 즐겨찾기 or 차단 여부 추가
             String userId = user.getId();
             if (likeService.isUserLikeExists(myId, userId)) {
@@ -411,24 +417,10 @@ public class UserController {
     @PutMapping("update")
     public Response update(@RequestBody UserRequestDto userRequestDto) {
 
-
         String id = userRequestDto.getId();
-        String password = userRequestDto.getPassword();
-        String liveCountry = userRequestDto.getLiveCountry();
-        String liveCity = userRequestDto.getLiveCity();
         List<String> needLang = userRequestDto.getNeedLang();
         List<String> useLang = userRequestDto.getUseLang();
-        String intro = userRequestDto.getIntro();
         String profileImg = userRequestDto.getProfileImg();
-
-        System.out.println(id);
-        System.out.println(password);
-        System.out.println(liveCountry);
-        System.out.println(liveCity);
-        System.out.println(needLang);
-        System.out.println(useLang);
-        System.out.println(intro);
-        System.out.println(profileImg);
 
         User user = userRepository.findById(id).orElse(null);
         try {

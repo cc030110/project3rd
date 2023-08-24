@@ -79,27 +79,26 @@ function joinForm() {
     if(!idValid) return;
     //
     // // password 유효성 검사
-    condition = password.val().length >= 4 && /^[A-Za-z0-9]+$/.test(password.val());
-    condition = password.val()!=="";
-    const passwordValid = validateInput(password,condition);
-    if(!passwordValid) return;
+    // condition = password.val().length >= 4 && /^[A-Za-z0-9]*$/.test(password.val());
+    // condition = password.val()!=="";
+    // const passwordValid = validateInput(password,condition);
+    // if(!passwordValid) return;
     //
     function isValidInputPassword(input) {
         // 정규식 패턴: 최소 6자 이상의 영어와 숫자만 허용
-        var pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
+        var pattern =  /^[A-Za-z0-9]*$/;
         return pattern.test(input);
     }
-    // // passwordChk 유효성 검사 (비밀번호 확인)
+
+// passwordChk 유효성 검사 (비밀번호 확인)
     condition = (passwordChk.val()===password.val());
-    const passwordChkValid = validateInput(passwordChk,condition);
-    if(isValidInputPassword(passwordChk)){
-            console.log(nameCheck + " is valid");
-        } else {
-            console.log(nameCheck + " is invalid");
-            alert("최소 6자 이상의 영어와 숫자만 허용")
-            return;
-        }
-    if(!passwordChkValid) return;
+    const passwordChkValid = validateInput(passwordChk, condition);
+    if (!isValidInputPassword(passwordChk.val())) {
+        console.log("passwordChk is invalid");
+        alert("최소 6자 이상의 영어와 숫자만 허용");
+        return;
+    }
+    if (!passwordChkValid) return;
 
     // 이메일 유효성 검사 추가 필요
     // jsp에도 p.err 내용 추가해야함.. 그러면 message에도 등록해야하구...

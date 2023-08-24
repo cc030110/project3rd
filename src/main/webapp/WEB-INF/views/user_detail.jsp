@@ -33,6 +33,17 @@
                         code="user_detail.country"/> : </span> ${user.liveCountry}</p>
                 <p class="user-info-item"><span class="label"><spring:message
                         code="user_detail.city"/> : </span> ${user.liveCity}</p>
+                <div class="lang-box">
+                    <c:forEach var="lang" items="${useLang}" varStatus="vs">
+                        <p class="${lang}"><spring:message code="user_join.select${lang}"/></p>
+                    </c:forEach>
+                </div>
+                <div class="lang-box">
+                    <c:forEach var="lang" items="${needLang}" varStatus="vs">
+                        <p class="${lang}"><spring:message code="user_join.select${lang}"/></p>
+                    </c:forEach>
+                </div>
+                <p class="user-info-item"><span class="label">소개 : </span> ${user.intro}</p>
             </div>
         </div>
         <c:if test="${not empty myUser}">
