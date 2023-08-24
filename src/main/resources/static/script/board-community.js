@@ -167,3 +167,18 @@ function deleteBoard(){
     }
 }
 
+// 참가
+function participate(boardNo){
+    $.ajax({
+        type: "POST",
+        url: `/board/community/participant/${boardNo}`,
+        contentType: "application/json",
+    }).done(function (response){
+        alert(response.value);
+    }).fail(function (request){
+        console.log("status: " + request.status);
+        console.log("responseText: " + request.responseText);
+        console.log("error: " + request.error);
+    });
+
+}

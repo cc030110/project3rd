@@ -14,4 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ParticipantService {
 
+    private final ParticipantRepository participantRepository;
+
 }

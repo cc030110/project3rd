@@ -1,17 +1,19 @@
-function deleteUser(){
-    const password = $('#password').val();
+function deleteUser(id,password){
+    const passwordchk = $('#password').val();
 
-    console.log(password);
-    $.ajax({
-        type: "delete",
-        url: `/user/resign`,
-        data:JSON.stringify(password),
-        contentType: 'application/json',
+    if(password===passwordchk){
+        let data = {
+            "id":id,
+            "password":password
+        }
+        $.ajax({
+            type: "delete",
+            url: `/user/resign`,
+            data:JSON.stringify(data),
+            contentType: 'application/json',
         }).done(function (response){
-            console.log(response);
-            alert(response);
-            if(response.delete==="success"){
-                alert("회원 탈퇴 성공");
+            if(response.value==="success"){
+                alert("회원 탈퇴 완료");
                 logout();
                 window.location.href = "/";
             }else{
@@ -21,6 +23,11 @@ function deleteUser(){
             alert("회원 탈퇴 실패");
             window.location.href = "";
         });
+    }else{
+        alert("비밀번호가 일치하지 않습니다.");
+    }
+
+
 }
 
 // 로그아웃

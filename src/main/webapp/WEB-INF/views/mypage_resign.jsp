@@ -23,7 +23,7 @@
             <label for="password">비밀번호</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <button type="submit" class="submit-btn" onclick="deleteUser()">회원 탈퇴</button>
+        <button type="submit" class="submit-btn" onclick="deleteUser(`${user.id}`,`${user.password}`)">회원 탈퇴</button>
     </form>
 </div>
 <script src="/script/user-delete.js"></script>

@@ -13,10 +13,7 @@ public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int participantNo;
-
-    @Column
     private int boardNo;
-
-    @Column
     private String participantId;
+    private short isAccept;
 }

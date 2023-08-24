@@ -84,7 +84,7 @@ public class UserController {
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
 
-        if(user!=null&&user.getPassword().equals(loginDto.getPassword())){
+        if (user != null && user.getPassword().equals(loginDto.getPassword())) {
             String name = user.getName();
             String accessToken = jwtTokenizer.createAccessToken(id, name);
 //            String refreshToken = JwtTokenizer.createRefreshToken(id);
@@ -127,63 +127,66 @@ public class UserController {
     }
 
 
-    /** 회원 가입 **/
+    /**
+     * 회원 가입
+     **/
     @GetMapping("/join")
     public ModelAndView JoinForm() {
         ModelAndView view = new ModelAndView("user_join");
         List<Language> languages = languageRepository.findAll();
         // DB에 저장되어있는 언어코드 목록 가져오기
-        if(!languages.isEmpty()){
+        if (!languages.isEmpty()) {
             List<String> languageCode = new ArrayList<>();
             for (Language language : languages) {
                 languageCode.add(language.getLanguageCode());
             }
-            view.addObject("languageCode",languageCode);
+            view.addObject("languageCode", languageCode);
         }
         return view;
     }
+
     @PostMapping(value = "/join")
-    public Response join(@RequestBody UserRequestDto userRequestDto){
+    public Response join(@RequestBody UserRequestDto userRequestDto) {
         List<String> needLang = userRequestDto.getNeedLang();
         List<String> useLang = userRequestDto.getUseLang();
 
         // 아이디 중복 검사
         String id = userRequestDto.getId();
         User user = userRepository.findById(id).orElse(null);
-        if(user!=null){
-            return new Response("err","중복되는 아이디 사용 불가");
+        if (user != null) {
+            return new Response("err", "중복되는 아이디 사용 불가");
         }
         // 이메일 중복 검사
         String email = userRequestDto.getEmail();
         user = userRepository.findByEmail(email);
-        if(user!=null){
-            return new Response("err","중복되는 이메일 사용 불가");
+        if (user != null) {
+            return new Response("err", "중복되는 이메일 사용 불가");
         }
         // 이름(닉네임) 중복 검사
         String name = userRequestDto.getName();
         user = userRepository.findByName(name);
-        if(user!=null){
-            return new Response("err","중복되는 닉네임 사용 불가");
+        if (user != null) {
+            return new Response("err", "중복되는 닉네임 사용 불가");
         }
 
         User joinUser = new User(userRequestDto);
-        try{
+        try {
             userRepository.save(joinUser);
             // 정상적으로 유저가 DB에 등록되면 useLang과 needLang도 등록
-            languageService.setUseLanguage(id,useLang);
-            languageService.setNeedLang(id,needLang);
-        }catch (Exception e){
-            return new Response("err","회원가입 실패");
+            languageService.setUseLanguage(id, useLang);
+            languageService.setNeedLang(id, needLang);
+        } catch (Exception e) {
+            return new Response("err", "회원가입 실패");
         }
 
-        return new Response("join","회원가입 성공");
+        return new Response("join", "회원가입 성공");
     }
 
-    @PostMapping(value="/join/profile", consumes = {"multipart/form-data"})
-    public String uploadProfile(@RequestParam("img") MultipartFile file){
+    @PostMapping(value = "/join/profile", consumes = {"multipart/form-data"})
+    public String uploadProfile(@RequestParam("img") MultipartFile file) {
         String url = "";
         url = uploadFileService.uploadImgFile(file);
-        System.out.println("url:"+url);
+        System.out.println("url:" + url);
         return url;
     }
 
@@ -210,22 +213,23 @@ public class UserController {
             userRepository.findById(myId).ifPresent(myUser -> view.addObject("myUser", myUser));
             // 해당 유저에 대한 즐겨찾기 or 차단 여부 추가
             String userId = user.getId();
-            if(likeService.isUserLikeExists(myId,userId)){
-                view.addObject("isLiked",true);
-            }else if(blockService.isUserBlockExists(myId,userId)){
-                view.addObject("isBlocked",true);
+            if (likeService.isUserLikeExists(myId, userId)) {
+                view.addObject("isLiked", true);
+            } else if (blockService.isUserBlockExists(myId, userId)) {
+                view.addObject("isBlocked", true);
             }
         }
 
         return view;
     }
 
-//    @ResponseBody
+    //    @ResponseBody
     @PostMapping("/join/emailCheck")
     public BaseResponse<String> emailCheck(@RequestBody EmailCheckReq emailCheckReq) throws MessagingException, UnsupportedEncodingException {
         String authCode = emailService.sendEmail(emailCheckReq.getEmail());
         return new BaseResponse<>(authCode);
     }
+
     @PostMapping("/join/idCheck")
     public Response idCheck(@RequestBody UserRequestDto userRequestDto) {
         System.out.println(userRequestDto);
@@ -253,12 +257,14 @@ public class UserController {
     }
 
 
-    /**유저 10인 정보 불러오기(프로필 게시판)**/
+    /**
+     * 유저 10인 정보 불러오기(프로필 게시판)
+     **/
     @GetMapping("list/{page}")
     public ModelAndView userList(@PathVariable int page,
                                  @RequestParam(defaultValue = "") String keyword,
                                  Pageable pageable,
-                                 @CookieValue(value = "accessToken", required = false) String accessToken){
+                                 @CookieValue(value = "accessToken", required = false) String accessToken) {
 
         int pageSize = 5; // 한 페이지에 보여질 아이템 수를 1로 설정
         pageable = PageRequest.of(page - 1, pageSize); // 페이지 정보 재설정
@@ -280,45 +286,41 @@ public class UserController {
         return view;
     }
 
-    /** 회원 탈퇴 **/
+    /**
+     * 회원 탈퇴
+     **/
     @DeleteMapping("resign")
-    public Map delete(@CookieValue(value = "accessToken", required = false) String accessToken, @RequestBody UserRequestDto userRequestDto, HttpServletResponse responselogout){
-        JSONObject response = new JSONObject();
-
-        Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-        String id = claims.get("id", String.class);
-        String name = claims.get("name", String.class);
+    public Response delete(@RequestBody UserRequestDto userRequestDto, HttpServletResponse responselogout) {
+        String id = userRequestDto.getId();
         String password = userRequestDto.getPassword();
-
-        System.out.println(password);
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
 
-        if(password.equals(user.getPassword()))
-        //&& log.equals(user.getId())
-        {
-            userService.deleteUser(id);
-            logout(responselogout);
-            response.put("delete", "success");
-        } else {
-            response.put("delete", "fail");
+        if(user!=null&&!user.getPassword().equals(password)){
+            return new Response("delete","fail");
         }
 
-        return response.toMap();
+        try {
+            userService.deleteUser(id);
+            logout(responselogout);
+            return new Response("delete", "success");
+        } catch (Exception e) {
+            return new Response("delete", "fail");
+        }
     }
 
     /* 마이페이지 */
     @GetMapping("mypage")
-    public ModelAndView myPageMain(@CookieValue(value = "accessToken", required = false) String accessToken){
+    public ModelAndView myPageMain(@CookieValue(value = "accessToken", required = false) String accessToken) {
         ModelAndView view = new ModelAndView("user_my_page");
-        if(accessToken==null){
+        if (accessToken == null) {
             return new ModelAndView(new RedirectView("login"));
-        }else{
+        } else {
             Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-            String id=claims.get("id",String.class);
+            String id = claims.get("id", String.class);
             User user = userRepository.findById(id).orElse(null);
-            if(user!=null){
+            if (user != null) {
                 view.addObject(user);
             }
         }
@@ -327,31 +329,30 @@ public class UserController {
 
     // 마이페이지 메뉴 내용 출력
     @GetMapping("mypage/content")
-    public ModelAndView myPageUpdate(@RequestParam String menu, @CookieValue(value = "accessToken", required = false) String accessToken){
+    public ModelAndView myPageUpdate(@RequestParam String menu, @CookieValue(value = "accessToken", required = false) String accessToken) {
         ModelAndView view = new ModelAndView();
 
-        if(accessToken==null){
+        if (accessToken == null) {
             return view;
         }
 
         List<Language> languages = languageRepository.findAll();
         // DB에 저장되어있는 언어코드 목록 가져오기
-        if(!languages.isEmpty()){
+        if (!languages.isEmpty()) {
             List<String> languageCode = new ArrayList<>();
             for (Language language : languages) {
                 languageCode.add(language.getLanguageCode());
             }
-            view.addObject("languageCode",languageCode);
+            view.addObject("languageCode", languageCode);
         }
 
         Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
-        String id=claims.get("id",String.class);
+        String id = claims.get("id", String.class);
         User user = userRepository.findById(id).orElse(null);
 
 
-
         // 유저 정보 add
-        view.addObject("user",user);
+        view.addObject("user", user);
 
         switch (menu) {
             case "update": // 정보 조회/수정
@@ -360,43 +361,43 @@ public class UserController {
 
                 view.setViewName("mypage_update");
                 view.addObject("needLang", needLang);
-                view.addObject("useLang",useLang);
+                view.addObject("useLang", useLang);
                 break;
             case "like-block": // 즐겨찾기/차단 목록
                 // 해당 유저의 like 리스트 <- name으로
                 List<String> likeIds = new ArrayList<>();
                 likeIds = likeService.likeList(id);
                 List<String> likeList = new ArrayList<>();
-                if(!likeIds.isEmpty()){
-                    for(String likeId : likeIds){
+                if (!likeIds.isEmpty()) {
+                    for (String likeId : likeIds) {
                         String name = userService.getUserName(likeId);
                         likeList.add(name);
                     }
                 }
-                view.addObject("likeList",likeList);
+                view.addObject("likeList", likeList);
                 // 해당 유저의 block 리스트 <- name으로
                 List<String> blockIds = new ArrayList<>();
                 blockIds = blockService.blockList(id);
                 List<String> blockList = new ArrayList<>();
-                if(!blockIds.isEmpty()){
-                    for(String likeId : blockIds){
+                if (!blockIds.isEmpty()) {
+                    for (String likeId : blockIds) {
                         String name = userService.getUserName(likeId);
                         blockList.add(name);
                     }
                 }
-                view.addObject("blockList",blockList);
+                view.addObject("blockList", blockList);
                 view.setViewName("mypage_like_block");
                 break;
             case "board-free":
                 // 해당 유저의 board_free 작성글 리스트 추가
                 List<BoardFree> boardFreeList = boardFreeService.getBoardListById(id);
-                view.addObject("boardList",boardFreeList);
+                view.addObject("boardList", boardFreeList);
                 view.setViewName("mypage_board_free");
                 break;
             case "board-community":
                 // 해당 유저의 board_community 작성글 리스트 추가
                 List<BoardCommunity> boardCommunityList = boardCommunityService.getBoardListById(id);
-                view.addObject("boardList",boardCommunityList) ;
+                view.addObject("boardList", boardCommunityList);
                 view.setViewName("mypage_board_community");
                 break;
             case "resign":
@@ -408,7 +409,7 @@ public class UserController {
     }
 
     @PutMapping("update")
-    public Response update(@RequestBody UserRequestDto userRequestDto){
+    public Response update(@RequestBody UserRequestDto userRequestDto) {
 
 
         String id = userRequestDto.getId();
@@ -430,16 +431,16 @@ public class UserController {
         System.out.println(profileImg);
 
         User user = userRepository.findById(id).orElse(null);
-        try{
+        try {
             userService.updateUser(id, userRequestDto, profileImg);
             // 정상적으로 유저가 DB에 등록되면 useLang과 needLang도 등록
-            languageService.setUseLanguage(id,useLang);
-            languageService.setNeedLang(id,needLang);
-        }catch (Exception e){
-            return new Response("err","회원수정 실패");
+            languageService.setUseLanguage(id, useLang);
+            languageService.setNeedLang(id, needLang);
+        } catch (Exception e) {
+            return new Response("err", "회원수정 실패");
         }
 
-        return new Response("update","회원수정 성공");
+        return new Response("update", "회원수정 성공");
     }
 
 }

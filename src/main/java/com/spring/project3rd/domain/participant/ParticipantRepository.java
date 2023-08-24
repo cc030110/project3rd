@@ -7,9 +7,7 @@ import java.util.List;
 
 
 public interface ParticipantRepository extends JpaRepository<Participant,String> {
-    // user id를 이용하여 participant id 조회
+
+    // boardNo와 id를 입력받아 해당하는 신청 내역 가져오기
     Participant findByBoardNoAndParticipantId(int boardNo, String participantId);
-
-
-
 }
