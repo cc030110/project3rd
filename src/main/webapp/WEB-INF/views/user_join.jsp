@@ -13,7 +13,9 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/join.css">
-    <title>회원가입</title>
+    <!-- favicon -->
+    <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
+    <title><spring:message code="user_join.title"/></title>
 </head>
 <body>
 <div class="wrap">
@@ -26,9 +28,9 @@
                         <div class="email-box">
                             <input class="id-check normal id-change" type="text" id="id" name="id"
                                    placeholder="<spring:message code="user_join.id"/>">
-                            <button type="button" id="id-check" onclick="idCheck()">중복 확인</button>
+                            <button type="button" id="id-check" onclick="idCheck()"><spring:message code="user_join.dupl-check"/></button>
                         </div>
-                        <p class="id-change">아이디 중복 체크 필요</p>
+                        <p class="id-change"><spring:message code="user_join.dupl-check-msg-id"/></p>
                         <p class="id-check err"><spring:message code="user_join.id-required"/></p>
                     </div>
                     <div class="line err-care">
@@ -45,32 +47,32 @@
                         <div class="email-box">
                             <input class="name-check normal name-change" type="text" id="name" name="name"
                                    placeholder="<spring:message code="user_join.name"/>">
-                            <button type="button" id="name-check" onclick="nameCheck()">중복 확인</button>
+                            <button type="button" id="name-check" onclick="nameCheck()"><spring:message code="user_join.dupl-check"/></button>
                         </div>
-                        <p class="name-change">닉네임 중복 체크 필요</p>
+                        <p class="name-change"><spring:message code="user_join.dupl-check-msg-name"/></p>
                         <p class="name-check err"><spring:message code="user_join.name-required"/></p>
                     </div>
                     <div class="line err-care">
                         <div class="email-box">
                             <input class="email-check" type="email" id="email" name="email"
                                    placeholder="<spring:message code="user_join.email"/>">
-                            <button type="button" id="sendEmailButton" onclick="sendEmail()">인증번호 요청</button>
+                            <button type="button" id="sendEmailButton" onclick="sendEmail()"><spring:message code="user_join.mail-required-btn"/></button>
                         </div>
                         <p class="email-check err"><spring:message code="user_join.mail-required"/></p>
                     </div>
                     <div class="line err-care">
                         <div class="email-box">
                             <input class="email-check-number" type="text" id="verificationCodeInput"
-                                   placeholder="인증 번호 입력">
-                            <button type="button" id="verifyButton" onclick="verifyCode()">확인</button>
+                                   placeholder="<spring:message code="user_join.mail-required"/>">
+                            <button type="button" id="verifyButton" onclick="verifyCode()"><spring:message code="user_join.mail-check-btn"/></button>
                         </div>
                         <p class="email-check-number" id="resultMessage"></p>
                     </div>
                     <div class="line gender-container">
                         <div class="gender-box">
-                            <input type="radio" class="gender" id="male" name="gender" value="남" checked>
+                            <input type="radio" class="gender" id="male" name="gender" value=<spring:message code="user_join.male"/> checked>
                             <label for="male"><spring:message code="user_join.male"/></label>
-                            <input type="radio" class="gender" id="female" name="gender" value="여">
+                            <input type="radio" class="gender" id="female" name="gender" value=<spring:message code="user_join.female"/>>
                             <label for="female"><spring:message code="user_join.female"/></label>
                         </div>
                     </div>

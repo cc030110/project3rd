@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>자유 게시판</title>
+    <title><spring:message code="board_free.title"/></title>
+    <!-- favicon -->
+    <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
     <link rel="stylesheet" href="/css/board_free.css">
 </head>
 <body>
@@ -12,7 +14,7 @@
     <div class="main">
         <c:choose>
             <c:when test="${board eq null}">
-                <div id="not-exist">존재하지 않는 게시글입니다.</div>
+                <div id="not-exist"><spring:message code="board_free.exist"/></div>
             </c:when>
 
             <c:otherwise>
@@ -20,28 +22,28 @@
                     <c:if test="${not empty id && id eq board.id}">
                         <div class="btn-group">
                             <a href="/board/free/${board.boardNo}/update" id="update-btn">
-                                <input type="button" id="modify-btn" value="수정"/>
+                                <input type="button" id="modify-btn" value=<spring:message code="board_free.modify"/>>
                             </a>
-                            <input type="button" id="delete-btn" onclick="deleteBoard(${board.boardNo})" value="삭제">
+                            <input type="button" id="delete-btn" onclick="deleteBoard(${board.boardNo})" value=<spring:message code="board_free.delete"/>>
                         </div>
                     </c:if>
 
                     <div class="back_btn">
-                        <input type="button" id="back-btn" value="뒤로가기">
+                        <input type="button" id="back-btn" value=<spring:message code="board_free.back"/>>
                     </div>
                 </div>
 
                 <div class="second-line">
-                    <div class="title">제목 : ${board.title}</div>
+                    <div class="title"><spring:message code="board_free.boardTitle"/> : ${board.title}</div>
                 </div>
 
                 <div class="third-line">
                     <div class="creator">
-                        작성자 : ${board.name}
+                        <spring:message code="board_free.author"/> : ${board.name}
                     </div>
 
                     <div class="etc">
-                        <span>조회수 : ${board.views}</span> | <span>작성일 : ${board.createdAt}</span>
+                        <span><spring:message code="board_free.views"/> : ${board.views}</span> | <span><spring:message code="board_free.createdAt"/> : ${board.createdAt}</span>
                     </div>
                 </div>
 

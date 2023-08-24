@@ -4,6 +4,8 @@
 <html>
 <head>
     <title><spring:message code="board_free_list.logo"/></title>
+    <!-- favicon -->
+    <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
     <link rel="stylesheet" href="/css/board_free_list.css">
 </head>
 <body>
@@ -15,7 +17,7 @@
             <div>
                 <span>
                     <spring:message code="board_free_list.total"/>
-                    ${boardList.totalElements}
+                        ${boardList.totalElements}
                     <spring:message code="board_free_list.unit"/>
                 </span>
                 <span>[
@@ -41,8 +43,7 @@
                 </div>
                 <div class="search-box">
                     <input type="text" id="search-input" name="search-input">
-                    <input type="button" id="search-btn" onclick="searchBoard(${boardList.number+1})" value=<spring:message
-                            code="board_free_list.search"/>>
+                    <input type="button" id="search-btn" onclick="searchBoard(${boardList.number+1})" value=<spring:message code="board_free_list.search"/>>
                 </div>
             </div>
         </div>

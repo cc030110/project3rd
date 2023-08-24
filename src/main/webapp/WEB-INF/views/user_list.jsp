@@ -12,21 +12,23 @@
 <html>
 
 <head>
-    <title>Title</title>
+    <title><spring:message code="user_list.title"/></title>
     <link rel="stylesheet" href="/css/user_list.css">
+    <!-- favicon -->
+    <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
 </head>
 
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
-        <div class="logo">
-            <h1>유 저 프 로 필</h1>
+        <div class="main_logo">
+            <h1><spring:message code="user_list.title"/></h1>
         </div>
         <!-- 콘텐츠 수 표시 -->
         <div class="content-row">
             <div class="contents-num">
-                <span>총 ${userList.totalElements} 건</span>
+                <span><spring:message code="user_list.total"/> ${userList.totalElements}<spring:message code="user_list.unit"/></span>
                 <span>[${userList.number + 1}/${userList.totalPages}]</span>
             </div>
 
@@ -34,9 +36,8 @@
             <div id="select-search-box">
                 <div class="select-box">
                     <select id="search-select">
-                        <option value="title" selected><spring:message code="board_community_main.select1"/></option>
-                        <option value="author"><spring:message code="board_community_main.select2"/></option>
-                        <option value="platform"><spring:message code="board_community_main.select3"/></option>
+                        <option value="title" selected><spring:message code="user_list.nickname"/></option>
+                        <option value="author"><spring:message code="user_list.nation"/></option>
                     </select>
 
                     <span class="select-arrow">
@@ -45,7 +46,7 @@
                 </div>
                 <div class="search-box">
                     <input type="text" id="search-input" name="search-input">
-                    <input type="button" id="search-btn" onclick="searchBoardCommunity(${boardList.number+1})" value=<spring:message code="board_community_main.search"/>>
+                    <input type="button" id="search-btn" value=<spring:message code="user_list.search"/>>
                 </div>
             </div>
         </div>
@@ -64,8 +65,8 @@
                             </c:otherwise>
                         </c:choose>
                     </a>
-                    <p>닉네임 : <a href="/user/${user.name}">${user.name}</a></p>
-                    <p>국적 : ${user.liveCountry}</p>
+                    <p><spring:message code="user_list.nickname"/> : <a href="/user/${user.name}">${user.name}</a></p>
+                    <p><spring:message code="user_list.nation"/> : ${user.liveCountry}</p>
                 </div>
             </c:forEach>
         </div>
@@ -92,7 +93,6 @@
             </ul>
         </nav>
     </div>
-
     <c:import url="footer.jsp"/>
 </div>
 </body>
