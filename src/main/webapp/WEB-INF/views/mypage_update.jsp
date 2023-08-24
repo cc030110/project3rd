@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/css/mypage_update.css">
     <!-- favicon -->
     <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
-    <title></title>
+    <title><spring:message code="mypage.title"/></title>
 </head>
 <body>
 <form>
@@ -36,7 +36,7 @@
                        accept="image/png, image/jpg, image/jpeg, image.gif" onclick="deleteSavedProfile()()">
             </div>
             <div class="update-id show-box line">
-                <label for="user-id">아이디 : </label>
+                <label for="user-id">ID : </label>
                 <input type="text" id="user-id" name="user-id" value="${user.id}" readonly>
             </div>
             <div class="update-name show-box line">
@@ -44,7 +44,8 @@
                 <input type="text" id="user-name" name="user-name" value="${user.name}" readonly>
             </div>
             <div class="update-gender show-box line">
-                <label for="user-gender">성&nbsp;&nbsp;&nbsp;별 : </label>
+                <label for="user-gender">성&nbsp;&nbsp;&nbsp;별
+                    : </label>
                 <input type="text" id="user-gender" name="user-gender" value="${user.gender}" readonly>
             </div>
             <div class="show-box line">

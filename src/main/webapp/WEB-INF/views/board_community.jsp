@@ -21,8 +21,9 @@
     <div class="main">
         <c:choose>
             <c:when test="${board eq null}">
-                <p>존재하지 않는 게시글입니다.</p>
+                <p><spring:message code="board_community.exist"/></p>
             </c:when>
+
             <c:otherwise>
                 <input type="hidden" id="board_num_hidden" value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
                     <div class="first_line">
@@ -76,7 +77,7 @@
                 </div>
 
                 <<div class="participate_btn">
-                    <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value="Join this community">
+                    <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value=<spring:message code="board_community.join"/>>
                 </div>
 
             </c:otherwise>

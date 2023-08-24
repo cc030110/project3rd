@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <html>
 <head>
     <!-- favicon -->
@@ -17,7 +19,7 @@
 <div class="my-board-community">
     <c:choose>
         <c:when test="${empty boardList}">
-            작성한 게시글이 존재하지 않습니다.
+            <spring:message code="mypage.warn"/>
         </c:when>
         <c:otherwise>
             <c:forEach items="${boardList}" var="board">
