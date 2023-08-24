@@ -368,16 +368,32 @@ public class UserController {
             return view;
         }
 
+        List<Language> languages = languageRepository.findAll();
+        // DB에 저장되어있는 언어코드 목록 가져오기
+        if(!languages.isEmpty()){
+            List<String> languageCode = new ArrayList<>();
+            for (Language language : languages) {
+                languageCode.add(language.getLanguageCode());
+            }
+            view.addObject("languageCode",languageCode);
+        }
+
         Claims claims = jwtTokenizer.parseToken(accessToken, jwtTokenizer.accessSecret);
         String id=claims.get("id",String.class);
         User user = userRepository.findById(id).orElse(null);
+
 
         // 유저 정보 add
         view.addObject("user",user);
 
         switch (menu) {
             case "update":
+                List<String> needLang = languageService.getNeedLanguage(id);
+                List<String> useLang = languageService.getUseLanguage(id);
+
                 view.setViewName("mypage_update");
+                view.addObject("needLang", needLang);
+                view.addObject("useLang",useLang);
                 break;
             case "like-block":
                 // 해당 유저의 like / block 리스트 추가

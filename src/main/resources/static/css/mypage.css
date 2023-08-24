@@ -31,9 +31,8 @@
     height: 100%;
 }
 
-/* 내용 */
+ /*내용 */
 .content-container{
-    background-color: #48A56F;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -47,8 +46,5 @@ h2#selected-menu{
     font-size: 1.5rem;
 }
 
-#content{
-    background-color: aliceblue;
-}
 
 

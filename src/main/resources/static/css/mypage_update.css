@@ -1,47 +1,48 @@
-/* 유저 수정 */
 .update-container{
     margin : 0 auto;
     max-width: 900px;
-    width: 40%;
-    border: 1px solid black;
-    margin-top: 50px;
-}
-#content{
-    display: flex;
-    flex-flow: column wrap;
-    margin: 10px auto;
-    text-align: left;
-}
+    width: 90%;
+    border: none;
+    border-radius: 30px;
 
-.update-profile-img{
-    width: 200px;
-    height: 200px;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.update-container img{
     margin-top: 20px;
 }
+#left-container,
+#right-container{
+    height: 600px;
+    background-color: aliceblue;
+    padding-top: 30px;
+}
+.update-profile-img{
+    margin: 0 auto;
+}
 .update-profile-img>img{
-    width: 100%;
-    height: 100%;
+    width: 40%;
+    height: 40%;
 }
 
 .update-profile {
     margin: 0 auto;
-    width: 100px;
+    width: 140px;
     height: 30px;
     background: #cfeaff;
     line-height: 30px;
     border-radius: 20px;
 }
-#profileImgBtn{
-    cursor: pointer;
-}
+/*#profileImgBtn{*/
+/*    cursor: pointer;*/
+/*}*/
 
 .update-profile,
-.update-id,
-.update-name,
 .update-pwd,
 .update-pwd-chk,
-.update-btn {
+.update-btn
+.show-box{
     margin: 20px auto; /* 각 div 요소를 수평 가운데로 정렬합니다 */
     text-align: center; /* 내부 요소들을 가운데로 정렬하기 위해 추가 */
 }
@@ -53,4 +54,132 @@
     line-height: 30px;
     border-radius: 20px;
     border: none;
+    margin-bottom: 20px;
  }
+#user-id,
+#user-name,
+#user-gender,
+#user-age,
+#user-email{
+    background: none;
+    border: none;
+    font-size: 18px;
+    text-align: center;
+}
+
+
+
+/*버튼*/
+.position {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 15%;
+}
+
+#workarea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #1e1a3e;
+    font-family: Raleway;
+}
+
+#personal {
+    color:white;
+    text-decoration:none;
+    position:absolute;
+    bottom:15px;
+    right:2%;
+}
+
+
+.svg-wrapper {
+    margin-top: 30px;
+    position: relative;
+    width: 150px;
+    /*make sure to use same height/width as in the html*/
+    height: 40px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+#shape {
+    stroke-width: 6px;
+    fill: transparent;
+    stroke: #009FFD;
+    stroke-dasharray: 85 400;
+    stroke-dashoffset: -220;
+    transition: 1s all ease;
+}
+
+#text {
+    margin-top: -31px;
+    text-align: center;
+}
+
+#text a {
+    text-decoration: none;
+    font-weight: 100;
+    font-size: 1.1em;
+}
+
+.svg-wrapper:hover #shape {
+    stroke-dasharray: 50 0;
+    stroke-width: 3px;
+    stroke-dashoffset: 0;
+    stroke: #06D6A0;
+    cursor: pointer;
+}
+.spot{
+    cursor: pointer;
+    color: #2C875F;
+}
+a.spot {
+    color: #2C875F;
+}
+
+.lang-choose {
+    display: flex; /* 가로 정렬을 위한 flex 컨테이너로 설정 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+
+.use-lang-box, .need-lang-box{
+    flex: 1; /* 남은 공간을 채우도록 flex-grow 설정 */
+    margin-right: 10px; /* 오른쪽 여백 추가 */
+    min-height: 30px;
+    border: 0.7px solid gray;
+    line-height: 30px;
+    text-align: center;
+    border : 0.7px solid lightgray;
+}
+#use-lang, #need-lang{
+    margin-left: 10px;
+}
+
+.use-lang-box  div, .wish-lang-box div {
+    display: inline-block; /* 내용을 한 줄에 나란히 표시 */
+    vertical-align: top; /* 상단 정렬 */
+}
+.line{
+    margin-bottom: 20px;
+}
+
+
+.fixed-textarea {
+    resize: none;
+    width: 100%;
+}
+.lang-choose{
+    margin-left: 10px;
+}
+
+.right-set{
+    text-align: left;
+    margin-left: 10px;
+}
+.intro{
+    margin-left: 10px;
+}
