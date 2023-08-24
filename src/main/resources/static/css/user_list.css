@@ -5,17 +5,147 @@ body{
     background-color:#F0F0EF;
 }
 
+.main{
+    margin:50px 10%;
+}
+
+.logo{
+    margin-bottom:50px;
+    text-align:center;
+    font-weight:bold;
+}
+
+/* 검색 */
+h2{
+    text-align: center;
+}
+
+.content-row{
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.contents-num{
+    margin-left:12px;
+}
+
+#select-search-box{
+    display: flex;
+    justify-content: flex-end;
+    margin-right:12px;
+}
+
+select{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.select-box {
+    position: relative;
+    width: 100px;
+    height: 30px;
+    border-radius: 4px;
+    border: 1px solid black;
+}
+
+#search-select {
+    width: inherit;
+    height: inherit;
+    background: transparent;
+    border: 0 none;
+    outline: 0 none;
+    padding-left: 10px;
+    position: relative;
+    z-index: 10;
+    /*background-color:white;*/
+}
+
+#search-select option {
+    padding: 5px;
+    min-height: 30px;
+}
+
+.select-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 35px;
+    height: inherit;
+    border-left: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-arrow img {
+    width: 25px;
+}
+
+.rotated {
+    transform: rotate(180deg);
+}
+
+#search-input{
+    height: 30px;
+    margin-left: 10px;
+    border-radius: 4px;
+}
+
+#search-btn{
+    height: 30px;
+    background-color: #257954;
+    color: white;
+    border-radius: 4px;
+    width: 50px;
+    cursor: pointer;
+}
+
+.write{
+    width: 100%;
+    text-align: right;
+    white-space: nowrap;
+}
+
+#write-btn{
+    display: inline-block;
+    border: 1px solid black;
+    background-color: #257954;
+    color: white;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+#write-btn>a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+/* 메인 콘텐츠 */
 .users {
+    width:100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    margin : 50px 0;
 }
 
 .user-box {
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
-    width: 220px;
+    width: 200px;
     text-align: center;
 }
 
@@ -24,6 +154,8 @@ body{
     height: 130px;
     margin-bottom: 10px;
 }
+
+
 
 .pagination {
     display: flex;
@@ -51,9 +183,9 @@ body{
 }
 
 .pagination .page-item.active .page-link {
-    background-color: #007bff;
+    background-color: #2C875F;
     color: #fff;
-    border-color: #007bff;
+    border-color: #2C875F;
 }
 
 .pagination .page-item.disabled .page-link {

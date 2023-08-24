@@ -10,16 +10,47 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
+
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="/css/user_list.css">
 </head>
+
 <body>
 <div class="wrap">
     <c:import url="header.jsp"/>
     <div class="main">
-        <span>총 ${userList.totalElements} 건</span>
-        <span>[${userList.number + 1}/${userList.totalPages}]</span>
+        <div class="logo">
+            <h1>유 저 프 로 필</h1>
+        </div>
+        <!-- 콘텐츠 수 표시 -->
+        <div class="content-row">
+            <div class="contents-num">
+                <span>총 ${userList.totalElements} 건</span>
+                <span>[${userList.number + 1}/${userList.totalPages}]</span>
+            </div>
+
+            <!-- 검색 -->
+            <div id="select-search-box">
+                <div class="select-box">
+                    <select id="search-select">
+                        <option value="title" selected><spring:message code="board_community_main.select1"/></option>
+                        <option value="author"><spring:message code="board_community_main.select2"/></option>
+                        <option value="platform"><spring:message code="board_community_main.select3"/></option>
+                    </select>
+
+                    <span class="select-arrow">
+                        <img src="https://ucarecdn.com/326e1541-5ce3-4908-836d-d735660c0300/" alt=""/>
+                    </span>
+                </div>
+                <div class="search-box">
+                    <input type="text" id="search-input" name="search-input">
+                    <input type="button" id="search-btn" onclick="searchBoardCommunity(${boardList.number+1})" value=<spring:message code="board_community_main.search"/>>
+                </div>
+            </div>
+        </div>
+
+
         <div class="users">
             <c:forEach items="${userList.content}" var="user">
                 <div class="user-box">
@@ -38,6 +69,7 @@
                 </div>
             </c:forEach>
         </div>
+
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <c:if test="${userList.number > 4}">

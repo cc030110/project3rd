@@ -19,7 +19,7 @@
             <h2><a href="/board/community/main/1"><spring:message code="board_community_main.logo"/></a></h2>
             <div class="content-row">
                 <div>
-                <span><spring:message code="board_community_main.total"/>
+                    <span><spring:message code="board_community_main.total"/>
                         ${boardList.totalElements}
                         <spring:message code="board_community_main.unit"/>
                     </span>
@@ -52,6 +52,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="list">
             <c:if test="${not empty boardList.content}">
                 <c:forEach items="${boardList.content}" var="board" varStatus="vs">
