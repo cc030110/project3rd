@@ -27,8 +27,6 @@ public class LikeController {
     public ResponseEntity<String> likeUser(@RequestBody UserLikeId ids){
         String userID = ids.getUserId();
         String likeId = ids.getLikeId();
-        System.out.println("userId:"+userID);
-        System.out.println("likeId:"+likeId);
         UserLike like = new UserLike(userID,likeId);
         try{
             likeRepository.save(like);

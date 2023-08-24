@@ -24,4 +24,15 @@ function blockUser(userId,myId){
         "blockId":userId
     }
 
+    $.ajax({
+        'method' : 'POST',
+        'url' : '/user/block',
+        'data' : JSON.stringify(data),
+        'contentType' : 'application/json',
+    }).done(function (response){
+        console.log(response);
+    }).fail(function (response){
+        console.log(response);
+    });
+
 }
