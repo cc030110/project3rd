@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -50,11 +51,9 @@ public class LikeController {
     // 즐겨찾기 취소
     @DeleteMapping("/cancel")
     public Response likeCancelUser(@RequestBody UserLikeId ids){
-        String userID = ids.getUserId();
-        String likeId = ids.getLikeId();
-        UserLike like = new UserLike(userID,likeId);
+        UserLike userLike = likeRepository.findById(ids).orElse(null);
         try{
-            likeService.likeCancel(like);
+            likeService.likeCancel(userLike);
             return new Response("success","Like canceled successfully.");
         }catch (Exception e){
             return new Response("fail","Error cancel like");

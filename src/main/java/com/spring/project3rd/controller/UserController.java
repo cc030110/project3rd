@@ -351,7 +351,7 @@ public class UserController {
         view.addObject("user",user);
 
         switch (menu) {
-            case "update":
+            case "update": // 정보 조회/수정
                 List<String> needLang = languageService.getNeedLanguage(id);
                 List<String> useLang = languageService.getUseLanguage(id);
 
@@ -359,10 +359,29 @@ public class UserController {
                 view.addObject("needLang", needLang);
                 view.addObject("useLang",useLang);
                 break;
-            case "like-block":
-                // 해당 유저의 like / block 리스트 추가
+            case "like-block": // 즐겨찾기/차단 목록
+                // 해당 유저의 like 리스트 <- name으로
+                List<String> likeIds = new ArrayList<>();
+                likeIds = likeService.likeList(id);
                 List<String> likeList = new ArrayList<>();
-                likeList = likeService.likeList(id);
+                if(!likeIds.isEmpty()){
+                    for(String likeId : likeIds){
+                        String name = userService.getUserName(likeId);
+                        likeList.add(name);
+                    }
+                }
+                view.addObject("likeList",likeList);
+                // 해당 유저의 block 리스트 <- name으로
+                List<String> blockIds = new ArrayList<>();
+                blockIds = blockService.blockList(id);
+                List<String> blockList = new ArrayList<>();
+                if(!blockIds.isEmpty()){
+                    for(String likeId : blockIds){
+                        String name = userService.getUserName(likeId);
+                        blockList.add(name);
+                    }
+                }
+                view.addObject("blockList",blockList);
                 view.setViewName("mypage_like_block");
                 break;
             case "board-free":

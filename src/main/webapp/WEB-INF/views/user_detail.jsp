@@ -23,17 +23,49 @@
                 </c:otherwise>
             </c:choose>
             <div class="user-info">
-                <p class="user-info-item"><span class="label"><spring:message code="user_detail.nickname"/> : </span> ${user.name}</p>
-                <p class="user-info-item"><span class="label"><spring:message code="user_detail.gender"/> : </span> ${user.gender}</p>
-                <p class="user-info-item"><span class="label"><spring:message code="user_detail.birth"/> : </span> ${user.birth}</p>
-                <p class="user-info-item"><span class="label"><spring:message code="user_detail.country"/> : </span> ${user.liveCountry}</p>
-                <p class="user-info-item"><span class="label"><spring:message code="user_detail.city"/> : </span> ${user.liveCity}</p>
+                <p class="user-info-item"><span class="label"><spring:message
+                        code="user_detail.nickname"/> : </span> ${user.name}</p>
+                <p class="user-info-item"><span class="label"><spring:message
+                        code="user_detail.gender"/> : </span> ${user.gender}</p>
+                <p class="user-info-item"><span class="label"><spring:message
+                        code="user_detail.birth"/> : </span> ${user.birth}</p>
+                <p class="user-info-item"><span class="label"><spring:message
+                        code="user_detail.country"/> : </span> ${user.liveCountry}</p>
+                <p class="user-info-item"><span class="label"><spring:message
+                        code="user_detail.city"/> : </span> ${user.liveCity}</p>
             </div>
         </div>
         <c:if test="${not empty myUser}">
             <div class="user-actions">
-                <button class="favorite-button" onclick="likeUser(`${user.id}`,`${myUser.id}`)"><spring:message code="user_detail.like"/></button>
-                <button class="report-button" onclick="blockUser(`${user.id}`,`${myUser.id}`)"><spring:message code="user_detail.block"/></button>
+                <c:choose>
+                    <c:when test="${user.id eq myUser.id}">
+
+                    </c:when>
+                    <c:when test="${isBlocked}">
+                        <!-- 차단 상태일 때 -->
+                        <div class="user-actions">
+                            <button class="report-button" onclick="unblockUser('${user.id}','${myUser.id}')">차단 해제
+                            </button>
+                        </div>
+                    </c:when>
+                    <c:when test="${isLiked}">
+                        <!-- 즐겨찾기 상태일 때 -->
+                        <div class="user-actions">
+                            <button class="favorite-button" onclick="cancelLikeUser('${user.id}','${myUser.id}')">즐겨찾기
+                                해제
+                            </button>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <!-- 둘 다 아닐 때 -->
+                        <div class="user-actions">
+                            <button class="favorite-button" onclick="likeUser('${user.id}','${myUser.id}')">
+                                <spring:message code="user_detail.like"/></button>
+                            <button class="report-button" onclick="blockUser('${user.id}','${myUser.id}')">
+                                <spring:message code="user_detail.block"/></button>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </c:if>
     </div>

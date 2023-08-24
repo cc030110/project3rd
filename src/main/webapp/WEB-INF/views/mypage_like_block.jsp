@@ -15,31 +15,31 @@
 </head>
 <body>
 <div>
-    <div>
-        즐겨찾기 목록
+    <div id="like-list-box">
+        <p>즐겨찾기 목록</p>
         <c:choose>
             <c:when test="${empty likeList}">
                 즐겨찾기한 유저가 존재하지 않습니다.
             </c:when>
             <c:otherwise>
                 <c:forEach items="${likeList}" var="likes">
-                    ${likes}
+                    <a href="/user/${likes}">${likes}</a>
                 </c:forEach>
             </c:otherwise>
         </c:choose>
     </div>
-    <div>
-        차단 목록
-<%--        <c:choose>--%>
-<%--            <c:when test="${empty blockList}">--%>
-<%--                차단한 유저가 존재하지 않습니다.--%>
-<%--            </c:when>--%>
-<%--            <c:otherwise>--%>
-<%--                <c:forEach items="${blockList}" var="blocks">--%>
-<%--                    ${blocks}--%>
-<%--                </c:forEach>--%>
-<%--            </c:otherwise>--%>
-<%--        </c:choose>--%>
+    <div id="block-list-box">
+        <p>차단 목록</p>
+        <c:choose>
+            <c:when test="${empty blockList}">
+                차단한 유저가 존재하지 않습니다.
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${blockList}" var="blocks">
+                    <a href="/user/${blocks}">${blocks}</a>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 </body>

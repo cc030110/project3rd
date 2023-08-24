@@ -51,9 +51,7 @@ public class BlockController {
     // 차단 해제
     @DeleteMapping("/unblock")
     public Response unblockUser(@RequestBody UserBlockId ids){
-        String userId = ids.getUserId();
-        String blockId = ids.getBlockId();
-        UserBlock block = new UserBlock(userId,blockId);
+        UserBlock block = blockRepository.findById(ids).orElse(null);
         try {
             blockService.unblock(block);
             return new Response("success","Unblocked successfully.");

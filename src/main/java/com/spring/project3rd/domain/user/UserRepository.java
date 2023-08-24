@@ -26,6 +26,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query(value = "SELECT `id` FROM `user` WHERE `is_active`=0",nativeQuery = true)
     List<String> findInactiveUserIds();
 
+
     Page<User> findByIdContaining(String keyword, Pageable pageable);
 }
 
