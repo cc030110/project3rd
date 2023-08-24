@@ -29,11 +29,25 @@ function updateForm() {
     console.log(intro);
 
     //
-    // // password 유효성 검사
-    // let condition = password.val().length >= 4 && /^[A-Za-z0-9]+$/.test(password.val());
-    // condition = password.val()!=="";
-    // const passwordValid = validateInput(password,condition);
-    // if(!passwordValid) return;
+// password 유효성 검사
+    const isPasswordValid = password.length >= 4 && /^[A-Za-z0-9]+$/.test(password);
+
+    if (!password) {
+        alert("비밀번호를 입력해주세요.");
+        return;
+    }
+
+    if (!isPasswordValid) {
+        alert("비밀번호를 올바르게 입력해주세요.");
+        return;
+    }
+
+    if (password !== password) {
+        alert("비밀번호 확인이 일치하지 않습니다.");
+        return;
+    }
+
+
     //
     // function isValidInputPassword(input) {
     //     // 정규식 패턴: 최소 6자 이상의 영어와 숫자만 허용
