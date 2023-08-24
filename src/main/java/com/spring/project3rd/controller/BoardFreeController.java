@@ -1,8 +1,5 @@
 package com.spring.project3rd.controller;
 
-import com.spring.project3rd.domain.boardCommunity.BoardCommunity;
-import com.spring.project3rd.domain.boardCommunity.BoardCommunityRequestDto;
-import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImg;
 import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.boardFree.BoardFreeRepository;
 import com.spring.project3rd.domain.boardFree.BoardFreeRequestDto;
@@ -10,17 +7,13 @@ import com.spring.project3rd.domain.boardFreeImg.BoardFreeImg;
 import com.spring.project3rd.domain.boardFreeImg.BoardFreeImgRepository;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
-import com.spring.project3rd.service.BlockService;
-import com.spring.project3rd.service.BoardFreeService;
-import com.spring.project3rd.service.UploadFileService;
-import com.spring.project3rd.service.UserService;
+import com.spring.project3rd.service.*;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -194,6 +187,9 @@ public class BoardFreeController {
                 String id = claims.get("id", String.class);
                 view.addObject("id", id);
             }
+
+
+
         }
         view.addObject("board", board);
         return view;

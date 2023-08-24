@@ -20,6 +20,8 @@ public class ParticipantController {
 
     private final BoardCommunityService boardCommunityService;
 
+
+    // 참가 신청
     @PostMapping("/{boardNo}")
     public Response participate(@CookieValue(value = "accessToken", required = false) String accessToken,
                                 @PathVariable int boardNo){
@@ -30,11 +32,18 @@ public class ParticipantController {
         String id = claims.get("id", String.class);
 
         Participant participant = participantRepository.findByBoardNoAndParticipantId(boardNo,id);
-        if(participant!=null)
+        if(participant!=null&&participant.getIsAccept()==0){
             return new Response("fail","이미 신청하였습니다.");
+        }else if(participant!=null&&participant.getIsAccept()==1){
+            return new Response("fail","이미 수락된 신청입니다.");
+        }else if(participant!=null&&participant.getIsAccept()==2){
+            return new Response("fail","이미 거절된 신청입니다.");
+        }
+
+        Participant newParticipant = new Participant(boardNo,id);
+        participantRepository.save(newParticipant);
 
         return new Response("success","완료");
-
     }
 
 }

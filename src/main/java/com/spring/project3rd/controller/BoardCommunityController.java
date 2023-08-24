@@ -5,16 +5,14 @@ import com.spring.project3rd.domain.boardCommunity.BoardCommunityRepository;
 import com.spring.project3rd.domain.boardCommunity.BoardCommunityRequestDto;
 import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImg;
 import com.spring.project3rd.domain.boardCommunityImg.BoardCommunityImgRepository;
+import com.spring.project3rd.domain.participant.Participant;
 import com.spring.project3rd.domain.platform.Platform;
 import com.spring.project3rd.domain.platform.PlatformRepository;
 import com.spring.project3rd.domain.user.User;
 import com.spring.project3rd.domain.user.UserRepository;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
-import com.spring.project3rd.service.BlockService;
-import com.spring.project3rd.service.BoardCommunityService;
-import com.spring.project3rd.service.UploadFileService;
-import com.spring.project3rd.service.UserService;
+import com.spring.project3rd.service.*;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 
@@ -44,6 +42,8 @@ public class BoardCommunityController{
     private final UserService userService;
     private final BlockService blockService;
     private final UploadFileService uploadFileService;
+    private final ParticipantService participantService;
+
 
     private final PlatformRepository platformRepository;
     private final UserRepository userRepository;
@@ -181,18 +181,15 @@ public class BoardCommunityController{
                 String id=claims.get("id",String.class);
                 view.addObject("id",id);
             }
+
+            // 게시글의 참가 수락 목록 전달
+            List<Participant> participants = participantService.getAcceptList(board.getBoardNo());
+            if(!participants.isEmpty()){
+                view.addObject("participants",participants);
+            }
+
         }
         view.addObject("board",board);
-
-        // 유저 이름 가져오기
-        Map<String,String> userInfo = new HashMap<>();
-        List<User> userList=userRepository.findAll();
-        for(User user : userList){
-            userInfo.put(user.getId(), user.getName());
-        }
-
-        view.addObject("user",userInfo);
-
 
         // 플랫폼 객체 가져오기
         Map<String,String> platforms = new HashMap<>();

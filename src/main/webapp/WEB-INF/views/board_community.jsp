@@ -72,9 +72,22 @@
                 </c:if>
 
                 <div class="participants_line">
-<%--                    <p>참가자</p>--%>
-                </div>
+                    <div class="participants_num">
+                        <span>참가자 [ ${participants.size()} / ${board.participantsNum} ]</span>
+                        <c:choose>
+                            <c:when test="${participants.size()==board.participantsNum}">
+                                [모집 완료]
+                            </c:when>
+                            <c:otherwise>
+                                [모집 중]
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                    <div class="participants_list">
 
+
+                    </div>
+                </div>
                 <<div class="participate_btn">
                     <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value="Join this community">
                 </div>
