@@ -287,6 +287,7 @@ public class BoardCommunityController{
 
         bcDto.setId(id);
         bcDto.setIsModified(modifyCheck);
+
         boardCommunityService.updateBoardByBoardNo(boardNo,name,bcDto);
 
         return new Response("Board Update","success");
