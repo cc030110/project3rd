@@ -8,7 +8,11 @@
 
 <head>
     <link rel="stylesheet" href="/css/board_community.css">
-    <title>GLOBALTIES</title>
+
+    <!-- favicon -->
+    <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
+
+    <title><spring:message code="board_community.main_title"/></title>
 </head>
 
 <body>
@@ -68,12 +72,12 @@
                 </c:if>
 
                 <div class="participants_line">
-                    <p>참가자</p>
+<%--                    <p>참가자</p>--%>
                 </div>
 
-                <div class="participate_btn">
+                <%--<div class="participate_btn">
                     <input type="button" id="participate_btn" value="Join this community">
-                </div>
+                </div>--%>
 
             </c:otherwise>
         </c:choose>

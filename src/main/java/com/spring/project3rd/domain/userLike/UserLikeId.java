@@ -29,9 +29,4 @@ public class UserLikeId implements Serializable {
         UserLikeId userLikeId = (UserLikeId) obj;
         return Objects.equals(userId, userLikeId.userId) && Objects.equals(likeId, userLikeId.likeId);
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userId, likeId);
-    }
 }

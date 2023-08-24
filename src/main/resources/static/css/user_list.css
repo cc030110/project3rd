@@ -9,7 +9,7 @@ body{
     margin:50px 10%;
 }
 
-.logo{
+.main_logo{
     margin-bottom:50px;
     text-align:center;
     font-weight:bold;
@@ -37,25 +37,22 @@ h2{
     margin-right:12px;
 }
 
-select{
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
 select::-ms-expand {
     display: none;
 }
 
 .select-box {
     position: relative;
-    width: 100px;
+    width: 110px;
     height: 30px;
     border-radius: 4px;
     border: 1px solid black;
 }
 
 #search-select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
     width: inherit;
     height: inherit;
     background: transparent;
@@ -103,8 +100,9 @@ select::-ms-expand {
     height: 30px;
     background-color: #257954;
     color: white;
+    font-weight:bold;
     border-radius: 4px;
-    width: 50px;
+    width: 60px;
     cursor: pointer;
 }
 

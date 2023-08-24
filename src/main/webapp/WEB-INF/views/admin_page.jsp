@@ -11,7 +11,9 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <link rel="stylesheet" href="/css/amdin_page.css">
-    <title>GlobalTies</title>
+    <!-- favicon -->
+    <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
+    <title>GLOBALTIES</title>
 </head>
 <body>
     <div id="wrap">

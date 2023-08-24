@@ -5,7 +5,9 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/user_detail.css">
-    <title>Title</title>
+    <!-- favicon -->
+    <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
+    <title><spring:message code="user_detail.title"/></title>
 </head>
 <body>
 <div class="wrap">
@@ -21,17 +23,17 @@
                 </c:otherwise>
             </c:choose>
             <div class="user-info">
-                <p class="user-info-item"><span class="label">Name:</span> ${user.name}</p>
-                <p class="user-info-item"><span class="label">Gender:</span> ${user.gender}</p>
-                <p class="user-info-item"><span class="label">Birth:</span> ${user.birth}</p>
-                <p class="user-info-item"><span class="label">Country:</span> ${user.liveCountry}</p>
-                <p class="user-info-item"><span class="label">City:</span> ${user.liveCity}</p>
+                <p class="user-info-item"><span class="label"><spring:message code="user_detail.nickname"/> : </span> ${user.name}</p>
+                <p class="user-info-item"><span class="label"><spring:message code="user_detail.gender"/> : </span> ${user.gender}</p>
+                <p class="user-info-item"><span class="label"><spring:message code="user_detail.birth"/> : </span> ${user.birth}</p>
+                <p class="user-info-item"><span class="label"><spring:message code="user_detail.country"/> : </span> ${user.liveCountry}</p>
+                <p class="user-info-item"><span class="label"><spring:message code="user_detail.city"/> : </span> ${user.liveCity}</p>
             </div>
         </div>
         <c:if test="${not empty myUser}">
             <div class="user-actions">
-                <button class="favorite-button" onclick="likeUser(`${user.id}`,`${myUser.id}`)">즐겨찾기</button>
-                <button class="report-button" onclick="blockUser(`${user.id}`,`${myUser.id}`)">차단하기</button>
+                <button class="favorite-button" onclick="likeUser(`${user.id}`,`${myUser.id}`)"><spring:message code="user_detail.like"/></button>
+                <button class="report-button" onclick="blockUser(`${user.id}`,`${myUser.id}`)"><spring:message code="user_detail.block"/></button>
             </div>
         </c:if>
     </div>
