@@ -35,4 +35,8 @@ public interface BoardCommunityRepository extends JpaRepository<BoardCommunity,I
     // 게시판 글 1개 불러오기
 //    public BoardCommunity findByBoardNoAndId(int boardNo, String id);       // creation은 내 맘대로 메소드를 정하는게 아니다 : 문서보고 만들 것
     public BoardCommunity getBoardCommunityByBoardNoAndName(int boardNo, String name);
+
+
+    // 유저가 작성한 게시글 목록
+    List<BoardCommunity> findById(String id);
 }

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,4 +34,12 @@ public class BoardFreeService {
     public void addViews(BoardFree board){
         board.viewPlus();
     }
+
+    // 유저가 작성한 게시글 목록
+    public List<BoardFree> getBoardListById(String id){
+        List<BoardFree> list = new ArrayList<>();
+        list = boardFreeRepository.findById(id);
+        return list;
+    }
+
 }

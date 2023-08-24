@@ -151,7 +151,7 @@ public class BoardCommunityController{
         view.addObject("startPage",startPage);
         view.addObject("endPage",endPage);
 
-        System.out.println("Page<T> : "+getBoardList);
+//        System.out.println("Page<T> : "+getBoardList);
 
         return view;
     }

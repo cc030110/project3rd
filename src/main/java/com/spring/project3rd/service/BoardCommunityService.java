@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BoardCommunityService {
@@ -32,5 +35,12 @@ public class BoardCommunityService {
     @Transactional
     public void addViews(BoardCommunity board){
         board.viewPlus();
+    }
+
+    // 유저가 작성한 게시글 목록
+    public List<BoardCommunity> getBoardListById(String id){
+        List<BoardCommunity> list = new ArrayList<>();
+        list = boardCommunityRepository.findById(id);
+        return list;
     }
 }

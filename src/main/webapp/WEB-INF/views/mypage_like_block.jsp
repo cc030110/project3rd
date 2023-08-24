@@ -12,6 +12,33 @@
     <title></title>
 </head>
 <body>
-like and block
+<div>
+    <div>
+        즐겨찾기 목록
+<%--        <c:choose>--%>
+<%--            <c:when test="${empty likeList}">--%>
+<%--                즐겨찾기한 유저가 존재하지 않습니다.--%>
+<%--            </c:when>--%>
+<%--            <c:otherwise>--%>
+<%--                <c:forEach items="${likeList}" var="likes">--%>
+<%--                    ${likes}--%>
+<%--                </c:forEach>--%>
+<%--            </c:otherwise>--%>
+<%--        </c:choose>--%>
+    </div>
+    <div>
+        차단 목록
+<%--        <c:choose>--%>
+<%--            <c:when test="${empty blockList}">--%>
+<%--                차단한 유저가 존재하지 않습니다.--%>
+<%--            </c:when>--%>
+<%--            <c:otherwise>--%>
+<%--                <c:forEach items="${blockList}" var="blocks">--%>
+<%--                    ${blocks}--%>
+<%--                </c:forEach>--%>
+<%--            </c:otherwise>--%>
+<%--        </c:choose>--%>
+    </div>
+</div>
 </body>
 </html>

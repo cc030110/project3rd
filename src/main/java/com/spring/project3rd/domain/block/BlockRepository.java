@@ -13,6 +13,10 @@ public interface BlockRepository extends JpaRepository<Block,BlockId> {
 
     // userId를 이용하여 blockId만 조회
     @Query(value = "SELECT block_id FROM block WHERE user_id = ?1", nativeQuery = true)
-    public List<String> findBlockIdsByUserId(String userId);
+    List<String> findBlockIdsByUserId(String userId);
+//    @Query(value = "SELECT bk.block_id FROM `block` bk " +
+//            "JOIN user usr ON bk.user_id = usr.id " +
+//            "WHERE bk.user_id = ?1 AND usr.is_active = 1", nativeQuery = true)
+//    List<String> findBlockIdsByUserId(String userId);
 
 }

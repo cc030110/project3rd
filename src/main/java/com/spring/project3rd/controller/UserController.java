@@ -1,6 +1,7 @@
 
 package com.spring.project3rd.controller;
 
+import com.spring.project3rd.domain.boardCommunity.BoardCommunity;
 import com.spring.project3rd.domain.boardFree.BoardFree;
 import com.spring.project3rd.domain.email.BaseResponse;
 import com.spring.project3rd.domain.email.EmailCheckReq;
@@ -50,13 +51,14 @@ public class UserController {
 
     private final BoardFreeService boardFreeService;
     private final BoardCommunityService boardCommunityService;
-
+    private final BlockService blockService;
+    private final LikeService likeService;
 
     @Autowired
     public UserController(UserService userService, UserRepository userRepository,
                           UploadFileService uploadFileService, JwtTokenizer jwtTokenizer,
                           LanguageRepository languageRepository, LanguageService languageService,
-                          EmailService emailService, BoardFreeService boardFreeService, BoardCommunityService boardCommunityService) {
+                          EmailService emailService, BoardFreeService boardFreeService, BoardCommunityService boardCommunityService, BlockService blockService, LikeService likeService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.uploadFileService = uploadFileService;
@@ -66,6 +68,8 @@ public class UserController {
         this.emailService = emailService;
         this.boardFreeService = boardFreeService;
         this.boardCommunityService = boardCommunityService;
+        this.blockService = blockService;
+        this.likeService = likeService;
     }
 
     @PostMapping("login")
@@ -382,15 +386,19 @@ public class UserController {
                 view.setViewName("mypage_update");
                 break;
             case "like-block":
-                // 해당 유저의 like / block 리스트 add
+                // 해당 유저의 like / block 리스트 추가
                 view.setViewName("mypage_like_block");
                 break;
             case "board-free":
-                // 해당 유저의 board_free 작성글 리스트 add
+                // 해당 유저의 board_free 작성글 리스트 추가
+                List<BoardFree> boardFreeList = boardFreeService.getBoardListById(id);
+                view.addObject("boardList",boardFreeList);
                 view.setViewName("mypage_board_free");
                 break;
             case "board-community":
-                // 해당 유저의 board_community 작성글 리스트 add
+                // 해당 유저의 board_community 작성글 리스트 추가
+                List<BoardCommunity> boardCommunityList = boardCommunityService.getBoardListById(id);
+                view.addObject("boardList",boardCommunityList) ;
                 view.setViewName("mypage_board_community");
                 break;
             case "resign":
