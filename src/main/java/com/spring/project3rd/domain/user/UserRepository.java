@@ -11,13 +11,17 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, String> {
 
-    Page<User> findAllByOrderByCreatedAtDesc(Pageable pageable);
+//    Page<User> findAllByOrderByCreatedAtDesc(Pageable pageable);
     User findByEmail(String email);
 
     User findByName(String name);
 
     /** 프로필 게시판 페이징**/
-    Page<User> findAllByIdLike(String pattern, Pageable pageable);
+    // 이름 검색
+    Page<User> findByNameContaining(String name, Pageable pageable);
+    // 국가 검색
+    Page<User> findByLiveCountry(String nation,Pageable pageable);
+
 
     @EntityGraph(attributePaths ="authorities")
     Optional<User> findOneWithAuthoritiesById(String id);
@@ -27,6 +31,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<String> findInactiveUserIds();
 
 
-    Page<User> findByIdContaining(String keyword, Pageable pageable);
 }
 

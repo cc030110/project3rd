@@ -175,6 +175,7 @@ function participate(boardNo){
         contentType: "application/json",
     }).done(function (response){
         alert(response.value);
+        window.location.reload();
     }).fail(function (request){
         console.log("status: " + request.status);
         console.log("responseText: " + request.responseText);

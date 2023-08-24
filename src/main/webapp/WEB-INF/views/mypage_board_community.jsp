@@ -21,7 +21,7 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${boardList}" var="board">
-                <div>
+                <div class="board-community-line">
                     <a href="/board/community/${board.boardNo}">
                         ${board.title}
                     </a>

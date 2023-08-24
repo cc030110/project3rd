@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title><spring:message code="board_free_list.logo"/></title>
@@ -73,7 +74,9 @@
                                 ${board.name}
                         </td>
                         <td class="createdAt">
-                                ${board.createdAt}
+                            <fmt:parseDate value="${board.createdAt}" var="parsedCreatedAt" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+                            <fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy-MM-dd" var="formattedCreatedAt" />
+                            ${formattedCreatedAt}
                         </td>
                         <td class="views">
                                 ${board.views}

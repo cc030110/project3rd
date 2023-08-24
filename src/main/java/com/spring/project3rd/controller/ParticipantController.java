@@ -43,7 +43,7 @@ public class ParticipantController {
         Participant newParticipant = new Participant(boardNo,id);
         participantRepository.save(newParticipant);
 
-        return new Response("success","완료");
+        return new Response("success","신청되었습니다.");
     }
 
 }

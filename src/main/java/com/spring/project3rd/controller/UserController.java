@@ -11,12 +11,12 @@ import com.spring.project3rd.domain.user.*;
 import com.spring.project3rd.payload.Response;
 import com.spring.project3rd.security.jwt.util.JwtTokenizer;
 import io.jsonwebtoken.Claims;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,14 +72,12 @@ public class UserController {
         this.likeService = likeService;
     }
 
+    // 로그인
     @PostMapping("login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto, HttpServletResponse response) {
 
         String id = loginDto.getId();
         String password = loginDto.getPassword();
-        System.out.println(id);
-        System.out.println(password);
-
 
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
@@ -268,26 +266,32 @@ public class UserController {
      **/
     @GetMapping("list/{page}")
     public ModelAndView userList(@PathVariable int page,
-                                 @RequestParam(defaultValue = "") String keyword,
-                                 Pageable pageable,
-                                 @CookieValue(value = "accessToken", required = false) String accessToken) {
+                                 @RequestParam(required = false) String name,
+                                 @RequestParam(required = false) String nation,
+                                 @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        int pageSize = 10; // 한 페이지에 보여질 아이템 수
 
-        int pageSize = 5; // 한 페이지에 보여질 아이템 수를 1로 설정
-        pageable = PageRequest.of(page - 1, pageSize); // 페이지 정보 재설정
 
         ModelAndView view = new ModelAndView("user_list");
         Page<User> getUserList = null;
 
-        getUserList = userRepository.findAllByOrderByCreatedAtDesc(pageable);
+        if(name!=null&&!name.isEmpty()){ // 이름 검색
+            getUserList = userRepository.findByNameContaining(name,pageable.withPage(page-1));
+        }else if(nation!=null&&!nation.isEmpty()){
+            getUserList = userRepository.findByLiveCountry(nation,pageable.withPage(page-1));
+        }else{
+            getUserList = userRepository.findAll(pageable.withPage(page-1));
+            System.out.println(getUserList);
+        }
+        view.addObject("userList", getUserList);
 
         int totalPages = getUserList.getTotalPages();
-        int currentPageGroup = (page - 1) / 5;
-        int startPage = currentPageGroup * 5 + 1;
-        int endPage = Math.min(startPage + 4, totalPages);
+        int currentPageGroup = (page - 1) / pageSize;
+        int startPage = currentPageGroup * pageSize + 1;
+        int endPage = Math.min(startPage + pageSize - 1 , totalPages);
 
         view.addObject("startPage", startPage);
         view.addObject("endPage", endPage);
-        view.addObject("userList", getUserList);
 
         return view;
     }

@@ -133,6 +133,20 @@ public class BoardCommunityController{
         // 게시판 리스트 view에 추가(boardList는 Page<BoardCommunity> 타입, 페이지 정보도 포함)
         view.addObject("boardList", getBoardList);
 
+        // 해당 게시판의 참가자 정보도 넣기 (수락(1)된 리스트)
+        List<BoardCommunity> boardList = getBoardList.getContent();
+        if(!boardList.isEmpty()){
+            // boardNo, 참가자 수
+            Map<Integer,Integer> acceptedNum = new HashMap<>();
+            for(BoardCommunity board : boardList){
+                int boardNo = board.getBoardNo();
+                List<Participant> p = participantService.getListByBoardNoAndAccept(boardNo,1);
+                acceptedNum.put(boardNo,p.size());
+            }
+            view.addObject("acceptedNum",acceptedNum);
+        }
+
+
         // 플랫폼 객체 가져오기
         Map<String,String> platforms = new HashMap<>();
         List<Platform> platformList = platformRepository.findAll();
@@ -183,11 +197,17 @@ public class BoardCommunityController{
             }
 
             // 게시글의 참가 수락 목록 전달
-            List<Participant> participants = participantService.getAcceptList(board.getBoardNo());
+            List<Participant> participants = participantService.getListByBoardNoAndAccept(boardNo, 1);
+            // 해당 목록에서 id만 가져와 -> name으로 가져옴
             if(!participants.isEmpty()){
-                view.addObject("participants",participants);
+                List<String> names = new ArrayList<>();
+                for(Participant p : participants){
+                    String id = p.getParticipantId();
+                    String name = userService.getUserName(id);
+                    names.add(name);
+                }
+                view.addObject("names",names);
             }
-
         }
         view.addObject("board",board);
 

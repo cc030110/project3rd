@@ -134,9 +134,9 @@ select::-ms-expand {
 .users {
     width:100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
-    margin : 50px 0;
+    margin : 15px 0;
 }
 
 .user-box {

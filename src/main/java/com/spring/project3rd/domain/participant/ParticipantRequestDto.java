@@ -13,7 +13,7 @@ public class ParticipantRequestDto {
     private int participantNo;
     private int boardNo;
     private String participantId;
-    private short isAccept;
+    private int isAccept;
 
     public ParticipantRequestDto(int boardNo, String participantId){
         this.boardNo=boardNo;

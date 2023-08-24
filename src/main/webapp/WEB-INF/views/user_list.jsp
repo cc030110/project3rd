@@ -29,29 +29,33 @@
         <div class="content-row">
             <div class="contents-num">
                 <span><spring:message code="user_list.total"/> ${userList.totalElements}<spring:message code="user_list.unit"/></span>
-                <span>[${userList.number + 1}/${userList.totalPages}]</span>
+                <span>[ <c:choose>
+                    <c:when test="${userList.totalPages ne 0}">
+                        ${userList.number+1}
+                    </c:when>
+                    <c:otherwise>
+                        0
+                    </c:otherwise>
+                </c:choose> / ${userList.totalPages} ]</span>
             </div>
 
             <!-- 검색 -->
             <div id="select-search-box">
                 <div class="select-box">
                     <select id="search-select">
-                        <option value="title" selected><spring:message code="user_list.nickname"/></option>
-                        <option value="author"><spring:message code="user_list.nation"/></option>
+                        <option value="name" selected><spring:message code="user_list.nickname"/></option>
+                        <option value="nation"><spring:message code="user_list.nation"/></option>
                     </select>
-
                     <span class="select-arrow">
                         <img src="https://ucarecdn.com/326e1541-5ce3-4908-836d-d735660c0300/" alt=""/>
                     </span>
                 </div>
                 <div class="search-box">
                     <input type="text" id="search-input" name="search-input">
-                    <input type="button" id="search-btn" value=<spring:message code="user_list.search"/>>
+                    <input type="button" id="search-btn" onclick="searchUser('${userList.number+1}')" value=<spring:message code="user_list.search"/>>
                 </div>
             </div>
         </div>
-
-
         <div class="users">
             <c:forEach items="${userList.content}" var="user">
                 <div class="user-box">
@@ -95,5 +99,6 @@
     </div>
     <c:import url="footer.jsp"/>
 </div>
+<script src="/script/user-list.js"></script>
 </body>
 </html>

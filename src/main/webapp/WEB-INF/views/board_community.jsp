@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 
@@ -24,19 +25,23 @@
                 <p>존재하지 않는 게시글입니다.</p>
             </c:when>
             <c:otherwise>
-                <input type="hidden" id="board_num_hidden" value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
-                    <div class="first_line">
-                        <c:if test="${board.id==id}">
+                <input type="hidden" id="board_num_hidden"
+                       value=${board.boardNo}> <!-- Trouble shooting : js에서 받아와야 할 값 추가-->
+                <div class="first_line">
+                    <c:if test="${board.id==id}">
                         <div class="btns">
-                            <input type="button" id="modify_btn" value="<spring:message code="board_community.modify"/>" onclick="moveToUpdate()">
-                            <input type="button" id="delete_btn" value="<spring:message code="board_community.delete"/>" onclick="deleteBoard()">
+                            <input type="button" id="modify_btn" value="<spring:message code="board_community.modify"/>"
+                                   onclick="moveToUpdate()">
+                            <input type="button" id="delete_btn" value="<spring:message code="board_community.delete"/>"
+                                   onclick="deleteBoard()">
                         </div>
-                        </c:if>
+                    </c:if>
 
-                        <div class="btns">
-                            <input type="button" id="back_btn" value="<spring:message code="board_community.back"/>" onclick="moveToMain()">
-                        </div>
+                    <div class="btns">
+                        <input type="button" id="back_btn" value="<spring:message code="board_community.back"/>"
+                               onclick="moveToMain()">
                     </div>
+                </div>
 
 
                 <div class="second_line">
@@ -54,8 +59,12 @@
                     <img src="${platform.get(board.platformName)}" alt="이미지 업로드 실패">
                     <div class="third_line_text">
                         <p id="platform"><spring:message code="board_community.platform"/> : ${board.platformName}</p>
-                        <p id="period"><spring:message code="board_community_main.period"/> : ${board.createdAt} ~ ${board.deadline}</p>
-                        <p id="participants"><spring:message code="board_community.participants"/> : ${board.participantsNum}</p>
+                        <fmt:parseDate value="${board.createdAt}" var="parsedCreatedAt" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+                        <fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy-MM-dd" var="formattedCreatedAt" />
+                        <p id="period"><spring:message code="board_community_main.period"/> : ${formattedCreatedAt}
+                            ~ ${board.deadline}</p>
+                        <p id="participants"><spring:message code="board_community.participants"/>
+                            : ${board.participantsNum}</p>
                     </div>
                 </div>
 
@@ -73,25 +82,30 @@
 
                 <div class="participants_line">
                     <div class="participants_num">
-                        <span>참가자 [ ${participants.size()} / ${board.participantsNum} ]</span>
+                        <span>참가자
                         <c:choose>
-                            <c:when test="${participants.size()==board.participantsNum}">
+                            <c:when test="${names.size()==board.participantsNum}">
                                 [모집 완료]
                             </c:when>
                             <c:otherwise>
                                 [모집 중]
                             </c:otherwise>
                         </c:choose>
+                        </span>
                     </div>
                     <div class="participants_list">
-
-
+                        <c:forEach items="${names}" var="name">
+                            <a href="/user/${name}">${name}</a>
+                        </c:forEach>
+                    </div>
+                    <div>
+                        [ ${names.size() >= 1 ? names.size() : 0} / ${board.participantsNum} ]
                     </div>
                 </div>
-                <<div class="participate_btn">
-                    <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value="Join this community">
+                <div class="participate_btn">
+                <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)"
+                       value="Join this community">
                 </div>
-
             </c:otherwise>
         </c:choose>
     </div>

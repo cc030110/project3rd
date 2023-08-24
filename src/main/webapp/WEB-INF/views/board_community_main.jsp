@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%><!-- 다국어 처리 -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 
@@ -34,7 +35,7 @@
                                 0
                             </c:otherwise>
                         </c:choose>
-                         / ${boardList.totalPages}]
+                         / ${boardList.totalPages} ]
                     </span>
                 </div>
                 <div id="select-search-box">
@@ -60,7 +61,9 @@
                 <c:forEach items="${boardList.content}" var="board" varStatus="vs">
                         <div class="list_top">
                             <div class="list_top_info">
-                                <p><spring:message code="board_community_main.period"/> : ${board.createdAt} ~ ${board.deadline}</p>
+                                <fmt:parseDate value="${board.createdAt}" var="parsedCreatedAt" pattern="yyyy-MM-dd'T'HH:mm:ss" />
+                                <fmt:formatDate value="${parsedCreatedAt}" pattern="yyyy-MM-dd" var="formattedCreatedAt" />
+                                <p><spring:message code="board_community_main.period"/> : ${formattedCreatedAt} ~ ${board.deadline}</p>
                                 <p><spring:message code="board_community_main.author"/> : ${board.name}</p>
                             </div>
 
@@ -83,7 +86,9 @@
                                         <p id="title">${board.title}</p><!-- 제목 -->
                                     </a>
                                     <p>${board.contents}</p><!-- 내용 -->
-                                    <p><spring:message code="board_community_main.participants"/>: ${board.participantsNum}</p>
+                                    <p>
+                                        <spring:message code="board_community_main.participants"/> : [ ${acceptedNum.get(board.boardNo) >=1 ? acceptedNum.get(board.boardNo) : 0 } / ${board.participantsNum} ]
+                                    </p>
                                 </div>
                         </div>
 

@@ -19,9 +19,14 @@ public class ParticipantService {
 
     private final ParticipantRepository participantRepository;
 
-    // boardNo를 받아 현재 수락된 내역들 가져오기
-    public List<Participant> getAcceptList(int boardNo){
-        return participantRepository.getParticipantsAcceptByBoardNo(boardNo);
+    // boardNo와 수락 여부를 받아 해당 리스트 받기
+    public List<Participant> getListByBoardNoAndAccept(int boardNo,int isAccept){
+        return participantRepository.findByBoardNoAndIsAccept(boardNo, isAccept);
+    }
+
+    // boardNo와 id를 입력받아 일치하는 신청기록 받기
+    public Participant getParticipant(int boardNo, String id){
+        return participantRepository.findByBoardNoAndParticipantId(boardNo,id);
     }
 
 }
