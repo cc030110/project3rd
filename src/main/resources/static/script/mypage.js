@@ -1,6 +1,4 @@
-// 현재 선택된 menu의 id, 처음 로드 시 기본 update
 let menu = $('#selected-menu').attr('class');
-changeContent(menu);
 $(document).ready(function () {
     // 메뉴의 li 클릭 시
     $('#menu li').click(function () {

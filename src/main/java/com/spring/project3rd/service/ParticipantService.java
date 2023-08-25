@@ -19,6 +19,17 @@ public class ParticipantService {
 
     private final ParticipantRepository participantRepository;
 
+    // boardNo의 모든 신청기록 받기
+    public List<Participant> getListAllByBoardNo(int boardNo){
+        return participantRepository.findAllByBoardNo(boardNo);
+    }
+
+    // 유저의 모든 게시판 신청기록 받기
+    public List<Participant> getListAllByUserId(String id){
+        return participantRepository.findAllByParticipantId(id);
+
+    }
+
     // boardNo와 수락 여부를 받아 해당 리스트 받기
     public List<Participant> getListByBoardNoAndAccept(int boardNo,int isAccept){
         return participantRepository.findByBoardNoAndIsAccept(boardNo, isAccept);
@@ -28,7 +39,6 @@ public class ParticipantService {
     public Participant getParticipant(int boardNo, String id){
         return participantRepository.findByBoardNoAndParticipantId(boardNo,id);
     }
-
 
     // 업데이트
     @Transactional

@@ -43,4 +43,9 @@ public class BoardCommunityService {
         list = boardCommunityRepository.findById(id);
         return list;
     }
+
+    // 보드 리턴
+    public BoardCommunity getBoard(int boardNo){
+        return boardCommunityRepository.findById(boardNo).orElse(null);
+    }
 }

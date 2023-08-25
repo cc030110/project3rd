@@ -435,6 +435,21 @@ public class UserController {
                 }
                 view.setViewName("mypage_board_community");
                 break;
+            case "community-accept":
+                // 내가 신청을 넣었던 모집 게시판들 모음
+                List<Participant> participants = participantService.getListAllByUserId(id);
+                view.addObject("participants",participants);
+                if(!participants.isEmpty()){
+                    Map<Integer,BoardCommunity> boardList = new HashMap<>();
+                    for(Participant part : participants){
+                        int boardNo = part.getBoardNo();
+                        BoardCommunity board = boardCommunityService.getBoard(boardNo);
+                        boardList.put(boardNo,board);
+                    }
+                    view.addObject("boardList",boardList);
+                }
+                view.setViewName("mypage_community_accept");
+                break;
             case "resign":
                 view.setViewName("mypage_resign");
                 break;

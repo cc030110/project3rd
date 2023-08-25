@@ -45,12 +45,13 @@
                             <li id="board-community">모임 게시판</li>
                         </ul>
                     </li>
+                    <li id="community-accept">참여한 커뮤니티</li>
                     <li id="resign">탈퇴</li>
                 </ul>
             </nav>
         </div>
         <div class="content-container">
-            <h2 id="selected-menu" class="update">정보 조회/수정</h2>
+            <h2 id="selected-menu"></h2>
             <div id="content">
 
             </div>

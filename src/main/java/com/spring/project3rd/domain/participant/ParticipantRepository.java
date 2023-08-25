@@ -15,5 +15,11 @@ public interface ParticipantRepository extends JpaRepository<Participant,String>
     // boardNo과 수락 형태(0신청/1수락/2거절)에 맞는 리스트 가져오기
     List<Participant> findByBoardNoAndIsAccept(int boardNo, int isAccept);
 
+    // boardNo의 모든 신청 내역
+    List<Participant> findAllByBoardNo(int boardNo);
+
+    // user의 모든 신청 내역
+    List<Participant> findAllByParticipantId(String id);
+
 
 }
