@@ -251,8 +251,10 @@ public class BoardCommunityController{
         BoardCommunity bc=null;
         if(accessToken!=null && bcDto.getTitle()!=null && bcDto.getContents()!=null){
             Claims claims=jwtTokenizer.parseToken(accessToken,jwtTokenizer.accessSecret);
+            String id=claims.get("id",String.class);
             String name=claims.get("name",String.class);
 
+            bcDto.setId(id);
             bcDto.setName(name);
             bc = new BoardCommunity(bcDto);
             boardCommunityRepository.save(bc);
