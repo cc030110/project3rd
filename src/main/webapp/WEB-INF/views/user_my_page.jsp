@@ -11,7 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title><spring:message code="mypage.title"/></title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/mypage.css">
     <!-- favicon -->
@@ -23,7 +23,7 @@
     <div class="main">
         <div id="sidebar">
             <div class="my-info">
-                <h2>MY PAGE</h2>
+                <h2><spring:message code="user_mypage.logo"/></h2>
                 <div class="profile-img">
                     <c:choose>
                         <c:when test="${user.profileImg ne null}">
@@ -37,20 +37,20 @@
             </div>
             <nav>
                 <ul id="menu">
-                    <li id="update">정보 조회/수정</li>
-                    <li id="like-block">즐겨찾기/차단 관리</li>
-                    <li id="board">내 게시글 조회
+                    <li id="update"><spring:message code="user_mypage.info"/></li>
+                    <li id="like-block"><spring:message code="user_mypage.like"/></li>
+                    <li id="board"><spring:message code="user_mypage.board"/>
                         <ul id="board-sub">
-                            <li id="board-free">자유 게시판</li>
-                            <li id="board-community">모임 게시판</li>
+                            <li id="board-free"><spring:message code="user_mypage.freeboard"/></li>
+                            <li id="board-community"><spring:message code="user_mypage.communityboard"/></li>
                         </ul>
                     </li>
-                    <li id="resign">탈퇴</li>
+                    <li id="resign"><spring:message code="user_mypage.resign"/></li>
                 </ul>
             </nav>
         </div>
         <div class="content-container">
-            <h2 id="selected-menu" class="update">정보 조회/수정</h2>
+            <h2 id="selected-menu" class="update"><spring:message code="user_mypage.info"/></h2>
             <div id="content">
 
             </div>

@@ -1,3 +1,10 @@
+body{
+    width:100%;
+    padding:0;
+    margin:0;
+    background-color:#F0F0EF;
+}
+
 /* 자유게시판 게시글 */
 .my-board-free a{
     display: inline-block;
@@ -8,7 +15,11 @@
 }
 
 /* 커뮤니티 게시판 */
-
+.board_community-line{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
 .board-community-line{
     margin: 20px 10%;
     padding: 5px;

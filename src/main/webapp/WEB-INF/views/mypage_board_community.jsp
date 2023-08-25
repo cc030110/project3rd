@@ -13,7 +13,7 @@
 <head>
     <!-- favicon -->
     <link rel="icon" href="https://ucarecdn.com/fb9bcc20-6d13-4a5a-a5b7-541ecfbf373f/" type="image/x-icon">
-    <title></title>
+    <title><spring:message code="mypage.title"/></title>
     <link href="/css/mypage_board.css" rel="stylesheet">
 </head>
 <body>
@@ -36,8 +36,8 @@
                             <c:forEach items="${userList}" var="acceptUser">
                                 <div class="accept-user">
                                     <a href="/user/${acceptUser.name}">${acceptUser.name}</a>
-                                    <input type="button" class="accept-btn" onclick="userAccept(`${board.boardNo}`,`${acceptUser.id}`,true)" value="수락">
-                                    <input type="button" class="refuse-btn" onclick="userAccept(`${board.boardNo}`,`${acceptUser.id}`,false)" value="거절">
+                                    <input type="button" class="accept-btn" onclick="userAccept(`${board.boardNo}`,`${acceptUser.id}`,true)" value=<spring:message code="mypage_board_community.accept"/>>
+                                    <input type="button" class="refuse-btn" onclick="userAccept(`${board.boardNo}`,`${acceptUser.id}`,false)" value=<spring:message code="mypage_board_community.deny"/>>
                                 </div>
                             </c:forEach>
                         </c:if>
