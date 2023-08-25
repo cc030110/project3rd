@@ -24,7 +24,7 @@
         </c:when>
         <c:otherwise>
             <c:forEach items="${boardList}" var="board">
-                <div>
+                <div class="my-board-free-list">
                     <a href="/board/free/${board.boardNo}">
                             ${board.title}
                     </a>

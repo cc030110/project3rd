@@ -6,25 +6,50 @@ body{
 }
 
 /* 자유게시판 게시글 */
-.my-board-free a{
-    display: inline-block;
-    margin: 5px 0;
+.my-board-free{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
 }
-.my-board-free a:hover{
-    color: #2C875F;
+
+.my-board-free-list{
+    width:60%;
+    margin: 20px 10%;
+    padding: 40px;
+    font-size:1.5rem;
+    font-weight:800;
+    background-color:#2C875F;
+    color:white;
+}
+
+.my-board-free-list:hover{
+    background-color: #1D5E42;
 }
 
 /* 커뮤니티 게시판 */
-.board_community-line{
+.my-board-community{
     display:flex;
     flex-direction:column;
+    justify-content: center;
     align-items:center;
 }
+
 .board-community-line{
+    width:60%;
     margin: 20px 10%;
-    padding: 5px;
-    border: 1px solid black;
+    padding: 40px;
+    font-size:1.5rem;
+    font-weight:800;
+    background-color:#2C875F;
+    color:white;
 }
+
+.board-community-line:hover{
+    background-color: #1D5E42;
+    color:white;
+}
+
 .accept-user{
     margin: 5px 0;
 }
