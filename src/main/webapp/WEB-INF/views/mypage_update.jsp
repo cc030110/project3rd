@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: cc030
-  Date: 2023-08-23
-  Time: 오후 9:21
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -31,29 +24,29 @@
                 </c:choose>
             </div>
             <div class="update-profile">
-                <label for="profileImg" id="profileImgBtn">사진 변경</label>
+                <label for="profileImg" id="profileImgBtn"><spring:message code="mypage_update.changeimage"/></label>
                 <input type="file" id="profileImg" name="profileImg" style="visibility:hidden;"
                        accept="image/png, image/jpg, image/jpeg, image.gif" onclick="deleteSavedProfile()()">
             </div>
             <div class="update-id show-box line">
-                <label for="user-id">ID : </label>
+                <label for="user-id"><spring:message code="mypage_update.id"/> : </label>
                 <input type="text" id="user-id" name="user-id" value="${user.id}" readonly>
             </div>
             <div class="update-name show-box line">
-                <label for="user-name">닉네임 : </label>
+                <label for="user-name"><spring:message code="mypage_update.nickname"/> : </label>
                 <input type="text" id="user-name" name="user-name" value="${user.name}" readonly>
             </div>
             <div class="update-gender show-box line">
-                <label for="user-gender">성&nbsp;&nbsp;&nbsp;별
+                <label for="user-gender"><spring:message code="mypage_update.gender"/>
                     : </label>
                 <input type="text" id="user-gender" name="user-gender" value="${user.gender}" readonly>
             </div>
             <div class="show-box line">
-                <label for="user-age">생년월일 : </label>
+                <label for="user-age"><spring:message code="mypage_update.birth"/> : </label>
                 <input type="text" id="user-age" name="user-age" value="${user.birth}" readonly>
             </div>
             <div class="show-box line">
-                <label for="user-email">이메일 : </label>
+                <label for="user-email"><spring:message code="mypage_update.email"/> : </label>
                 <input type="text" id="user-email" name="user-email" value="${user.email}" readonly>
             </div>
 
@@ -61,11 +54,11 @@
         </div>
         <div id="right-container">
             <div class="update-pwd line right-set">
-                <label for="new-pwd">새 비밀번호 :&nbsp;&nbsp;</label>
+                <label for="new-pwd"><spring:message code="mypage_update.password"/> :&nbsp;&nbsp;</label>
                 <input type="password" id="new-pwd" name="new-pwd">
             </div>
             <div class="update-pwd-chk line right-set">
-                <label for="new-pwd-chk">새 비밀번호 확인 :&nbsp;&nbsp;</label>
+                <label for="new-pwd-chk"><spring:message code="mypage_update.passwordCheck"/> :&nbsp;&nbsp;</label>
                 <input type="password" id="new-pwd-chk" name="new-pwd-chk">
             </div>
 
@@ -136,7 +129,7 @@
             </div>
             <div class="line ">
                 <div class="intro">
-                    <h3>소개글</h3><br>
+                    <h3><spring:message code="mypage_update.intro"/></h3><br>
                     <textarea class="fixed-textarea">${user.intro}</textarea>
                 </div>
 
@@ -146,13 +139,11 @@
                 <svg height="40" width="150" xmlns="http://www.w3.org/2000/svg">
                     <rect id="shape" height="40" width="150"/>
                     <div id="text">
-                                <span class="spot login-bnt" onclick="updateForm()">수정</span>
+                        <span class="spot login-bnt" onclick="updateForm()"><spring:message code="mypage_update.update"/></span>
                     </div>
                 </svg>
             </div>
         </div>
-
-
     </div>
 </form>
 <script src="/script/user-update.js"></script>

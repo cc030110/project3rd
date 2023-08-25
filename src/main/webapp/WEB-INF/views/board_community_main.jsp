@@ -43,7 +43,6 @@
                         <select id="search-select">
                             <option value="title" selected><spring:message code="board_community_main.select1"/></option>
                             <option value="author"><spring:message code="board_community_main.select2"/></option>
-                            <option value="platform"><spring:message code="board_community_main.select3"/></option>
                         </select>
                         <span class="select-arrow">
                         <img src="https://ucarecdn.com/326e1541-5ce3-4908-836d-d735660c0300/" alt=""/>
