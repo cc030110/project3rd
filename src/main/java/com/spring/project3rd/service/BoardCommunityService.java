@@ -40,7 +40,7 @@ public class BoardCommunityService {
     // 유저가 작성한 게시글 목록
     public List<BoardCommunity> getBoardListById(String id){
         List<BoardCommunity> list = new ArrayList<>();
-        list = boardCommunityRepository.findById(id);
+        list = boardCommunityRepository.findAllById(id);
         return list;
     }
 

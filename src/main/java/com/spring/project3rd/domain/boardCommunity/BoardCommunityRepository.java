@@ -38,5 +38,5 @@ public interface BoardCommunityRepository extends JpaRepository<BoardCommunity,I
 
 
     // 유저가 작성한 게시글 목록
-    List<BoardCommunity> findById(String id);
+    List<BoardCommunity> findAllById(String id);
 }
