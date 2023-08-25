@@ -57,7 +57,6 @@
             </div>
         </div>
     </div>
-</div>
 <c:import url="footer.jsp"/>
 </div>
 <script src="/script/mypage.js"></script>

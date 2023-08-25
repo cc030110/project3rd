@@ -17,14 +17,7 @@ body{
     width:60%;
     margin: 20px 10%;
     padding: 40px;
-    font-size:1.5rem;
     font-weight:800;
-    background-color:#2C875F;
-    color:white;
-}
-
-.my-board-free-list:hover{
-    background-color: #1D5E42;
 }
 
 /* 커뮤니티 게시판 */
@@ -39,15 +32,11 @@ body{
     width:60%;
     margin: 20px 10%;
     padding: 40px;
-    font-size:1.5rem;
     font-weight:800;
-    background-color:#2C875F;
-    color:white;
 }
 
-.board-community-line:hover{
-    background-color: #1D5E42;
-    color:white;
+.board-community-line a:hover{
+    color:#1D5E42;
 }
 
 .accept-user{

@@ -54,11 +54,23 @@
 
 h2#selected-menu{
     display: inline-block;
-    margin: 20px 0;
     font-weight: bold;
     font-size: 1.5rem;
     margin-top: 50px;
+    margin-bottom: 20px;
 }
 
+/* community accept */
+#community-accept>div{
+    margin: 10px 10%;
+    border: 1px solid black;
+}
+#community-accept p,
+#community-accept a{
+    padding: 5px;
+}
 
-
+.my-board-free a:hover,
+#community-accept a:hover{
+    color: #48A56F;
+}

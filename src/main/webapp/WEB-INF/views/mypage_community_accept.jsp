@@ -10,9 +10,10 @@
 <html>
 <head>
     <title></title>
+    <link href="/css/mypage.css" rel="stylesheet">
 </head>
 <body>
-    <div>
+    <div id="community-accept">
         <c:choose>
             <c:when test="${empty participants}">
                 신청 내역이 없습니다.
@@ -20,7 +21,7 @@
             <c:otherwise>
                 <c:forEach items="${participants}" var="part">
                     <!-- Map<boardNo,board> boardList -->
-                    <div>
+                    <div class="line-box">
                         <!-- 제목 -->
                         <a href="/board/community/${part.boardNo}">
                             ${boardList.get(part.boardNo).title}
