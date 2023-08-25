@@ -1,6 +1,6 @@
 # GlobalTies
 - 프로젝트 개요
-- [서비스 소개](https://www.canva.com/design/DAFsJwwmMGc/ePA7fXR7-8bAJF3L4UZT7w/edit?utm_content=DAFsJwwmMGc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+- [서비스 소개](https://www.canva.com/design/DAFsashXC60/vOCwAetaObLYrH71Kh7MAQ/edit?utm_content=DAFsashXC60&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ### 테스크 툴
 - [테스크툴](https://www.meistertask.com/app/project/eNhwx4u1/globalties)
