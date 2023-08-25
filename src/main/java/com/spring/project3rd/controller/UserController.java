@@ -102,7 +102,7 @@ public class UserController {
 
             Cookie accessTokenCookie = new Cookie("accessToken", accessToken);
             accessTokenCookie.setHttpOnly(true); // JavaScript로 쿠키 접근 방지
-//            accessTokenCookie.setSecure(true); // HTTPS에서만 전송
+            accessTokenCookie.setSecure(true); // HTTPS에서만 전송
             accessTokenCookie.setPath("/"); // 모든 경로에서 접근 가능
             accessTokenCookie.setMaxAge(ACCESS_TOKEN_EXPIRE_COUNT.intValue() / 1000); // 유효기간 설정
             response.addCookie(accessTokenCookie);
