@@ -199,18 +199,18 @@ public class UserController {
         // 타인 정보
         Optional<User> optionalUser = Optional.ofNullable(userRepository.findByName(name));
         User user = optionalUser.orElse(null);
-        String id = user.getId();
 
-        if (user != null) {
-            UserResponseDto userResponseDto = new UserResponseDto(user);
-            view.addObject("user", userResponseDto);
-            List<String> needLang = languageService.getNeedLanguage(id);
-            List<String> useLang = languageService.getUseLanguage(id);
-            view.addObject("needLang", needLang);
-            view.addObject("useLang", useLang);
-        } else {
+        if (user == null) {
             return new ModelAndView(new RedirectView("/"));
         }
+        String id = user.getId();
+
+        UserResponseDto userResponseDto = new UserResponseDto(user);
+        view.addObject("user", userResponseDto);
+        List<String> needLang = languageService.getNeedLanguage(id);
+        List<String> useLang = languageService.getUseLanguage(id);
+        view.addObject("needLang", needLang);
+        view.addObject("useLang", useLang);
 
         // 내 정보
         if (accessToken != null) {
@@ -280,12 +280,12 @@ public class UserController {
         ModelAndView view = new ModelAndView("user_list");
         Page<User> getUserList = null;
 
-        if(name!=null&&!name.isEmpty()){ // 이름 검색
-            getUserList = userRepository.findByNameContaining(name,pageable.withPage(page-1));
-        }else if(nation!=null&&!nation.isEmpty()){
-            getUserList = userRepository.findByLiveCountry(nation,pageable.withPage(page-1));
-        }else{
-            getUserList = userRepository.findAll(pageable.withPage(page-1));
+        if (name != null && !name.isEmpty()) { // 이름 검색
+            getUserList = userRepository.findByNameContaining(name, pageable.withPage(page - 1));
+        } else if (nation != null && !nation.isEmpty()) {
+            getUserList = userRepository.findByLiveCountry(nation, pageable.withPage(page - 1));
+        } else {
+            getUserList = userRepository.findAll(pageable.withPage(page - 1));
             System.out.println(getUserList);
         }
         view.addObject("userList", getUserList);
@@ -293,7 +293,7 @@ public class UserController {
         int totalPages = getUserList.getTotalPages();
         int currentPageGroup = (page - 1) / pageSize;
         int startPage = currentPageGroup * pageSize + 1;
-        int endPage = Math.min(startPage + pageSize - 1 , totalPages);
+        int endPage = Math.min(startPage + pageSize - 1, totalPages);
 
         view.addObject("startPage", startPage);
         view.addObject("endPage", endPage);
@@ -312,8 +312,8 @@ public class UserController {
         Optional<User> optionalUser = userRepository.findById(id);
         User user = optionalUser.orElse(null);
 
-        if(user!=null&&!user.getPassword().equals(password)){
-            return new Response("delete","fail");
+        if (user != null && !user.getPassword().equals(password)) {
+            return new Response("delete", "fail");
         }
 
         try {
@@ -414,39 +414,39 @@ public class UserController {
                 List<BoardCommunity> boardCommunityList = boardCommunityService.getBoardListById(id);
                 view.addObject("boardList", boardCommunityList);
                 // 해당 글에서 신청자 추가
-                if(!boardCommunityList.isEmpty()){
+                if (!boardCommunityList.isEmpty()) {
                     // boardNo, 참가자
-                    Map<Integer,List<User>> participantUsers = new HashMap<>();
-                    for(BoardCommunity board : boardCommunityList){
+                    Map<Integer, List<User>> participantUsers = new HashMap<>();
+                    for (BoardCommunity board : boardCommunityList) {
                         int boardNo = board.getBoardNo();
                         // 신청한 참가자 목록
-                        List<Participant> participants = participantService.getListByBoardNoAndAccept(boardNo,0); // 신청자 : 0
+                        List<Participant> participants = participantService.getListByBoardNoAndAccept(boardNo, 0); // 신청자 : 0
                         // 해당 참가자 목록으로 user 객체 리스트로 바꾸기
                         List<User> users = new ArrayList<>();
-                        for(Participant pUser : participants){
+                        for (Participant pUser : participants) {
                             User usr = userRepository.findById(pUser.getParticipantId()).orElse(null);
-                            if(user!=null){
+                            if (user != null) {
                                 users.add(usr);
                             }
                         }
-                        participantUsers.put(boardNo,users);
+                        participantUsers.put(boardNo, users);
                     }
-                    view.addObject("participantUsers",participantUsers);
+                    view.addObject("participantUsers", participantUsers);
                 }
                 view.setViewName("mypage_board_community");
                 break;
             case "community-accept":
                 // 내가 신청을 넣었던 모집 게시판들 모음
                 List<Participant> participants = participantService.getListAllByUserId(id);
-                view.addObject("participants",participants);
-                if(!participants.isEmpty()){
-                    Map<Integer,BoardCommunity> boardList = new HashMap<>();
-                    for(Participant part : participants){
+                view.addObject("participants", participants);
+                if (!participants.isEmpty()) {
+                    Map<Integer, BoardCommunity> boardList = new HashMap<>();
+                    for (Participant part : participants) {
                         int boardNo = part.getBoardNo();
                         BoardCommunity board = boardCommunityService.getBoard(boardNo);
-                        boardList.put(boardNo,board);
+                        boardList.put(boardNo, board);
                     }
-                    view.addObject("boardList",boardList);
+                    view.addObject("boardList", boardList);
                 }
                 view.setViewName("mypage_community_accept");
                 break;

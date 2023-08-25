@@ -103,7 +103,9 @@
                     </div>
                 </div>
                 <div class="participate_btn">
-                    <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value='<spring:message code="board_community.join"/>'>
+                    <c:if test="${board.id ne id}">
+                        <input type="button" id="participate_btn" onclick="participate(`${board.boardNo}`)" value='<spring:message code="board_community.join"/>'>
+                    </c:if>
                 </div>
             </c:otherwise>
         </c:choose>
